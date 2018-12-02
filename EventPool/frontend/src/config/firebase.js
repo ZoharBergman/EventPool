@@ -3,6 +3,7 @@
  */
 import * as firebase from "firebase";
 import { DB_COLLECTIONS } from '../util/dbCollections';
+import userEvenet from '../classes/userEvent';
 
 const config = {
     apiKey: "AIzaSyBMZVAJEOouJVnrgaE6VKi_ajW_V0Mpomc",
@@ -22,4 +23,4 @@ export const firebaseAuth = firebase.auth;
 export const database = firebase.database();
 
 export const eventsRef = databaseRef.child(DB_COLLECTIONS.EVENTS);
-export const userEventsRef = databaseRef.child(DB_COLLECTIONS.USER_EVENTS);
+export const userEventsRef = databaseRef.child(userEvenet.collectionName());

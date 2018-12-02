@@ -1,10 +1,9 @@
 /**
  * Created by Zohar on 20/11/2018.
  */
-import { eventsRef, database, userEventsRef } from '../config/firebase';
+import { eventsRef, userEventsRef } from '../config/firebase';
 import geocoding from '../util/Geocoding';
 import auth from '../config/auth';
-import { DB_COLLECTIONS } from '../util/dbCollections';
 import userEvent from '../classes/userEvent';
 
 const handleCreateEvent = newEvent => {
@@ -28,7 +27,7 @@ const handleCreateEvent = newEvent => {
 
     const saveEventToUser = function (user, eventId) {
         // Trying to get the events of the current user
-        database.ref(DB_COLLECTIONS.USER_EVENTS + "/").orderByChild("userId").equalTo(user).once('value')
+        userEventsRef.orderByChild("userId").equalTo(user).once('value')
             .then((snapshot) => {
                 if (!snapshot.exists() || !snapshot.val()) {
                     // Creating a new user events object ans save it to the DB

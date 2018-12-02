@@ -10,7 +10,7 @@ class MyEventsPage extends Component {
     }
 
     componentWillMount() {
-        // userEventsRef('/' + )
+        // userEventsRef.child
     }
 
     render() {
