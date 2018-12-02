@@ -3,26 +3,24 @@
  */
 import React from "react";
 // import {FontIcon, RaisedButton} from "material-ui";
-import {loginWithGoogle} from "../config/auth";
+import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
 
-
 const firebaseAuthKey = "firebaseAuthInProgress";
-const appTokenKey = "appToken";
 
 export default class LoginPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            splashScreen: false
+            splashScreen: true
         };
 
         this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
     }
 
     handleGoogleLogin() {
-        loginWithGoogle()
+        auth.loginWithGoogle()
             .catch(function (error) {
                 alert(error);
                 localStorage.removeItem(firebaseAuthKey);
@@ -34,21 +32,19 @@ export default class LoginPage extends React.Component {
         /**
          * We have appToken relevant for our backend API
          */
-        if (localStorage.getItem(appTokenKey)) {
-            // this.props.history.push("/home");
-            // return;
+        if (localStorage.getItem(auth.appTokenKey)) {
+            this.props.history.push("/home");
+            return;
         }
 
         firebaseAuth().onAuthStateChanged(user => {
             if (user) {
-                console.log("User signed in: ", JSON.stringify(user));
-
                 localStorage.removeItem(firebaseAuthKey);
 
                 // here you could authenticate with you web server to get the
                 // application specific token so that you do not have to
                 // authenticate with firebase every time a user logs in
-                localStorage.setItem(appTokenKey, user.uid);
+                localStorage.setItem(auth.appTokenKey, user.uid);
 
                 // store the token
                 this.props.history.push("/home");
@@ -85,4 +81,5 @@ const Login = ({handleGoogleLogin}) => (
         </div>
     </div>
 );
+
 const SplashScreen = () => (<p>Loading...</p>)

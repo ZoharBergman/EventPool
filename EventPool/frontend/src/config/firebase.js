@@ -2,6 +2,7 @@
  * Created by Zohar on 06/11/2018.
  */
 import * as firebase from "firebase";
+import { DB_COLLECTIONS } from '../util/dbCollections';
 
 const config = {
     apiKey: "AIzaSyBMZVAJEOouJVnrgaE6VKi_ajW_V0Mpomc",
@@ -18,5 +19,7 @@ const databaseRef = firebase.database().ref();
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const firebaseAuth = firebase.auth;
+export const database = firebase.database();
 
-export const eventsRef = databaseRef.child("events");
+export const eventsRef = databaseRef.child(DB_COLLECTIONS.EVENTS);
+export const userEventsRef = databaseRef.child(DB_COLLECTIONS.USER_EVENTS);

@@ -6,16 +6,19 @@ import { BrowserRouter, Route, Switch, Redirect  } from 'react-router-dom';
 
 import { HomePage } from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
-import CreateEventForm from '../forms/CreateEventForm';
-import handlers from '../forms/FormsHandler';
+import { CreateEventPage } from '../pages/CreateEventPage';
+import { AppHeader } from '../headers/AppHeader';
+import { MyEventsPage } from '../pages/MyEventsPage';
 
 export const AppRouter = () => (
     <BrowserRouter>
         <Fragment>
+            <AppHeader />
             <Switch>
                 <Route path="/login" component={LoginPage}/>
-                {/*<Route path='/home' component={HomePage}/>*/}
-                <Route path='/events/create' component={() => <CreateEventForm onSubmit={handlers.handleCreateEvent}/>} />
+                <Route path='/home' component={HomePage}/>
+                <Route path='/events/create' component={CreateEventPage} />
+                <Route path='/events/' component={MyEventsPage} />
                 <Redirect from="/" to="/login" />
             </Switch>
         </Fragment>
