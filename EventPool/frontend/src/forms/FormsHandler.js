@@ -1,12 +1,13 @@
 /**
  * Created by Zohar on 20/11/2018.
  */
+import React from "react";
 import { eventsRef, userEventsRef } from '../config/firebase';
 import geocoding from '../util/Geocoding';
 import auth from '../config/auth';
 import userEvent from '../classes/userEvent';
 
-const handleCreateEvent = newEvent => {
+const handleCreateEvent = (newEvent) => {
     const saveNewEvent = function (user, geocodeResponse) {
         // Setting the fields of the new event
         newEvent.date = newEvent.date.getTime();
@@ -42,15 +43,14 @@ const handleCreateEvent = newEvent => {
             });
     };
 
-    const afterGeocode = function(err, response) {
+    geocoding.codeAddress(newEvent.address, function(err, response) {
         if (!err) {
             const user = localStorage.getItem(auth.appTokenKey);
             const eventId = saveNewEvent(user, response);
             saveEventToUser(user, eventId);
+            this.props.history.push("/event/" + eventId);
         }
-    };
-
-    geocoding.codeAddress(newEvent.address, afterGeocode);
+    });
 };
 
 export default {

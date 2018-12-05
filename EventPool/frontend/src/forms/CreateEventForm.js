@@ -6,12 +6,13 @@ import { reduxForm, Field } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from "moment";
 import momentLocalizer from 'react-widgets-moment';
+import renderField from './RenderedField';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
 momentLocalizer(moment)
 
-const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, placeholder, meta: { touched, error, warning } }) =>
+const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, placeholder, meta: { touched, error, warning } }) => (
     <div>
         <div className="control">
             <label className="field">{label}</label>
@@ -25,16 +26,7 @@ const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, pla
             {((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
         </div>
     </div>
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-    <div>
-        <div className="control">
-            <label className="field">{label}</label>
-            <input className="input" {...input} placeholder={label} type={type}/>
-            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-)
+);
 
 const validate = val => {
     const errors = {};
@@ -58,7 +50,8 @@ const validate = val => {
 };
 
 let CreateEventForm = props => {
-    const { handleSubmit, valid  } = props;
+    let { handleSubmit, valid  } = props;
+
     return (
         <form className="form" onSubmit={handleSubmit}>
             <div className="field">
@@ -87,6 +80,6 @@ let CreateEventForm = props => {
 CreateEventForm = reduxForm({
     form: 'createEvent',
     validate
-})(CreateEventForm)
+})(CreateEventForm);
 
 export default CreateEventForm;
