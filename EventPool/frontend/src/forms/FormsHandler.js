@@ -30,13 +30,15 @@ const handleCreateEvent = (newEvent) => {
         // Trying to get the events of the current user
         userEventsRef.orderByChild("userId").equalTo(user).once('value')
             .then((snapshot) => {
+                const newUserEventAsOrganizer = {eventId: eventId, eventName: newEvent.name};
+
                 if (!snapshot.exists() || !snapshot.val()) {
                     // Creating a new user events object ans save it to the DB
-                    userEventsRef.push().set(new userEvent(user, [], [eventId]));
+                    userEventsRef.push().set(new userEvent(user, [], [newUserEventAsOrganizer]));
                 } else {
                     const userEvents = snapshot.val();
                     for (let key in userEvents) {
-                        userEvents[key].asOrganizer.push(eventId);
+                        userEvents[key].asOrganizer.push(newUserEventAsOrganizer);
                     }
                     userEventsRef.update(userEvents);
                 }

@@ -3,6 +3,7 @@
  */
 import { createClient } from '@google/maps';
 import { GOOGLE_GEOCODE_API_KEY } from '../config/keys';
+import polylineDecoder from 'decode-google-map-polyline';
 
 let googleMapsClient;
 
@@ -25,6 +26,20 @@ function codeAddress(address, callback) {
     );
 }
 
+function calcRoute(origin, destination) {
+    getGoogleMapsClient().directions({
+        origin: origin,
+        destination: destination,
+        mode: 'driving',
+    });
+}
+
+function decodePolyline(polyline) {
+    return polylineDecoder(polyline);
+}
+
 export default {
-    codeAddress: codeAddress
+    codeAddress: codeAddress,
+    calcRoute: calcRoute,
+    decodePolyline: decodePolyline
 };

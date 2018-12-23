@@ -6,7 +6,7 @@ import reducers from "./reducers";
 
 import { AppRouter } from './routers/AppRouter'
 
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+export const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 export const App = () => (
     <Provider store={store}>

@@ -2,8 +2,8 @@
  * Created by Zohar on 06/11/2018.
  */
 import * as firebase from "firebase";
-import { DB_COLLECTIONS } from '../util/dbCollections';
 import userEvenet from '../classes/userEvent';
+import event from '../classes/event';
 
 const config = {
     apiKey: "AIzaSyBMZVAJEOouJVnrgaE6VKi_ajW_V0Mpomc",
@@ -22,5 +22,5 @@ export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const firebaseAuth = firebase.auth;
 export const database = firebase.database();
 
-export const eventsRef = databaseRef.child(DB_COLLECTIONS.EVENTS);
+export const eventsRef = databaseRef.child(event.collectionName());
 export const userEventsRef = databaseRef.child(userEvenet.collectionName());

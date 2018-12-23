@@ -27,8 +27,10 @@ let AddGuestForm = (props) => {
     let { handleSubmit, valid  } = props;
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
-            <label>Add new guest</label>
+    <div>
+        <label style={{textDecoration: 'underline'}}>Add new guest</label>
+        <br />
+        <form className="form" onSubmit={handleSubmit} style={{display: 'inline-flex'}}>
             <div className="field">
                 <Field className="input" name="fullName" component={renderField} type="text" label="Full name" />
             </div>
@@ -41,6 +43,7 @@ let AddGuestForm = (props) => {
                 <button disabled={!valid}>Add</button>
             </div>
         </form>
+    </div>
     );
 };
 
