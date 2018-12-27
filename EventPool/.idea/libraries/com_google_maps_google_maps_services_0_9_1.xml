@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="com.google.maps:google-maps-services:0.9.1" type="repository">
+    <properties maven-id="com.google.maps:google-maps-services:0.9.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/maps/google-maps-services/0.9.1/google-maps-services-0.9.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.12.0/okhttp-3.12.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

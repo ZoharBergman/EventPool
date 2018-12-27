@@ -8,6 +8,7 @@
     "decode-google-map-polyline": "^1.0.1",
     "firebase": "^5.5.7",
     "geofire": "^4.1.2",
+    "google-maps": "^3.3.0",
     "google-maps-direction": "^1.0.0",
     "moment": "^2.22.2",
     "node-sass": "^4.7.2",

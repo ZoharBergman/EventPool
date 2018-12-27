@@ -6,6 +6,7 @@ import CarpoolGuestDetailsForm from '../forms/CarpoolGuestDetailsForm';
 import { eventsRef } from '../config/firebase';
 import event from '../classes/event';
 import geocoding from '../util/Geocoding';
+import routesService from '../services/RoutesService';
 
 class NewGuestPage extends Component {
     constructor(props) {
@@ -22,10 +23,22 @@ class NewGuestPage extends Component {
         this.afterGeocode = this.afterGeocode.bind(this);
     }
 
-    afterGeocode = function(err, geocodeResponse) {
+    componentWillMount() {
+        eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
+            if (snapshot.exists()) {
+                this.setState({event: new event(snapshot.val())});
+
+                if (this.state.event.notApprovedGuests[this.state.guestId]) {
+                    this.setState({newGuest: this.state.event.notApprovedGuests[this.state.guestId]})
+                }
+            }
+        });
+    }
+
+    afterGeocode(err, geocodeResponse) {
         if (!err) {
             // Setting the geocoded address on the guest detail
-            let guestDetails = this.state.newGuest;
+            const guestDetails = this.state.newGuest;
             guestDetails.startLocation = geocodeResponse.json.results[0].geometry.location;
             delete guestDetails.startAddress;
 
@@ -33,16 +46,17 @@ class NewGuestPage extends Component {
             if (!guestDetails.isCar) {
                 // Save the guest's details in the DB
 
-
             } else { // The guest is a driver
                 // Getting the route from the driver's starting point to the event's point
-                geocoding.calcRoute(guestDetails.startLocation, this.state.event.address.location).then(function (result) {
-                    debugger;
-                    // geocoding.decodePolyline(result)
-                })
+                routesService.calcRoute(
+                    `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
+                    `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`)
+                    .then(response => {
+                        debugger;
+                    });
             }
         }
-    }
+    };
 
     handleSubmit(guestDetails) {
         this.setState({newGuest: guestDetails});
@@ -54,18 +68,6 @@ class NewGuestPage extends Component {
             // Geocoding the start address of the guest
             geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
         }
-    }
-
-    componentWillMount() {
-        eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
-            if (snapshot.exists()) {
-                this.setState({event: new event(snapshot.val())});
-
-                if (this.state.event.notApprovedGuests[this.state.guestId]) {
-                    this.setState({newGuest: this.state.event.notApprovedGuests[this.state.guestId]})
-                }
-            }
-        });
     }
 
     render() {

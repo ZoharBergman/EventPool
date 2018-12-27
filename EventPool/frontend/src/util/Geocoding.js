@@ -27,11 +27,25 @@ function codeAddress(address, callback) {
 }
 
 function calcRoute(origin, destination) {
-    getGoogleMapsClient().directions({
+    return getGoogleMapsClient().directions({
         origin: origin,
         destination: destination,
         mode: 'driving',
     });
+    // const directionsService = new google.maps.DirectionsService();
+    //
+    // directionsService.route({
+    //     origin: origin,
+    //     destination: destination,
+    //     travelMode: 'DRIVING'
+    // }, function(response, status) {
+    //     if (status === 'OK') {
+    //         debugger;
+    //         console.log(response)
+    //     } else {
+    //         window.alert('Directions request failed due to ' + status);
+    //     }
+    // });
 }
 
 function decodePolyline(polyline) {
@@ -43,3 +57,4 @@ export default {
     calcRoute: calcRoute,
     decodePolyline: decodePolyline
 };
+
