@@ -50,9 +50,10 @@
 
 		<dependency>
 			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-server-sdk</artifactId>
-			<version>3.0.3</version>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.6.0</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>

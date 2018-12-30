@@ -61,11 +61,7 @@ let CarpoolGuestDetailsForm = (props) => {
                                        input={{disabled: props.isDisabled}}/>
                             </div>
 
-                            <div className="field">
-                                <label>Max deviation radius from original route in KM</label>
-                                <Field className="input" name="maxRadiusInKm" component="input" type="Number"
-                                input={{disabled: props.isDisabled}}/>
-                            </div>
+
                         </div>
                     }
                 </div>}

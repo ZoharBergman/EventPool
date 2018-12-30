@@ -5,8 +5,8 @@ import RequestsService from './RequestsService';
 
 class RoutesService {
 
-    static calcRoute(origin, destination) {
-        return RequestsService.request(`calcRoute/${origin}/${destination}`);
+    static calcAndSaveRoute(origin, destination, driverId, eventId) {
+        return RequestsService.request(`calcAndSaveRoute/${origin}/${destination}/${driverId}/${eventId}`);
     }
 }
 

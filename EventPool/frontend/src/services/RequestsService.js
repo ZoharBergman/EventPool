@@ -7,7 +7,7 @@ class RequestsService {
     }
 
     static request(url) {
-        return fetch(this.getServerUrl() + url)
+        return fetch(this.getServerUrl() + url);
     }
 }
 

@@ -46,6 +46,14 @@ const validate = val => {
          errors.address = 'Required';
      }
 
+     if (!val.maxRadiusInKm) {
+         errors.maxRadiusInKm = 'Required';
+     } else {
+         if (val.maxRadiusInKm <= 0) {
+             errors.maxRadiusInKm = 'Must be higher than 0';
+         }
+     }
+
      return errors;
 };
 
@@ -68,6 +76,10 @@ let CreateEventForm = props => {
 
             <div>
                 <Field className="input" name="address" component={renderField} type="text" label="Address" />
+            </div>
+
+            <div className="field">
+                <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius from original route in KM"/>
             </div>
 
             <div className="field">

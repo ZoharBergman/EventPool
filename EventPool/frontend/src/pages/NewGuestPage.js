@@ -21,6 +21,7 @@ class NewGuestPage extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.afterGeocode = this.afterGeocode.bind(this);
+        this.saveToDB = this.saveToDB.bind(this);
     }
 
     componentWillMount() {
@@ -35,6 +36,14 @@ class NewGuestPage extends Component {
         });
     }
 
+    saveToDB() {
+        // Save guest as approved
+        eventsRef.child(this.state.eventId).child('approvedGuests').child(this.state.guestId).set(this.state.newGuest);
+
+        // Delete guest as not approved
+        eventsRef.child(this.state.eventId).child('notApprovedGuests').child(this.state.guestId).remove();
+    }
+
     afterGeocode(err, geocodeResponse) {
         if (!err) {
             // Setting the geocoded address on the guest detail
@@ -45,25 +54,32 @@ class NewGuestPage extends Component {
             // Checking if the guest is a driver
             if (!guestDetails.isCar) {
                 // Save the guest's details in the DB
-
+                this.setState({newGuest: guestDetails});
+                this.saveToDB();
             } else { // The guest is a driver
-                // Getting the route from the driver's starting point to the event's point
-                routesService.calcRoute(
+                // Calculate and save the route of the driver
+                routesService.calcAndSaveRoute(
                     `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
-                    `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`)
-                    .then(response => {
-                        debugger;
+                    `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
+                    this.state.guestId,
+                    this.state.eventId)
+                    .then(response => response.text())
+                    .then(routeId => {
+                        guestDetails.routeId = routeId;
+                        this.setState({newGuest: guestDetails});
+                        this.saveToDB();
                     });
             }
         }
     };
 
     handleSubmit(guestDetails) {
+        Object.assign(guestDetails, guestDetails, this.state.newGuest);
         this.setState({newGuest: guestDetails});
 
         if (!guestDetails.isComing) {
             // Save the guest's details in the DB
-
+            this.saveToDB();
         } else {
             // Geocoding the start address of the guest
             geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);

@@ -1,10 +1,6 @@
 package com.FinalProject.EventPool.BL.Routes;
 
 import com.FinalProject.EventPool.Models.Route;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
@@ -24,7 +20,7 @@ public class RoutesBL implements IRoutes{
     private final static String DIRECTIONS_API_KEY = "AIzaSyBGVHjFRQulDD1p49Hjl6HNBnPaLFDghbo";
 
     @Override
-    public String calcRoute(String origin, String destination) {
+    public List<LatLng> calcRoute(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder().apiKey(DIRECTIONS_API_KEY).build();
 
         try {
@@ -38,11 +34,7 @@ public class RoutesBL implements IRoutes{
                 directionsResult.routes[0] != null &&
                 directionsResult.routes[0].overviewPolyline != null) {
                 // Getting the points of the calculated route
-                List<LatLng> lstRoutePoints = directionsResult.routes[0].overviewPolyline.decodePath();
-
-                if (lstRoutePoints.size() > 0) {
-                    saveRoute(new Route(lstRoutePoints, null, null));
-                }
+                return directionsResult.routes[0].overviewPolyline.decodePath();
             }
         } catch (ApiException e) {
             e.printStackTrace();
@@ -55,7 +47,24 @@ public class RoutesBL implements IRoutes{
         return null;
     }
 
+    @Override
+    public String calcAndSaveRoute(String origin, String destination, String driverId, String eventId) {
+        List<LatLng> lstRoutePoints = calcRoute(origin, destination);
+
+        if (lstRoutePoints.size() <= 0) {
+            return null;
+        } else {
+            Route route = new Route(lstRoutePoints, eventId, driverId, generateRouteKey());
+            saveRoute(route);
+            return route.getId();
+        }
+    }
+
     public void saveRoute(Route route) {
-        String routeId = Route.getReference().push().getKey();
+        Route.getReference().child(route.getId()).setValueAsync(route);
+    }
+
+    private String generateRouteKey() {
+        return Route.getReference().push().getKey();
     }
 }
