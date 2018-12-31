@@ -1,5 +1,6 @@
 package com.FinalProject.EventPool.BL.Routes;
 
+import com.FinalProject.EventPool.Config.Keys;
 import com.FinalProject.EventPool.Models.Route;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
@@ -17,11 +18,9 @@ import java.util.List;
  */
 @Service
 public class RoutesBL implements IRoutes{
-    private final static String DIRECTIONS_API_KEY = "AIzaSyBGVHjFRQulDD1p49Hjl6HNBnPaLFDghbo";
-
     @Override
     public List<LatLng> calcRoute(String origin, String destination) {
-        GeoApiContext context = new GeoApiContext.Builder().apiKey(DIRECTIONS_API_KEY).build();
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(Keys.DIRECTIONS_API_KEY).build();
 
         try {
             // Getting the directions
