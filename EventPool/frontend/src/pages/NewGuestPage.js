@@ -52,8 +52,8 @@ class NewGuestPage extends Component {
             delete guestDetails.startAddress;
 
             // Checking if the guest is a driver
-            if (!guestDetails.isCar) {
-                // Save the guest's details in the DB
+            if (!guestDetails.isCar) { // The guest is a passenger
+                // Save the passenger's details in the DB
                 this.setState({newGuest: guestDetails});
                 this.saveToDB();
             } else { // The guest is a driver
@@ -75,6 +75,7 @@ class NewGuestPage extends Component {
 
     handleSubmit(guestDetails) {
         Object.assign(guestDetails, guestDetails, this.state.newGuest);
+        guestDetails.guestId = this.state.guestId;
         this.setState({newGuest: guestDetails});
 
         if (!guestDetails.isComing) {

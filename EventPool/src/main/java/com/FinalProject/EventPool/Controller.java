@@ -1,5 +1,6 @@
 package com.FinalProject.EventPool;
 
+import com.FinalProject.EventPool.BL.CarpoolMatching.ICarpoolMatching;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,21 +17,25 @@ import java.util.Date;
  */
 @RestController
 public class Controller {
+    // Services
     @Autowired
     private IRoutes Routes;
+    @Autowired
+    private ICarpoolMatching CarpoolMatching;
 
+    // Const
     public final static String SUPPORTED_URL = "http://localhost:3000";
 
-    @GetMapping("/api/hello")
-    public String hello() {
-        return "Hello, the time at the server is now  " + new Date() + "\n";
-    }
-
+    // Rest controller methods
     @CrossOrigin(origins = SUPPORTED_URL)
     @GetMapping("/calcAndSaveRoute/{origin}/{destination}/{driverId}/{eventId}")
     public String calcAndSaveRoute(@PathVariable String origin, @PathVariable String destination, @PathVariable String driverId, @PathVariable String eventId) {
         return Routes.calcAndSaveRoute(origin, destination, driverId, eventId);
     }
 
-
+    @CrossOrigin(origins = SUPPORTED_URL)
+    @GetMapping("/calcCarpoolMatching/{eventId}/{deviationRadius}")
+    public void calcCarpoolMatching(@PathVariable String eventId, @PathVariable Double deviationRadius) {
+        CarpoolMatching.calcCarpoolMatching(eventId, deviationRadius);
+    }
 }
