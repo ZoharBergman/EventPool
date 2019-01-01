@@ -33,7 +33,7 @@ const handleCreateEvent = (newEvent) => {
                 const newUserEventAsOrganizer = {eventId: eventId, eventName: newEvent.name};
 
                 if (!snapshot.exists() || !snapshot.val()) {
-                    // Creating a new user events object ans save it to the DB
+                    // Creating a new user events object and save it to the DB
                     userEventsRef.push().set(new userEvent(user, [], [newUserEventAsOrganizer]));
                 } else {
                     const userEvents = snapshot.val();

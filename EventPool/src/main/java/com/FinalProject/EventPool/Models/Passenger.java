@@ -1,23 +1,19 @@
 package com.FinalProject.EventPool.Models;
 
-import com.google.type.LatLng;
+import com.google.maps.model.LatLng;
 
 /**
  * Created by Zohar on 31/12/2018.
  */
 public class Passenger {
-    private String fullName;
+    // Properties
+    private String guestId;
     private LatLng startLocation;
-    private String id;
 
-    public String getFullName() {
-        return fullName;
-    }
+    // Ctor
+    public Passenger() {}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
+    // Getters & Setters
     public LatLng getStartLocation() {
         return startLocation;
     }
@@ -26,11 +22,11 @@ public class Passenger {
         this.startLocation = startLocation;
     }
 
-    public String getId() {
-        return id;
+    public String getGuestId() {
+        return guestId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
     }
 }

@@ -53,22 +53,17 @@ class NewGuestPage extends Component {
 
             // Checking if the guest is a driver
             if (!guestDetails.isCar) { // The guest is a passenger
-                // Save the passenger's details in the DB
-                this.setState({newGuest: guestDetails});
-                this.saveToDB();
+                guestDetails.isCar = false;
+                this.setState({newGuest: guestDetails}, this.saveToDB);
             } else { // The guest is a driver
                 // Calculate and save the route of the driver
                 routesService.calcAndSaveRoute(
                     `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
                     `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
                     this.state.guestId,
-                    this.state.eventId)
-                    .then(response => response.text())
-                    .then(routeId => {
-                        guestDetails.routeId = routeId;
-                        this.setState({newGuest: guestDetails});
-                        this.saveToDB();
-                    });
+                    this.state.eventId);
+
+                this.saveToDB();
             }
         }
     };
@@ -76,14 +71,17 @@ class NewGuestPage extends Component {
     handleSubmit(guestDetails) {
         Object.assign(guestDetails, guestDetails, this.state.newGuest);
         guestDetails.guestId = this.state.guestId;
-        this.setState({newGuest: guestDetails});
 
         if (!guestDetails.isComing) {
             // Save the guest's details in the DB
             this.saveToDB();
+        } else if (guestDetails.isComing && guestDetails.isCar && guestDetails.freeSeatsNum === "0") {
+            this.setState({newGuest: guestDetails}, this.saveToDB);
         } else {
-            // Geocoding the start address of the guest
-            geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
+            this.setState({newGuest: guestDetails}, () => {
+                // Geocoding the start location of the guest
+                geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
+            });
         }
     }
 

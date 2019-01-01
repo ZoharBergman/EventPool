@@ -75,5 +75,6 @@
     <orderEntry type="library" name="Simple Logging Facade for Java:1.7.25" level="project" />
     <orderEntry type="library" name="com.firebase:firebase-client:1.0.18" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-admin:6.6.0" level="project" />
+    <orderEntry type="library" name="com.firebase:geofire-java:2.2.0" level="project" />
   </component>
 </module>

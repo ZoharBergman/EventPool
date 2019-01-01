@@ -1,7 +1,12 @@
 package com.FinalProject.EventPool.BL.Routes;
 
 import com.FinalProject.EventPool.Config.Keys;
+import com.FinalProject.EventPool.Models.Geofire;
+import com.FinalProject.EventPool.Models.GeofireToDriver;
 import com.FinalProject.EventPool.Models.Route;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DatabaseError;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
@@ -11,7 +16,9 @@ import com.google.maps.model.TravelMode;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Zohar on 27/12/2018.
@@ -47,16 +54,31 @@ public class RoutesBL implements IRoutes{
     }
 
     @Override
-    public String calcAndSaveRoute(String origin, String destination, String driverId, String eventId) {
+    public void calcAndSaveRoute(String origin, String destination, String driverId, String eventId) {
         List<LatLng> lstRoutePoints = calcRoute(origin, destination);
 
-        if (lstRoutePoints.size() <= 0) {
-            return null;
-        } else {
-            Route route = new Route(lstRoutePoints, eventId, driverId, generateRouteKey());
-            saveRoute(route);
-            return route.getId();
+        if (lstRoutePoints.size() > 0) {
+            saveRoute(lstRoutePoints, driverId, eventId);
         }
+    }
+
+    private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId) {
+        lstRoutePoints.forEach(latLng -> {
+            // Save the LatLng as a geolocation object in the DB
+            GeoLocation geoLocation = new GeoLocation(latLng.lat, latLng.lng);
+            String geoLocationKey = Geofire.getGeoLocationKey(geoLocation);
+            Geofire.getInstance(eventId).setLocation(geoLocationKey, geoLocation, new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String s, DatabaseError databaseError) {
+
+                }
+            });
+
+            // Map the geolocation to the driver
+            Map<String, Object> mapDriver = new HashMap<>();
+            mapDriver.put(driverId, true);
+            GeofireToDriver.getReference().child(eventId).child(geoLocationKey).updateChildren(mapDriver, null);
+        });
     }
 
     public void saveRoute(Route route) {

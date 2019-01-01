@@ -29,13 +29,17 @@ public class Controller {
     // Rest controller methods
     @CrossOrigin(origins = SUPPORTED_URL)
     @GetMapping("/calcAndSaveRoute/{origin}/{destination}/{driverId}/{eventId}")
-    public String calcAndSaveRoute(@PathVariable String origin, @PathVariable String destination, @PathVariable String driverId, @PathVariable String eventId) {
-        return Routes.calcAndSaveRoute(origin, destination, driverId, eventId);
+    public void calcAndSaveRoute(@PathVariable String origin, @PathVariable String destination, @PathVariable String driverId, @PathVariable String eventId) {
+        Routes.calcAndSaveRoute(origin, destination, driverId, eventId);
     }
 
     @CrossOrigin(origins = SUPPORTED_URL)
     @GetMapping("/calcCarpoolMatching/{eventId}/{deviationRadius}")
     public void calcCarpoolMatching(@PathVariable String eventId, @PathVariable Double deviationRadius) {
-        CarpoolMatching.calcCarpoolMatching(eventId, deviationRadius);
+        try {
+            CarpoolMatching.calcCarpoolMatching(eventId, deviationRadius);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

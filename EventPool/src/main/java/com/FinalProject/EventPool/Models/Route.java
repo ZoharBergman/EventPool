@@ -10,12 +10,18 @@ import java.util.List;
  * Created by Zohar on 27/12/2018.
  */
 public class Route {
+    // Consts
+    public static final String COLLECTION_NAME = "routes";
+    public static final String EVENT_ID = "eventId";
+    public static final String POINTS = "points";
+
     // Properties
     private List<LatLng> points;
     private String eventId;
     private String driverId;
     private String id;
 
+    // Ctors
     public Route(List<LatLng> points, String eventId, String driverId, String id) {
         this.points = points;
         this.eventId = eventId;
@@ -23,9 +29,11 @@ public class Route {
         this.id = id;
     }
 
+    public Route() {}
+
     // Methods
     public static DatabaseReference getReference() {
-        return Firebase.getDbInstance().getReference("routes");
+        return Firebase.getDbInstance().getReference(COLLECTION_NAME);
     }
 
     public List<LatLng> getPoints() {

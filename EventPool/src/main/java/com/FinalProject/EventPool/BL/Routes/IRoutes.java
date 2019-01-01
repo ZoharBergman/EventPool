@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface IRoutes {
     List<LatLng> calcRoute(String origin, String destination);
-    String calcAndSaveRoute(String origin, String destination, String driverId, String eventId);
-    void saveRoute(Route route);
+    void calcAndSaveRoute(String origin, String destination, String driverId, String eventId);
 }
