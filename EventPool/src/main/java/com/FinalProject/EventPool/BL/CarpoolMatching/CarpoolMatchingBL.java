@@ -1,16 +1,12 @@
 package com.FinalProject.EventPool.BL.CarpoolMatching;
 
-import com.FinalProject.EventPool.Config.Firebase;
 import com.FinalProject.EventPool.Models.ApprovedGuest;
 import com.FinalProject.EventPool.Models.Geofire;
 import com.FinalProject.EventPool.Models.Passenger;
-import com.FinalProject.EventPool.Models.Route;
-import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +19,6 @@ import java.util.concurrent.Semaphore;
  */
 @Service
 public class CarpoolMatchingBL implements ICarpoolMatching {
-
     @Override
     public void calcCarpoolMatching(String eventId, Double deviationRadius) throws InterruptedException {
         // Getting the passengers
@@ -68,35 +63,6 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                         }
                     });
         });
-    }
-
-    private List<Route> getRoutesByEventId(String eventId) throws InterruptedException {
-        // For synchronize against Firebase
-        final Semaphore semaphore = new Semaphore(0);
-
-        List<Route> lstDriversRoutes = new ArrayList<>();
-        Route.getReference().orderByChild(Route.EVENT_ID).equalTo(eventId)
-                .getRef()
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        dataSnapshot.getChildren().forEach(routeSnapshot -> {
-                            lstDriversRoutes.add(routeSnapshot.getValue(Route.class));
-                        });
-
-                        semaphore.release();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        semaphore.release();
-                    }
-        });
-
-        // Wait until Firebase responses
-        semaphore.acquire();
-
-        return lstDriversRoutes;
     }
 
     private List<Passenger> getPassengers(String eventId) throws InterruptedException {

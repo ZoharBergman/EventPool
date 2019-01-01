@@ -3,7 +3,6 @@ package com.FinalProject.EventPool.BL.Routes;
 import com.FinalProject.EventPool.Config.Keys;
 import com.FinalProject.EventPool.Models.Geofire;
 import com.FinalProject.EventPool.Models.GeofireToDriver;
-import com.FinalProject.EventPool.Models.Route;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.DatabaseError;
@@ -79,13 +78,5 @@ public class RoutesBL implements IRoutes{
             mapDriver.put(driverId, true);
             GeofireToDriver.getReference().child(eventId).child(geoLocationKey).updateChildren(mapDriver, null);
         });
-    }
-
-    public void saveRoute(Route route) {
-        Route.getReference().child(route.getId()).setValueAsync(route);
-    }
-
-    private String generateRouteKey() {
-        return Route.getReference().push().getKey();
     }
 }

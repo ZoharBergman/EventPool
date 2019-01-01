@@ -1,6 +1,5 @@
 package com.FinalProject.EventPool.BL.Routes;
 
-import com.FinalProject.EventPool.Models.Route;
 import com.google.maps.model.LatLng;
 
 import java.util.List;
