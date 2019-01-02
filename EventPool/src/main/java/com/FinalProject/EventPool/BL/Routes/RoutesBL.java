@@ -53,15 +53,15 @@ public class RoutesBL implements IRoutes{
     }
 
     @Override
-    public void calcAndSaveRoute(String origin, String destination, String driverId, String eventId) {
+    public void calcAndSaveRoute(String origin, String destination, String driverId, String eventId, Integer freeSeatsNum) {
         List<LatLng> lstRoutePoints = calcRoute(origin, destination);
 
         if (lstRoutePoints.size() > 0) {
-            saveRoute(lstRoutePoints, driverId, eventId);
+            saveRoute(lstRoutePoints, driverId, eventId, freeSeatsNum);
         }
     }
 
-    private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId) {
+    private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId, Integer freeSeatsNum) {
         lstRoutePoints.forEach(latLng -> {
             // Save the LatLng as a geolocation object in the DB
             GeoLocation geoLocation = new GeoLocation(latLng.lat, latLng.lng);
@@ -75,7 +75,7 @@ public class RoutesBL implements IRoutes{
 
             // Map the geolocation to the driver
             Map<String, Object> mapDriver = new HashMap<>();
-            mapDriver.put(driverId, true);
+            mapDriver.put(driverId, freeSeatsNum);
             GeofireToDriver.getReference().child(eventId).child(geoLocationKey).updateChildren(mapDriver, null);
         });
     }

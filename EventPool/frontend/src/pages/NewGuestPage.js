@@ -61,7 +61,8 @@ class NewGuestPage extends Component {
                     `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
                     `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
                     this.state.guestId,
-                    this.state.eventId);
+                    this.state.eventId,
+                    guestDetails.freeSeatsNum);
 
                 this.saveToDB();
             }

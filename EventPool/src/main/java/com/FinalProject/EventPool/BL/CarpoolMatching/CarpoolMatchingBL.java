@@ -1,18 +1,21 @@
 package com.FinalProject.EventPool.BL.CarpoolMatching;
 
-import com.FinalProject.EventPool.Models.ApprovedGuest;
-import com.FinalProject.EventPool.Models.Geofire;
-import com.FinalProject.EventPool.Models.Passenger;
+import com.FinalProject.EventPool.Models.*;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
+import com.google.common.collect.ArrayTable;
+import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.stream.Collectors;
 
 /**
  * Created by Zohar on 31/12/2018.
@@ -24,22 +27,49 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         // Getting the passengers
         List<Passenger> lstPassengers = getPassengers(eventId);
 
+//        Table<Driver, Passenger, Double> potentialMatches = ArrayTable.create();
+
         // Calc potential matching
-        calcPotentialMatching(deviationRadius, lstPassengers, eventId);
+        Map<String, PotentialMatch> mapPotentialMatch = calcPotentialMatching(deviationRadius, lstPassengers, eventId);
 
         // Calc matching
-        calcMatching();
+        calcMatching(mapPotentialMatch);
     }
 
-    public void calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
+    private Map<String, PotentialMatch> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
+        Map<String, PotentialMatch> mapPotentialMatches = new HashMap<>();
+
         lstPassengers.forEach(passenger -> {
+            final Semaphore semaphore = new Semaphore(0);
             // Find the drivers that are driving near the current passenger
             Geofire.getInstance(eventId).queryAtLocation(new GeoLocation(passenger.getStartLocation().lat, passenger.getStartLocation().lng),
                             deviationRadius)
                     .addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
                         @Override
                         public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation geoLocation) {
-                            dataSnapshot.getValue();
+                            // Get the drivers that are driving through the location
+                            GeofireToDriver.getReference().child(eventId).child(dataSnapshot.getKey())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            ((Map)dataSnapshot.getValue()).forEach((driverId, freeSeatsNum) -> {
+                                                if (mapPotentialMatches.containsKey(driverId)) {
+                                                    PotentialMatch potentialMatch = mapPotentialMatches.get(driverId);
+                                                    potentialMatch.addPassenger(passenger);
+                                                } else {
+                                                    PotentialMatch potentialMatch =
+                                                            new PotentialMatch(driverId.toString(), new Integer(freeSeatsNum.toString()));
+                                                    potentialMatch.addPassenger(passenger);
+                                                    mapPotentialMatches.put(driverId.toString(), potentialMatch);
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
                         }
 
                         @Override
@@ -56,13 +86,39 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
                         @Override
                         public void onGeoQueryReady() {
+                            semaphore.release();
                         }
 
                         @Override
                         public void onGeoQueryError(DatabaseError databaseError) {
                         }
                     });
+
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
+
+        return mapPotentialMatches;
+    }
+
+    private static double distanceInKm(double lat1, double lon1, double lat2, double lon2) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515;
+            // Make the dist in KM
+            dist = dist * 1.609344;
+
+            return (dist);
+        }
     }
 
     private List<Passenger> getPassengers(String eventId) throws InterruptedException {
@@ -93,7 +149,19 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         return lstPassengers;
     }
 
-    private void calcMatching() {
+    private void calcMatching(Map<String, PotentialMatch> mapPotentialMatch) {
 
     }
+
+    private List<PotentialMatch> passengersEqualFreeSeatsNumCondition(Map<String, PotentialMatch> mapPotentialMatch) {
+        return mapPotentialMatch.values().stream()
+                .filter(potentialMatch -> potentialMatch.getFreeSeatsNum().equals(potentialMatch.getSetPassengers().size()))
+                .collect(Collectors.toList());
+    }
+
+    private List<PotentialMatch> passengersWithOneDriverMatchCondition() {
+        return null;
+    }
+
+//    private List<PotentialMatch>
 }

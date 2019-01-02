@@ -28,9 +28,11 @@ public class Controller {
 
     // Rest controller methods
     @CrossOrigin(origins = SUPPORTED_URL)
-    @GetMapping("/calcAndSaveRoute/{origin}/{destination}/{driverId}/{eventId}")
-    public void calcAndSaveRoute(@PathVariable String origin, @PathVariable String destination, @PathVariable String driverId, @PathVariable String eventId) {
-        Routes.calcAndSaveRoute(origin, destination, driverId, eventId);
+    @GetMapping("/calcAndSaveRoute/{origin}/{destination}/{driverId}/{eventId}/{freeSeatsNum}")
+    public void calcAndSaveRoute(@PathVariable String origin, @PathVariable String destination,
+                                 @PathVariable String driverId, @PathVariable String eventId,
+                                 @PathVariable Integer freeSeatsNum) {
+        Routes.calcAndSaveRoute(origin, destination, driverId, eventId, freeSeatsNum);
     }
 
     @CrossOrigin(origins = SUPPORTED_URL)

@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface IRoutes {
     List<LatLng> calcRoute(String origin, String destination);
-    void calcAndSaveRoute(String origin, String destination, String driverId, String eventId);
+    void calcAndSaveRoute(String origin, String destination, String driverId, String eventId, Integer freeSeatsNum);
 }
