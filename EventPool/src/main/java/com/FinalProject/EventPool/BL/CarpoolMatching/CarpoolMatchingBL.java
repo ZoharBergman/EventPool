@@ -4,6 +4,7 @@ import com.FinalProject.EventPool.Models.*;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.common.collect.ArrayTable;
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         // Getting the passengers
         List<Passenger> lstPassengers = getPassengers(eventId);
 
-//        Table<Driver, Passenger, Double> potentialMatches = ArrayTable.create();
+        Table<Driver, Passenger, Double> potentialMatches = HashBasedTable.create();
 
         // Calc potential matching
         Map<String, PotentialMatch> mapPotentialMatch = calcPotentialMatching(deviationRadius, lstPassengers, eventId);
@@ -38,29 +39,40 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
     private Map<String, PotentialMatch> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
         Map<String, PotentialMatch> mapPotentialMatches = new HashMap<>();
+        Table<Driver, Passenger, Double> potentialMatches = HashBasedTable.create();
 
+        // Going over the passengers
         lstPassengers.forEach(passenger -> {
             final Semaphore semaphore = new Semaphore(0);
-            // Find the drivers that are driving near the current passenger
+
+            // Find the locations of the drivers that are driving near the current passenger
             Geofire.getInstance(eventId).queryAtLocation(new GeoLocation(passenger.getStartLocation().lat, passenger.getStartLocation().lng),
                             deviationRadius)
                     .addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
                         @Override
-                        public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation geoLocation) {
+                        public void onDataEntered(DataSnapshot locationSnapshot, GeoLocation geoLocation) {
                             // Get the drivers that are driving through the location
-                            GeofireToDriver.getReference().child(eventId).child(dataSnapshot.getKey())
+                            GeofireToDriver.getReference().child(eventId).child(locationSnapshot.getKey())
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            ((Map)dataSnapshot.getValue()).forEach((driverId, freeSeatsNum) -> {
-                                                if (mapPotentialMatches.containsKey(driverId)) {
-                                                    PotentialMatch potentialMatch = mapPotentialMatches.get(driverId);
-                                                    potentialMatch.addPassenger(passenger);
+                                        public void onDataChange(DataSnapshot driversSnapshot) {
+                                            // Going over the drivers
+                                            ((Map)driversSnapshot.getValue()).forEach((driverId, freeSeatsNum) -> {
+                                                Driver driver = new Driver(driverId.toString(), new Integer(freeSeatsNum.toString()));
+                                                Double distance = distanceInKm(
+                                                        passenger.getStartLocation().lat,
+                                                        passenger.getStartLocation().lng,
+                                                        geoLocation.latitude,
+                                                        geoLocation.longitude);
+
+                                                if (potentialMatches.contains(driver, passenger)) {
+                                                    potentialMatches.put(
+                                                            driver,
+                                                            passenger,
+                                                            Math.min(distance, potentialMatches.get(driver, passenger)));
                                                 } else {
-                                                    PotentialMatch potentialMatch =
-                                                            new PotentialMatch(driverId.toString(), new Integer(freeSeatsNum.toString()));
-                                                    potentialMatch.addPassenger(passenger);
-                                                    mapPotentialMatches.put(driverId.toString(), potentialMatch);
+                                                    potentialMatches.put(driver, passenger, distance);
+
                                                 }
                                             });
                                         }
