@@ -1,27 +1,32 @@
 package com.FinalProject.EventPool.Models;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Zohar on 02/01/2019.
  */
-public class PotentialMatch {
+public class Match {
     // Properties
     private String driverId;
-    private Integer freeSeatsNum;
     private Set<Passenger> setPassengers;
 
     // Ctor
-    public PotentialMatch(String driverId, Integer freeSeatsNum) {
+    public Match(String driverId) {
         this.driverId = driverId;
-        this.freeSeatsNum = freeSeatsNum;
         this.setPassengers = new HashSet<>();
     }
 
+    public Match(String driverId, @NotNull Set<Passenger> setPassengers) {
+        this.driverId = driverId;
+        this.setPassengers = setPassengers;
+    }
+
     // Methods
-    public void addPassenger(Passenger passenger) {
+    public Match addPassenger(Passenger passenger) {
         this.setPassengers.add(passenger);
+        return this;
     }
 
     // Getters & Setters
@@ -31,14 +36,6 @@ public class PotentialMatch {
 
     public void setDriverId(String driverId) {
         this.driverId = driverId;
-    }
-
-    public Integer getFreeSeatsNum() {
-        return freeSeatsNum;
-    }
-
-    public void setFreeSeatsNum(Integer freeSeatsNum) {
-        this.freeSeatsNum = freeSeatsNum;
     }
 
     public Set<Passenger> getSetPassengers() {

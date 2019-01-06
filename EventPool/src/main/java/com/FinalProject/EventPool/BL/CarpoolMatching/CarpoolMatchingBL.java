@@ -3,7 +3,6 @@ package com.FinalProject.EventPool.BL.CarpoolMatching;
 import com.FinalProject.EventPool.Models.*;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
-import com.google.common.collect.ArrayTable;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
@@ -11,10 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
@@ -28,18 +24,16 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         // Getting the passengers
         List<Passenger> lstPassengers = getPassengers(eventId);
 
-        Table<Driver, Passenger, Double> potentialMatches = HashBasedTable.create();
-
         // Calc potential matching
-        Map<String, PotentialMatch> mapPotentialMatch = calcPotentialMatching(deviationRadius, lstPassengers, eventId);
+        Table<Driver, Passenger, Double> potentialMatches = calcPotentialMatching(deviationRadius, lstPassengers, eventId);
 
         // Calc matching
-        calcMatching(mapPotentialMatch);
+        calcMatching(potentialMatches);
     }
 
-    private Map<String, PotentialMatch> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
-        Map<String, PotentialMatch> mapPotentialMatches = new HashMap<>();
+    private Table<Driver, Passenger, Double> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
         Table<Driver, Passenger, Double> potentialMatches = HashBasedTable.create();
+        Map<String, Driver> mapDriversById = new HashMap<>();
 
         // Going over the passengers
         lstPassengers.forEach(passenger -> {
@@ -58,7 +52,14 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                                         public void onDataChange(DataSnapshot driversSnapshot) {
                                             // Going over the drivers
                                             ((Map)driversSnapshot.getValue()).forEach((driverId, freeSeatsNum) -> {
-                                                Driver driver = new Driver(driverId.toString(), new Integer(freeSeatsNum.toString()));
+                                                Driver driver;
+                                                if (mapDriversById.containsKey(driverId)) {
+                                                    driver = mapDriversById.get(driverId);
+                                                } else {
+                                                    driver = new Driver(driverId.toString(), new Integer(freeSeatsNum.toString()));
+                                                    mapDriversById.put(driver.getDriverId(), driver);
+                                                }
+
                                                 Double distance = distanceInKm(
                                                         passenger.getStartLocation().lat,
                                                         passenger.getStartLocation().lng,
@@ -113,7 +114,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
             }
         });
 
-        return mapPotentialMatches;
+        return potentialMatches;
     }
 
     private static double distanceInKm(double lat1, double lon1, double lat2, double lon2) {
@@ -161,19 +162,46 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         return lstPassengers;
     }
 
-    private void calcMatching(Map<String, PotentialMatch> mapPotentialMatch) {
+    private void calcMatching(Table<Driver, Passenger, Double> potentialMatches) {
 
     }
 
-    private List<PotentialMatch> passengersEqualFreeSeatsNumCondition(Map<String, PotentialMatch> mapPotentialMatch) {
-        return mapPotentialMatch.values().stream()
-                .filter(potentialMatch -> potentialMatch.getFreeSeatsNum().equals(potentialMatch.getSetPassengers().size()))
+    private List<Match> passengersEqualFreeSeatsNumCondition(Table<Driver, Passenger, Double> potentialMatches) {
+        List<Driver> lstDrivers = potentialMatches.rowKeySet().stream()
+                .filter(driver -> driver.getFreeSeatsNum().equals(potentialMatches.row(driver).size()))
                 .collect(Collectors.toList());
-    }
 
-    private List<PotentialMatch> passengersWithOneDriverMatchCondition() {
+        if (lstDrivers.size() > 0) {
+            List<Match> lstMatches = new ArrayList<>();
+            lstDrivers.forEach(driver ->
+                    lstMatches.add(new Match(driver.getDriverId(), potentialMatches.row(driver).keySet()))
+            );
+
+            return lstMatches;
+        }
+
         return null;
     }
 
-//    private List<PotentialMatch>
+    private List<Match> passengersWithOneDriverMatchCondition(Table<Driver, Passenger, Double> potentialMatches) {
+        List<Passenger> lstPassengers = potentialMatches.columnKeySet().stream().filter(passenger ->
+            potentialMatches.column(passenger).keySet().stream()
+                    .filter(driver -> driver.getFreeSeatsNum() > 0).collect(Collectors.toSet()).size() == 1
+
+        ).collect(Collectors.toList());
+
+        if (lstPassengers.size() > 0) {
+            List<Match> lstMatches = new ArrayList<>();
+            lstPassengers.forEach(passenger ->
+                    lstMatches.add(new Match(
+                            ((List<Driver>)potentialMatches.column(passenger).keySet()).get(0).getDriverId())
+                            .addPassenger(passenger)
+                    )
+            );
+
+            return lstMatches;
+        }
+
+        return null;
+    }
 }
