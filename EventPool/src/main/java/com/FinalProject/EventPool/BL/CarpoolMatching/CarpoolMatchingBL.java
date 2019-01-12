@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +30,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         Table<Driver, Passenger, Double> potentialMatches = calcPotentialMatching(deviationRadius, lstPassengers, eventId);
 
         // Calc matching
-        calcMatching(potentialMatches);
+        Map<String, Match> matches = calcMatching(potentialMatches);
     }
 
     private Table<Driver, Passenger, Double> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
@@ -162,46 +164,115 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         return lstPassengers;
     }
 
-    private void calcMatching(Table<Driver, Passenger, Double> potentialMatches) {
+    private Map<String, Match> calcMatching(Table<Driver, Passenger, Double> potentialMatches) {
+        Map<String, Match> matches = new HashMap<>();
 
+        // Building the constraints list
+        List<Function<Table<Driver, Passenger, Double>, Match>> prioritizedConstraints = new ArrayList();
+        prioritizedConstraints.add(driverWithOnePassengerMatchCondition);
+        prioritizedConstraints.add(passengersNumLessOrEqualToFreeSeatsNumCondition);
+        prioritizedConstraints.add(passengersWithOneDriverMatchCondition);
+
+        while (matchesExist(potentialMatches)) {
+            Integer currConstraintIndex = 0;
+
+            while (currConstraintIndex < prioritizedConstraints.size()) {
+                Match match = prioritizedConstraints.get(currConstraintIndex).apply(potentialMatches);
+
+                if (match == null) {
+                    currConstraintIndex++;
+                } else {
+                    // Adding the match to the matches map
+                    if (matches.containsKey(match.getDriverId())) {
+                        matches.put(match.getDriverId(),
+                                matches.get(match.getDriverId()).addPassengers(match.getSetPassengers()));
+                    } else {
+                        matches.put(match.getDriverId(), match);
+                    }
+
+                    removeMatchFromPotentialMatches(match, potentialMatches);
+                    currConstraintIndex = 0;
+                }
+            }
+        }
+
+        return matches;
     }
 
-    private List<Match> passengersEqualFreeSeatsNumCondition(Table<Driver, Passenger, Double> potentialMatches) {
-        List<Driver> lstDrivers = potentialMatches.rowKeySet().stream()
-                .filter(driver -> driver.getFreeSeatsNum().equals(potentialMatches.row(driver).size()))
-                .collect(Collectors.toList());
+    Function<Table<Driver, Passenger, Double>, Match> driverWithOnePassengerMatchCondition =
+            (Table<Driver, Passenger, Double> potentialMatches) -> {
+                Optional<Driver> optDriver = potentialMatches.rowKeySet().stream()
+                        .filter(driver -> potentialMatches.row(driver).keySet().size() == 1)
+                        .findFirst();
 
-        if (lstDrivers.size() > 0) {
-            List<Match> lstMatches = new ArrayList<>();
-            lstDrivers.forEach(driver ->
-                    lstMatches.add(new Match(driver.getDriverId(), potentialMatches.row(driver).keySet()))
-            );
+                return optDriver
+                        .map(driver -> new Match(driver.getDriverId(), potentialMatches.row(driver).keySet()))
+                        .orElse(null);
+            };
 
-            return lstMatches;
+    Function<Table<Driver, Passenger, Double>, Match> passengersNumLessOrEqualToFreeSeatsNumCondition =
+            (Table<Driver, Passenger, Double> potentialMatches) -> {
+        Optional<Driver> optDriver = potentialMatches.rowKeySet().stream()
+                .filter(driver -> driver.getFreeSeatsNum() >= potentialMatches.row(driver).size()).findFirst();
+
+        return optDriver
+                .map(driver -> new Match(driver.getDriverId(), potentialMatches.row(driver).keySet()))
+                .orElse(null);
+
+    };
+
+    Function<Table<Driver, Passenger, Double>, Match> passengersWithOneDriverMatchCondition =
+            (Table<Driver, Passenger, Double> potentialMatches) -> {
+        // Getting a driver that for his passenger, he is the only potential match of them
+        Optional<Driver> optDriver = potentialMatches.rowKeySet().stream().filter(driver ->
+            potentialMatches.row(driver).keySet().stream()
+                    .anyMatch(passenger -> potentialMatches.column(passenger).keySet().size() == 1)
+        ).findFirst();
+
+        if (optDriver.isPresent()) {
+            Driver driver = optDriver.get();
+
+            // Getting the passenger with one driver match that is the closest to the driver
+            Optional<Passenger> optPassenger = potentialMatches.row(driver).keySet().stream()
+                    .filter(passenger -> potentialMatches.column(passenger).keySet().size() == 1)
+                    .reduce((passenger1, passenger2) -> {
+                        if (potentialMatches.get(driver, passenger1) > potentialMatches.get(driver, passenger2)) {
+                            return passenger2;
+                        } else {
+                            return passenger1;
+                        }
+                    });
+
+            optPassenger
+                    .map(passenger -> new Match(driver.getDriverId(), passenger))
+                    .orElse(null);
         }
 
         return null;
+    };
+
+    private void removeDriversWithNoFreeSeats(Table<Driver, Passenger, Double> potentialMatches) {
+        potentialMatches.rowKeySet().stream()
+                .filter(driver -> driver.getFreeSeatsNum().equals(0))
+                .forEach(driver -> potentialMatches.row(driver).keySet()
+                        .forEach(passenger -> potentialMatches.remove(driver, passenger)));
     }
 
-    private List<Match> passengersWithOneDriverMatchCondition(Table<Driver, Passenger, Double> potentialMatches) {
-        List<Passenger> lstPassengers = potentialMatches.columnKeySet().stream().filter(passenger ->
-            potentialMatches.column(passenger).keySet().stream()
-                    .filter(driver -> driver.getFreeSeatsNum() > 0).collect(Collectors.toSet()).size() == 1
+    private void removeMatchFromPotentialMatches(Match match, Table<Driver, Passenger, Double> potentialMatches) {
+        // Getting the driver
+        Optional<Driver> optDriver = potentialMatches.rowKeySet().stream()
+                .filter(driver -> driver.getDriverId().equals(match.getDriverId())).findFirst();
 
-        ).collect(Collectors.toList());
+        // Remove the matches
+        optDriver.ifPresent(
+                driver -> {
+                    driver.setFreeSeatsNum(driver.getFreeSeatsNum() - match.getSetPassengers().size());
+                    match.getSetPassengers().forEach(passenger -> potentialMatches.remove(driver, passenger));
+                });
+    }
 
-        if (lstPassengers.size() > 0) {
-            List<Match> lstMatches = new ArrayList<>();
-            lstPassengers.forEach(passenger ->
-                    lstMatches.add(new Match(
-                            ((List<Driver>)potentialMatches.column(passenger).keySet()).get(0).getDriverId())
-                            .addPassenger(passenger)
-                    )
-            );
-
-            return lstMatches;
-        }
-
-        return null;
+    private Boolean matchesExist(Table<Driver, Passenger, Double> potentialMatches) {
+        return potentialMatches.rowKeySet().stream()
+                .anyMatch(driver -> driver.getFreeSeatsNum() > 0 && potentialMatches.row(driver).keySet().size() > 0);
     }
 }

@@ -79,6 +79,7 @@ class EventPage extends Component {
                 <div>
                     <h2>Details</h2>
                 </div>
+                <button>Calculate Carpool groups</button>
                 <div>
                     <h2>Guests</h2>
                     <AddGuestForm onSubmit={this.handleAddGuest}/>

@@ -23,7 +23,18 @@ public class Match {
         this.setPassengers = setPassengers;
     }
 
+    public Match(String driverId, Passenger passenger) {
+        this.driverId = driverId;
+        this.setPassengers = new HashSet<>();
+        addPassenger(passenger);
+    }
+
     // Methods
+    public Match addPassengers(Set<Passenger> setPassengers) {
+        this.setPassengers.addAll(setPassengers);
+        return this;
+    }
+
     public Match addPassenger(Passenger passenger) {
         this.setPassengers.add(passenger);
         return this;
