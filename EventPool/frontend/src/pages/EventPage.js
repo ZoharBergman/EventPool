@@ -6,6 +6,7 @@ import { eventsRef } from '../config/firebase';
 import AddGuestForm from '../forms/AddGuestForm';
 import { Link } from 'react-router-dom';
 import event from '../classes/event';
+import EventPoolService from '../services/EventPoolService';
 
 class EventPage extends Component {
     constructor(props) {
@@ -17,10 +18,13 @@ class EventPage extends Component {
                 name: "",
                 notApprovedGuests: {},
                 approvedGuests: {}
-            }
+            },
+            carpoolGroups: ""
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
+        this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
+        this.syntaxHighlight = this.syntaxHighlight.bind(this);
     }
 
     componentWillMount() {
@@ -57,6 +61,34 @@ class EventPage extends Component {
         });
     }
 
+    syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
+    handleCalcCarpoolGroups() {
+        EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
+            .then(response => response.json())
+            .then(data => {
+                debugger;
+                this.setState({carpoolGroups: JSON.stringify(data)});
+            });
+    }
+
     render() {
         let approvedGuests;
         let notApprovedGuests;
@@ -79,7 +111,7 @@ class EventPage extends Component {
                 <div>
                     <h2>Details</h2>
                 </div>
-                <button>Calculate Carpool groups</button>
+                <button onClick={this.handleCalcCarpoolGroups}>Calculate Carpool groups</button>
                 <div>
                     <h2>Guests</h2>
                     <AddGuestForm onSubmit={this.handleAddGuest}/>
@@ -87,6 +119,10 @@ class EventPage extends Component {
                     <div>{notApprovedGuests}</div>
                     <span style={{textDecoration: 'underline'}}>Approved guests</span>
                     <div>{approvedGuests}</div>
+                </div>
+                <div>
+                    <h2>Carpool Groups</h2>
+                    {this.state.carpoolGroups}
                 </div>
             </div>
         );

@@ -6,7 +6,7 @@ import CarpoolGuestDetailsForm from '../forms/CarpoolGuestDetailsForm';
 import { eventsRef } from '../config/firebase';
 import event from '../classes/event';
 import geocoding from '../util/Geocoding';
-import routesService from '../services/RoutesService';
+import routesService from '../services/EventPoolService';
 
 class NewGuestPage extends Component {
     constructor(props) {

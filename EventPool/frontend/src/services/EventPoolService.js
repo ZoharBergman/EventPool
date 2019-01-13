@@ -3,11 +3,15 @@
  */
 import RequestsService from './RequestsService';
 
-class RoutesService {
+class EventPoolService {
 
     static calcAndSaveRoute(origin, destination, driverId, eventId, freeSeatsNum) {
         return RequestsService.request(`calcAndSaveRoute/${origin}/${destination}/${driverId}/${eventId}/${freeSeatsNum}`);
     }
+
+    static calcCarpoolMatching(eventId, deviationRadius) {
+        return RequestsService.request(`calcCarpoolMatching/${eventId}/${deviationRadius}`);
+    }
 }
 
-export default RoutesService;
+export default EventPoolService;

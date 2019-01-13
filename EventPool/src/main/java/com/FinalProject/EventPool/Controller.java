@@ -1,6 +1,7 @@
 package com.FinalProject.EventPool;
 
 import com.FinalProject.EventPool.BL.CarpoolMatching.ICarpoolMatching;
+import com.FinalProject.EventPool.Models.Match;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FinalProject.EventPool.BL.Routes.IRoutes;
 
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -37,11 +39,13 @@ public class Controller {
 
     @CrossOrigin(origins = SUPPORTED_URL)
     @GetMapping("/calcCarpoolMatching/{eventId}/{deviationRadius}")
-    public void calcCarpoolMatching(@PathVariable String eventId, @PathVariable Double deviationRadius) {
+    public Collection<Match> calcCarpoolMatching(@PathVariable String eventId, @PathVariable Double deviationRadius) {
         try {
-            CarpoolMatching.calcCarpoolMatching(eventId, deviationRadius);
+            return CarpoolMatching.calcCarpoolMatching(eventId, deviationRadius);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 }

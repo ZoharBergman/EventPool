@@ -4,8 +4,6 @@ import com.FinalProject.EventPool.Models.*;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +20,7 @@ import java.util.function.Function;
 @Service
 public class CarpoolMatchingBL implements ICarpoolMatching {
     @Override
-    public void calcCarpoolMatching(String eventId, Double deviationRadius) throws InterruptedException {
+    public Collection<Match> calcCarpoolMatching(String eventId, Double deviationRadius) throws InterruptedException {
         // Getting the passengers
         List<Passenger> lstPassengers = getPassengers(eventId);
 
@@ -31,6 +29,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Calc matching
         Map<String, Match> matches = calcMatching(potentialMatches);
+        return matches.values();
     }
 
     private Table<Driver, Passenger, Double> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
