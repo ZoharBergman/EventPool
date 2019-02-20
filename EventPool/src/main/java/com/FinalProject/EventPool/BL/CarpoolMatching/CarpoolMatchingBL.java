@@ -9,7 +9,7 @@ import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+import org.jgrapht.alg.flow.DinicMFImpl;
 import org.jgrapht.alg.interfaces.MaximumFlowAlgorithm;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.springframework.stereotype.Service;
@@ -211,7 +211,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Building the flow network and calculating the max flow
         DirectedWeightedMultigraph<String, Edge> flowNet = buildFlowNetwork(potentialMatches);
-        MaximumFlowAlgorithm<String, Edge> solver = new EdmondsKarpMFImpl<>(flowNet);
+        MaximumFlowAlgorithm<String, Edge> solver = new DinicMFImpl<>(flowNet);
         MaximumFlowAlgorithm.MaximumFlow<Edge> maximumFlow = solver.getMaximumFlow(SOURCE, TARGET);
 
         // Building a map of the passengers

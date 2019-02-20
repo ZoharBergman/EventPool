@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@google/maps": "^0.5.5",
+    "@material-ui": "^0.20.2",
     "bootstrap": "^4.0.0",
     "decode-google-map-polyline": "^1.0.1",
     "firebase": "^5.5.7",

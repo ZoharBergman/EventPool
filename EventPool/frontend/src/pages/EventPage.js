@@ -7,6 +7,7 @@ import AddGuestForm from '../forms/AddGuestForm';
 import { Link } from 'react-router-dom';
 import event from '../classes/event';
 import EventPoolService from '../services/EventPoolService';
+import CarpoolGroupComponent from '../components/CarpoolGroupComponent';
 
 class EventPage extends Component {
     constructor(props) {
@@ -19,21 +20,20 @@ class EventPage extends Component {
                 notApprovedGuests: {},
                 approvedGuests: {}
             },
-            carpoolGroups: ""
+            carpoolGroups: {}
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
         this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
-        this.syntaxHighlight = this.syntaxHighlight.bind(this);
     }
 
     componentWillMount() {
-     eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
-         if (snapshot.exists()) {
+        eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
+            if (snapshot.exists()) {
 
-             this.setState({event: new event(snapshot.val())});
-         }
-     });
+                this.setState({event: new event(snapshot.val())});
+            }
+        });
     }
 
     handleAddGuest(newGuest) {
@@ -61,24 +61,28 @@ class EventPage extends Component {
         });
     }
 
-    syntaxHighlight(json) {
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
-}
+    buildCarpoolGroupsList(carpoolGroups) {
+        debugger;
+    }
+
+    // syntaxHighlight(json) {
+    // json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+    //     var cls = 'number';
+    //     if (/^"/.test(match)) {
+    //         if (/:$/.test(match)) {
+    //             cls = 'key';
+    //         } else {
+    //             cls = 'string';
+    //         }
+    //     } else if (/true|false/.test(match)) {
+    //         cls = 'boolean';
+    //     } else if (/null/.test(match)) {
+    //         cls = 'null';
+    //     }
+    //     return '<span class="' + cls + '">' + match + '</span>';
+    // });
+    // }
 
     handleCalcCarpoolGroups() {
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
@@ -92,6 +96,7 @@ class EventPage extends Component {
     render() {
         let approvedGuests;
         let notApprovedGuests;
+        let carpoolGroups;
 
         if (Object.keys(this.state.event.notApprovedGuests).length > 0) {
             notApprovedGuests = this.buildGuestsList(this.state.event.notApprovedGuests, 'newGuest');
@@ -105,13 +110,16 @@ class EventPage extends Component {
             approvedGuests = "No Approved guests.";
         }
 
+        if (Object.keys(this.state.carpoolGroups).length > 0) {
+            carpoolGroups = this.buildCarpoolGroupsList(this.state.carpoolGroups);
+        }
+
         return (
             <div>
                 <h1>{this.state.event.name}</h1>
                 <div>
                     <h2>Details</h2>
                 </div>
-                <button onClick={this.handleCalcCarpoolGroups}>Calculate Carpool groups</button>
                 <div>
                     <h2>Guests</h2>
                     <AddGuestForm onSubmit={this.handleAddGuest}/>
@@ -122,7 +130,8 @@ class EventPage extends Component {
                 </div>
                 <div>
                     <h2>Carpool Groups</h2>
-                    {this.state.carpoolGroups}
+                    <button onClick={this.handleCalcCarpoolGroups}>Calculate Carpool groups</button>
+                    {carpoolGroups}
                 </div>
             </div>
         );
