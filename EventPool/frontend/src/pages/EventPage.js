@@ -20,18 +20,36 @@ class EventPage extends Component {
                 notApprovedGuests: {},
                 approvedGuests: {}
             },
-            carpoolGroups: {}
+            carpoolGroups: [],
+            isCarpoolGroupsConfirmed: false
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
         this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
+        this.saveCarpoolGroups = this.saveCarpoolGroups.bind(this);
     }
 
     componentWillMount() {
         eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
             if (snapshot.exists()) {
 
-                this.setState({event: new event(snapshot.val())});
+                this.setState({
+                    event: new event(snapshot.val()),
+                    isCarpoolGroupsConfirmed: snapshot.val().hasOwnProperty("carpoolGroups") && snapshot.val().carpoolGroups.length > 0
+                });
+
+                this.setState({carpoolGroups: [
+                    {
+                        driverId:"-LW1RlfHY-q2Um4OyR7Y",
+                        setPassengers:[{guestId:"-LVi4cRp_PYDq6QTAGuI",startLocation:{lat:32.1178669,lng:34.8298462}}]
+                    }, {
+                        driverId:"-LW1Rjad_92PS227eHuK",
+                        setPassengers:[{guestId:"-LW1HK2EOFt-voAMnZKz",startLocation:{lat:32.0726562,lng:34.8294233}}]
+                    }, {
+                        driverId:"-LW1RhQ7H0jKFr6JzlX2",
+                        setPassengers:[{guestId:"-LVClp-ZVtX1rqkcEzIj",startLocation:{lat:32.1168559,lng:34.8297932}},{guestId:"-LVClgQvUz4DMI_RIEHf",startLocation:{lat:32.0564395,lng:34.8732652}}]
+                    }
+                ]});
             }
         });
     }
@@ -62,35 +80,37 @@ class EventPage extends Component {
     }
 
     buildCarpoolGroupsList(carpoolGroups) {
-        debugger;
-    }
+        return carpoolGroups.map((group, i) => {
+            const groupDetails = {
+                driver: {
+                    id: group.driverId,
+                    name: this.state.event.approvedGuests[group.driverId].fullName},
+                passengers: []
+            };
 
-    // syntaxHighlight(json) {
-    // json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    // return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-    //     var cls = 'number';
-    //     if (/^"/.test(match)) {
-    //         if (/:$/.test(match)) {
-    //             cls = 'key';
-    //         } else {
-    //             cls = 'string';
-    //         }
-    //     } else if (/true|false/.test(match)) {
-    //         cls = 'boolean';
-    //     } else if (/null/.test(match)) {
-    //         cls = 'null';
-    //     }
-    //     return '<span class="' + cls + '">' + match + '</span>';
-    // });
-    // }
+            group.setPassengers.forEach(passenger => {
+                passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
+                groupDetails.passengers.push(passenger);
+            });
+
+           return (
+               <li key={i}>
+                   <CarpoolGroupComponent driver={groupDetails.driver} passengers={groupDetails.passengers}/>
+               </li>
+           );
+        });
+    }
 
     handleCalcCarpoolGroups() {
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
             .then(response => response.json())
             .then(data => {
-                debugger;
-                this.setState({carpoolGroups: JSON.stringify(data)});
+                this.setState({carpoolGroups: data});
             });
+    }
+
+    saveCarpoolGroups() {
+
     }
 
     render() {
@@ -110,7 +130,7 @@ class EventPage extends Component {
             approvedGuests = "No Approved guests.";
         }
 
-        if (Object.keys(this.state.carpoolGroups).length > 0) {
+        if (this.state.carpoolGroups.length > 0) {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.carpoolGroups);
         }
 
@@ -130,7 +150,8 @@ class EventPage extends Component {
                 </div>
                 <div>
                     <h2>Carpool Groups</h2>
-                    <button onClick={this.handleCalcCarpoolGroups}>Calculate Carpool groups</button>
+                    <button onClick={this.handleCalcCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed}>Calculate Carpool groups</button>
+                    <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || this.state.carpoolGroups.length <= 0}>Save Carpool groups</button>
                     {carpoolGroups}
                 </div>
             </div>

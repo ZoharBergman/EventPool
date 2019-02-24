@@ -11,27 +11,27 @@ class CarpoolGroupComponent extends Component {
         super(props);
 
         this.state = {
-            id: "",
-            driverId: "",
-            driverName: "",
-            passengers: []
+            driver: props.driver,
+            passengers: props.passengers
         };
     }
 
     generate(listItems, attribute) {
-        return listItems.map(item => {
-            <ListItem>
+        return listItems.map((item, i) => {
+            return (
+            <ListItem key={i}>
                 <ListItemText primary={item[attribute]}/>
             </ListItem>
+            );
         });
     }
 
     render() {
         return (
             <Card>
-                <CardHeader title={"Driver: " + this.state.driverName}/>
+                <CardHeader title={"Driver: " + this.state.driver.name}/>
                 <CardContent>
-                    <List dense=false>
+                    <List dense={false}>
                         {this.generate(this.state.passengers, "name")}
                     </List>
                 </CardContent>
