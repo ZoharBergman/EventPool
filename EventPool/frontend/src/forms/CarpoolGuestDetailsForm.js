@@ -3,7 +3,6 @@
  */
 import React from "react";
 import { reduxForm, Field, formValueSelector } from 'redux-form';
-import renderField from './RenderedField';
 import { connect } from 'react-redux';
 
 const validate = (val)=> {

@@ -8,6 +8,7 @@ class event {
         this.date = event.date;
         this.maxRadiusInKm = event.maxRadiusInKm;
         this.organizersIds = event.organizersIds;
+        this.carpoolGroups = event.carpoolGroups ? event.carpoolGroups : {};
         this.notApprovedGuests = event.notApprovedGuests ? event.notApprovedGuests : {};
         this.approvedGuests = event.approvedGuests ? event.approvedGuests : {};
     }

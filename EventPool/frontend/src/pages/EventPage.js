@@ -5,9 +5,12 @@ import React, { Component } from 'react';
 import { eventsRef } from '../config/firebase';
 import AddGuestForm from '../forms/AddGuestForm';
 import { Link } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+
 import event from '../classes/event';
 import EventPoolService from '../services/EventPoolService';
 import CarpoolGroupComponent from '../components/CarpoolGroupComponent';
+import NewDeviationRadiusForm from '../forms/NewDeviationRadiusForm';
 
 class EventPage extends Component {
     constructor(props) {
@@ -18,38 +21,40 @@ class EventPage extends Component {
             event: {
                 name: "",
                 notApprovedGuests: {},
-                approvedGuests: {}
+                approvedGuests: {},
+                carpoolGroups: {}
             },
-            carpoolGroups: [],
             isCarpoolGroupsConfirmed: false
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
         this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
         this.saveCarpoolGroups = this.saveCarpoolGroups.bind(this);
+        this.calcCarpoolGroupsAgain = this.calcCarpoolGroupsAgain.bind(this);
     }
 
     componentWillMount() {
         eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
             if (snapshot.exists()) {
+                const val = snapshot.val();
 
                 this.setState({
-                    event: new event(snapshot.val()),
-                    isCarpoolGroupsConfirmed: snapshot.val().hasOwnProperty("carpoolGroups") && snapshot.val().carpoolGroups.length > 0
+                    event: new event(val),
+                    isCarpoolGroupsConfirmed: val.hasOwnProperty("carpoolGroups") && Object.keys(val.carpoolGroups).length > 0
                 });
 
-                this.setState({carpoolGroups: [
-                    {
-                        driverId:"-LW1RlfHY-q2Um4OyR7Y",
-                        setPassengers:[{guestId:"-LVi4cRp_PYDq6QTAGuI",startLocation:{lat:32.1178669,lng:34.8298462}}]
-                    }, {
-                        driverId:"-LW1Rjad_92PS227eHuK",
-                        setPassengers:[{guestId:"-LW1HK2EOFt-voAMnZKz",startLocation:{lat:32.0726562,lng:34.8294233}}]
-                    }, {
-                        driverId:"-LW1RhQ7H0jKFr6JzlX2",
-                        setPassengers:[{guestId:"-LVClp-ZVtX1rqkcEzIj",startLocation:{lat:32.1168559,lng:34.8297932}},{guestId:"-LVClgQvUz4DMI_RIEHf",startLocation:{lat:32.0564395,lng:34.8732652}}]
-                    }
-                ]});
+                // this.setState({carpoolGroups: [
+                //     {
+                //         driverId:"-LW1RlfHY-q2Um4OyR7Y",
+                //         setPassengers:[{guestId:"-LVi4cRp_PYDq6QTAGuI",startLocation:{lat:32.1178669,lng:34.8298462}}]
+                //     }, {
+                //         driverId:"-LW1Rjad_92PS227eHuK",
+                //         setPassengers:[{guestId:"-LW1HK2EOFt-voAMnZKz",startLocation:{lat:32.0726562,lng:34.8294233}}]
+                //     }, {
+                //         driverId:"-LW1RhQ7H0jKFr6JzlX2",
+                //         setPassengers:[{guestId:"-LVClp-ZVtX1rqkcEzIj",startLocation:{lat:32.1168559,lng:34.8297932}},{guestId:"-LVClgQvUz4DMI_RIEHf",startLocation:{lat:32.0564395,lng:34.8732652}}]
+                //     }
+                // ]});
             }
         });
     }
@@ -80,15 +85,15 @@ class EventPage extends Component {
     }
 
     buildCarpoolGroupsList(carpoolGroups) {
-        return carpoolGroups.map((group, i) => {
+        return Object.keys(carpoolGroups).map((groupId, i) => {
             const groupDetails = {
                 driver: {
-                    id: group.driverId,
-                    name: this.state.event.approvedGuests[group.driverId].fullName},
+                    id: carpoolGroups[groupId].driverId,
+                    name: this.state.event.approvedGuests[carpoolGroups[groupId].driverId].fullName},
                 passengers: []
             };
 
-            group.setPassengers.forEach(passenger => {
+            carpoolGroups[groupId].setPassengers.forEach(passenger => {
                 passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
                 groupDetails.passengers.push(passenger);
             });
@@ -105,12 +110,32 @@ class EventPage extends Component {
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
             .then(response => response.json())
             .then(data => {
-                this.setState({carpoolGroups: data});
+                const event = this.state.event;
+                event.carpoolGroups = data;
+                this.setState({event: event});
             });
     }
 
     saveCarpoolGroups() {
+        this.setState({isCarpoolGroupsConfirmed: true});
+        const groupObjects = {};
+        this.state.event.carpoolGroups.forEach(group => {
+           groupObjects[group.driverId] = group;
+        });
 
+        eventsRef.child(this.state.eventId + '/carpoolGroups').set(groupObjects);
+    }
+
+    calcCarpoolGroupsAgain(data) {
+        debugger;
+        // Update the radius in the state and in the DB
+        const event = this.state.event;
+        event.maxRadiusInKm = data.maxRadiusInKm;
+        this.setState({event: event});
+        eventsRef.child(this.state.eventId).update({maxRadiusInKm: event.maxRadiusInKm});
+
+        // Calculate the carpool groups
+        this.handleCalcCarpoolGroups()
     }
 
     render() {
@@ -130,8 +155,8 @@ class EventPage extends Component {
             approvedGuests = "No Approved guests.";
         }
 
-        if (this.state.carpoolGroups.length > 0) {
-            carpoolGroups = this.buildCarpoolGroupsList(this.state.carpoolGroups);
+        if (Object.keys(this.state.event.carpoolGroups).length > 0) {
+            carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
         }
 
         return (
@@ -150,8 +175,14 @@ class EventPage extends Component {
                 </div>
                 <div>
                     <h2>Carpool Groups</h2>
-                    <button onClick={this.handleCalcCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed}>Calculate Carpool groups</button>
-                    <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || this.state.carpoolGroups.length <= 0}>Save Carpool groups</button>
+                    <button onClick={this.handleCalcCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
+                    <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length <= 0}>Save Carpool Groups</button>
+                    <Popup
+                        trigger={<button hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>Calculate Carpool Groups Again</button>}
+                        modal
+                        closeOnDocumentClick>
+                        <NewDeviationRadiusForm maxRadiusInKm={this.state.event.maxRadiusInKm} onSubmit={this.calcCarpoolGroupsAgain}/>
+                    </Popup>
                     {carpoolGroups}
                 </div>
             </div>
