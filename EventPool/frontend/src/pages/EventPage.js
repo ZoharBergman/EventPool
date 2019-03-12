@@ -24,13 +24,17 @@ class EventPage extends Component {
                 approvedGuests: {},
                 carpoolGroups: {}
             },
-            isCarpoolGroupsConfirmed: false
+            isCarpoolGroupsConfirmed: false,
+            isCalcCarpoolGroupsAgain: false,
+            open: false
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
         this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
         this.saveCarpoolGroups = this.saveCarpoolGroups.bind(this);
         this.calcCarpoolGroupsAgain = this.calcCarpoolGroupsAgain.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentWillMount() {
@@ -99,7 +103,7 @@ class EventPage extends Component {
             });
 
            return (
-               <li key={i}>
+               <li key={groupId}>
                    <CarpoolGroupComponent driver={groupDetails.driver} passengers={groupDetails.passengers}/>
                </li>
            );
@@ -110,9 +114,12 @@ class EventPage extends Component {
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
             .then(response => response.json())
             .then(data => {
-                const event = this.state.event;
-                event.carpoolGroups = data;
-                this.setState({event: event});
+                this.setState((prevState) => ({
+                    event: {
+                        ...prevState.event,
+                        carpoolGroups: data
+                    }
+                }));
             });
     }
 
@@ -124,18 +131,32 @@ class EventPage extends Component {
         });
 
         eventsRef.child(this.state.eventId + '/carpoolGroups').set(groupObjects);
+
+        if (this.state.isCalcCarpoolGroupsAgain) {
+            eventsRef.child(this.state.eventId).update({maxRadiusInKm: this.state.event.maxRadiusInKm});
+            this.setState({isCalcCarpoolGroupsAgain: false});
+        }
     }
 
     calcCarpoolGroupsAgain(data) {
-        debugger;
-        // Update the radius in the state and in the DB
-        const event = this.state.event;
-        event.maxRadiusInKm = data.maxRadiusInKm;
-        this.setState({event: event});
-        eventsRef.child(this.state.eventId).update({maxRadiusInKm: event.maxRadiusInKm});
+        this.closeModal();
 
-        // Calculate the carpool groups
-        this.handleCalcCarpoolGroups()
+        // Update the new radius and then calculate the carpool groups
+        this.setState((prevState) => ({
+            event: {
+                ...prevState.event,
+                maxRadiusInKm: data.maxRadiusInKm
+            },
+            isCalcCarpoolGroupsAgain: true,
+            isCarpoolGroupsConfirmed: false
+        }), this.handleCalcCarpoolGroups);
+    }
+
+    openModal(){
+        this.setState({ open: true })
+    }
+    closeModal() {
+        this.setState({ open: false })
     }
 
     render() {
@@ -177,12 +198,14 @@ class EventPage extends Component {
                     <h2>Carpool Groups</h2>
                     <button onClick={this.handleCalcCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
                     <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length <= 0}>Save Carpool Groups</button>
-                    <Popup
-                        trigger={<button hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>Calculate Carpool Groups Again</button>}
-                        modal
-                        closeOnDocumentClick>
-                        <NewDeviationRadiusForm maxRadiusInKm={this.state.event.maxRadiusInKm} onSubmit={this.calcCarpoolGroupsAgain}/>
-                    </Popup>
+                    <div>
+                        <button onClick={this.openModal} hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
+                            Calculate Carpool Groups Again
+                        </button>
+                        <Popup open={this.state.open} onClose={this.closeModal} closeOnDocumentClick modal>
+                            <NewDeviationRadiusForm maxRadiusInKm={this.state.event.maxRadiusInKm} onSubmit={this.calcCarpoolGroupsAgain}/>
+                        </Popup>
+                    </div>
                     {carpoolGroups}
                 </div>
             </div>
