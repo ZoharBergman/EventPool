@@ -103,7 +103,7 @@ class EventPage extends Component {
             });
 
            return (
-               <li key={groupId}>
+               <li key={carpoolGroups[groupId].driverId}>
                    <CarpoolGroupComponent driver={groupDetails.driver} passengers={groupDetails.passengers}/>
                </li>
            );

@@ -129,7 +129,7 @@ public class PotentialMatchThread extends Thread{
         try {
             geoLocationQuery.acquire();
 
-            while (numOfHandledGeoLocations > 0) {
+            if (numOfHandledGeoLocations > 0) {
                 counterIsZero.acquire();
             }
         } catch (InterruptedException e) {
