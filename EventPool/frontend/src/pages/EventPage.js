@@ -92,21 +92,21 @@ class EventPage extends Component {
     }
 
     buildCarpoolGroupsList(carpoolGroups) {
-        return Object.keys(carpoolGroups).map((groupId) => {
+        return Object.values(carpoolGroups).map(carpoolGroup => {
             const groupDetails = {
                 driver: {
-                    id: carpoolGroups[groupId].driverId,
-                    name: this.state.event.approvedGuests[carpoolGroups[groupId].driverId].fullName},
+                    id: carpoolGroup.driverId,
+                    name: this.state.event.approvedGuests[carpoolGroup.driverId].fullName},
                 passengers: []
             };
 
-            carpoolGroups[groupId].setPassengers.forEach(passenger => {
+            carpoolGroup.setPassengers.forEach(passenger => {
                 passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
                 groupDetails.passengers.push(passenger);
             });
 
            return (
-               <li key={carpoolGroups[groupId].driverId}>
+               <li key={carpoolGroup.driverId}>
                    <CarpoolGroupComponent driver={groupDetails.driver} passengers={groupDetails.passengers}/>
                </li>
            );
