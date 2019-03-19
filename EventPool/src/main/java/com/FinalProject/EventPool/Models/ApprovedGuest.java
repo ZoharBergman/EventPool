@@ -11,6 +11,8 @@ public class ApprovedGuest {
     public static final String COLLECTION_NAME = "approvedGuests";
     public static final String IS_COMING = "isComing";
     public static final String IS_CAR = "isCar";
+    public static final String GUEST_ID = "guestId";
+    public static final String FREE_SEATS_NUM = "freeSeatsNum";
 
     // Properties
     private String guestId;

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Zohar on 27/12/2018.
@@ -41,11 +42,7 @@ public class RoutesBL implements IRoutes{
                 // Getting the points of the calculated route
                 return directionsResult.routes[0].overviewPolyline.decodePath();
             }
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ApiException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
 
@@ -62,6 +59,9 @@ public class RoutesBL implements IRoutes{
     }
 
     private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId, Integer freeSeatsNum) {
+        final Semaphore semaphore = new Semaphore(0);
+        final Integer[] numOfHaandledPoints = {lstRoutePoints.size()};
+
         lstRoutePoints.forEach(latLng -> {
             // Save the LatLng as a geolocation object in the DB
             GeoLocation geoLocation = new GeoLocation(latLng.lat, latLng.lng);
@@ -69,7 +69,13 @@ public class RoutesBL implements IRoutes{
             Geofire.getInstance(eventId).setLocation(geoLocationKey, geoLocation, new GeoFire.CompletionListener() {
                 @Override
                 public void onComplete(String s, DatabaseError databaseError) {
+                    synchronized (numOfHaandledPoints[0]) {
+                        numOfHaandledPoints[0]--;
 
+                        if (numOfHaandledPoints[0] == 0) {
+                            semaphore.release();
+                        }
+                    }
                 }
             });
 
@@ -78,5 +84,11 @@ public class RoutesBL implements IRoutes{
             mapDriver.put(driverId, freeSeatsNum);
             GeofireToDriver.getReference().child(eventId).child(geoLocationKey).updateChildren(mapDriver, null);
         });
+
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

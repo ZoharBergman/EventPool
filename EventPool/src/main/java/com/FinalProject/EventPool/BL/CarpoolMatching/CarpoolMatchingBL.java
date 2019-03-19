@@ -39,7 +39,59 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Calc matching
         Map<String, Match> matches = calcMatching(potentialMatches);
+
+        // Optimize the matches
+        optimizeMatches(matches, potentialMatches);
+
         return matches.values();
+    }
+
+    private void optimizeMatches(Map<String, Match> matches, Table<Driver, Passenger, Double> potentialMatches) {
+        // Creating a set of all the passengers that were matched
+        Set<Passenger> setMatchedPassengers = matches.values().stream().map(Match::getSetPassengers)
+                .flatMap(Collection::stream).collect(Collectors.toSet());
+
+        if (setMatchedPassengers.size() == potentialMatches.columnKeySet().size()) {
+            return;
+        }
+
+        // Creating a map of drivers by id
+        Map<String, Driver> mapDrivers = potentialMatches.rowKeySet().stream()
+                .collect(Collectors.toMap(Driver::getDriverId, Function.identity()));
+
+        // Optimize the matches according to the distance between the drivers and the passengers
+        matches.forEach((driverId, match) -> {
+            Driver driver = mapDrivers.get(driverId);
+
+            // Getting the potential passengers of the current driver that has no match
+            List<Passenger> lstPassengersWithoutMatch = potentialMatches.row(driver).keySet().stream()
+                    .filter(passenger -> !setMatchedPassengers.contains(passenger)).collect(Collectors.toList());
+
+            lstPassengersWithoutMatch.forEach(passengerWithoutMatch -> {
+                Double maxDistanceBetweenDriverAndMatchedPassenger = match.getSetPassengers().stream()
+                        .map(passenger -> potentialMatches.get(driver, passenger))
+                        .reduce(Math::max).get();
+
+                Optional<Passenger> farthestMatchedPassengerOpt = potentialMatches.row(driver).keySet().stream()
+                        .filter(passenger -> potentialMatches.get(driver, passenger)
+                                        .equals(maxDistanceBetweenDriverAndMatchedPassenger))
+                        .findFirst();
+
+                farthestMatchedPassengerOpt.ifPresent(farthestMatchedPassenger -> {
+                    // In case the current 'without match passenger' is closer to the
+                    // driver than the farthest matched passengers - switch them
+                    if (maxDistanceBetweenDriverAndMatchedPassenger > potentialMatches.get(driver, passengerWithoutMatch)) {
+                        // Add the not matched passenger to the match
+                        match.getSetPassengers().add(passengerWithoutMatch);
+                        setMatchedPassengers.add(passengerWithoutMatch);
+
+                        // Remove the matched passenger from the match
+                        match.getSetPassengers().remove(farthestMatchedPassenger);
+                        setMatchedPassengers.remove(farthestMatchedPassenger);
+                    }
+                });
+            });
+        });
     }
 
     private Table<Driver, Passenger, Double> calcPotentialMatching(Double deviationRadius, List<Passenger> lstPassengers, String eventId) {
@@ -49,8 +101,10 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Calculating for each passenger his potential matches
         lstPassengers.forEach(passenger ->
-            lstPotentialMatchThreads.add(new PotentialMatchThread(potentialMatches, deviationRadius, passenger, eventId, mapDriversById))
+            lstPotentialMatchThreads.add(
+                    new PotentialMatchThread(potentialMatches, deviationRadius, passenger, eventId, mapDriversById))
         );
+
         lstPotentialMatchThreads.forEach(Thread::start);
         lstPotentialMatchThreads.forEach(potentialMatchThread -> {
             try {
@@ -73,9 +127,9 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        dataSnapshot.getChildren().forEach(passengerSnapshot -> {
-                            lstPassengers.add(passengerSnapshot.getValue(Passenger.class));
-                        });
+                        dataSnapshot.getChildren().forEach(passengerSnapshot ->
+                            lstPassengers.add(passengerSnapshot.getValue(Passenger.class))
+                        );
 
                         semaphore.release();
                     }

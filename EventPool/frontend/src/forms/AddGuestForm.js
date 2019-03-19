@@ -30,7 +30,7 @@ let AddGuestForm = (props) => {
     <div>
         <label style={{textDecoration: 'underline'}}>Add new guest</label>
         <br />
-        <form className="form" onSubmit={handleSubmit} style={{display: 'inline-flex'}}>
+        <form className="form" onSubmit={handleSubmit} >{/*style={{display: 'inline-flex'}}*/}
             <div className="field">
                 <Field className="input" name="fullName" component={renderField} type="text" label="Full name" />
             </div>

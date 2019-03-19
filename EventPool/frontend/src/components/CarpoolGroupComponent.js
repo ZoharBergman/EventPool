@@ -17,7 +17,7 @@ class CarpoolGroupComponent extends Component {
     }
 
     generate(listItems, attribute, keyAttribute) {
-        return listItems.map((item, i) => {
+        return listItems.map((item) => {
             return (
             <ListItem key={item[keyAttribute]}>
                 <ListItemText primary={item[attribute]}/>
@@ -32,7 +32,7 @@ class CarpoolGroupComponent extends Component {
                 <CardHeader title={"Driver: " + this.state.driver.name}/>
                 <CardContent>
                     <List dense={false}>
-                        {this.generate(this.state.passengers, "name", "guestId")}
+                        {this.generate(this.props.passengers, "name", "guestId")}
                     </List>
                 </CardContent>
             </Card>

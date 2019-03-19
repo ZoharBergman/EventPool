@@ -26,7 +26,9 @@ class EventPage extends Component {
             },
             isCarpoolGroupsConfirmed: false,
             isCalcCarpoolGroupsAgain: false,
-            open: false
+            open: false,
+            oldCarpoolGroups: {},
+            oldRadius: ""
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
@@ -35,6 +37,7 @@ class EventPage extends Component {
         this.calcCarpoolGroupsAgain = this.calcCarpoolGroupsAgain.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
     }
 
     componentWillMount() {
@@ -79,9 +82,9 @@ class EventPage extends Component {
     }
 
     buildGuestsList(guests, guestsType) {
-        return Object.keys(guests).map((guestId, i) => {
+        return Object.keys(guests).map((guestId) => {
             return (
-                <li key={i}>
+                <li key={guestId}>
                     <Link to={`/event/${this.state.eventId}/${guestsType}/${guestId}`}>{guests[guestId].fullName}</Link>
                 </li>
             );
@@ -89,7 +92,7 @@ class EventPage extends Component {
     }
 
     buildCarpoolGroupsList(carpoolGroups) {
-        return Object.keys(carpoolGroups).map((groupId, i) => {
+        return Object.keys(carpoolGroups).map((groupId) => {
             const groupDetails = {
                 driver: {
                     id: carpoolGroups[groupId].driverId,
@@ -134,12 +137,22 @@ class EventPage extends Component {
 
         if (this.state.isCalcCarpoolGroupsAgain) {
             eventsRef.child(this.state.eventId).update({maxRadiusInKm: this.state.event.maxRadiusInKm});
-            this.setState({isCalcCarpoolGroupsAgain: false});
+            this.setState({
+                isCalcCarpoolGroupsAgain: false,
+                oldCarpoolGroups: {}
+            });
         }
     }
 
     calcCarpoolGroupsAgain(data) {
         this.closeModal();
+
+        if (Object.keys(this.state.oldCarpoolGroups).length === 0) {
+            this.setState({
+                oldCarpoolGroups: this.state.event.carpoolGroups,
+                oldRadius: this.state.event.maxRadiusInKm
+            });
+        }
 
         // Update the new radius and then calculate the carpool groups
         this.setState((prevState) => ({
@@ -148,13 +161,28 @@ class EventPage extends Component {
                 maxRadiusInKm: data.maxRadiusInKm
             },
             isCalcCarpoolGroupsAgain: true,
-            isCarpoolGroupsConfirmed: false
+            isCarpoolGroupsConfirmed: false,
         }), this.handleCalcCarpoolGroups);
     }
 
-    openModal(){
+    cancelNewCarpoolGroups() {
+        this.setState((prevState) => ({
+           event: {
+               ...prevState.event,
+               carpoolGroups: prevState.oldCarpoolGroups,
+               maxRadiusInKm: prevState.oldRadius
+           },
+            isCalcCarpoolGroupsAgain: false,
+            isCarpoolGroupsConfirmed: true,
+            oldCarpoolGroups: {},
+            oldRadius: ""
+        }));
+    }
+
+    openModal() {
         this.setState({ open: true })
     }
+
     closeModal() {
         this.setState({ open: false })
     }
@@ -196,8 +224,9 @@ class EventPage extends Component {
                 </div>
                 <div>
                     <h2>Carpool Groups</h2>
-                    <button onClick={this.handleCalcCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
+                    <button onClick={this.handleCalcCarpoolGroups} hidden={Object.keys(this.state.event.approvedGuests).length <= 0 || this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
                     <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length <= 0}>Save Carpool Groups</button>
+                    <button onClick={this.cancelNewCarpoolGroups} hidden={Object.keys(this.state.oldCarpoolGroups).length <= 0}>Cancel new groups calculation</button>
                     <div>
                         <button onClick={this.openModal} hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
                             Calculate Carpool Groups Again

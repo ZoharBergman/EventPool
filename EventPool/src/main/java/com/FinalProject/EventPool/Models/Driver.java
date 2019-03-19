@@ -9,6 +9,11 @@ public class Driver {
     private Integer freeSeatsNum;
 
     // Ctor
+    public Driver(String driverId) {
+        this.driverId = driverId;
+        this.freeSeatsNum = 0;
+    }
+
     public Driver(String driverId, Integer freeSeatsNum) {
         this.driverId = driverId;
         this.freeSeatsNum = freeSeatsNum;
