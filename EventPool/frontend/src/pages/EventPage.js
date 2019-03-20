@@ -49,19 +49,6 @@ class EventPage extends Component {
                     event: new event(val),
                     isCarpoolGroupsConfirmed: val.hasOwnProperty("carpoolGroups") && Object.keys(val.carpoolGroups).length > 0
                 });
-
-                // this.setState({carpoolGroups: [
-                //     {
-                //         driverId:"-LW1RlfHY-q2Um4OyR7Y",
-                //         setPassengers:[{guestId:"-LVi4cRp_PYDq6QTAGuI",startLocation:{lat:32.1178669,lng:34.8298462}}]
-                //     }, {
-                //         driverId:"-LW1Rjad_92PS227eHuK",
-                //         setPassengers:[{guestId:"-LW1HK2EOFt-voAMnZKz",startLocation:{lat:32.0726562,lng:34.8294233}}]
-                //     }, {
-                //         driverId:"-LW1RhQ7H0jKFr6JzlX2",
-                //         setPassengers:[{guestId:"-LVClp-ZVtX1rqkcEzIj",startLocation:{lat:32.1168559,lng:34.8297932}},{guestId:"-LVClgQvUz4DMI_RIEHf",startLocation:{lat:32.0564395,lng:34.8732652}}]
-                //     }
-                // ]});
             }
         });
     }
@@ -93,21 +80,9 @@ class EventPage extends Component {
 
     buildCarpoolGroupsList(carpoolGroups) {
         return Object.values(carpoolGroups).map(carpoolGroup => {
-            const groupDetails = {
-                driver: {
-                    id: carpoolGroup.driverId,
-                    name: this.state.event.approvedGuests[carpoolGroup.driverId].fullName},
-                passengers: []
-            };
-
-            carpoolGroup.setPassengers.forEach(passenger => {
-                passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
-                groupDetails.passengers.push(passenger);
-            });
-
            return (
-               <li key={carpoolGroup.driverId}>
-                   <CarpoolGroupComponent driver={groupDetails.driver} passengers={groupDetails.passengers}/>
+               <li key={carpoolGroup.driver.id}>
+                   <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={carpoolGroup.passengers}/>
                </li>
            );
         });
@@ -117,10 +92,32 @@ class EventPage extends Component {
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
             .then(response => response.json())
             .then(data => {
+                const carpoolGroups = Object.values(data).map(carpoolGroup => {
+                    const groupDetails = {
+                        driver: {
+                            id: carpoolGroup.driverId,
+                            name: this.state.event.approvedGuests[carpoolGroup.driverId].fullName,
+                            phoneNumber: this.state.event.approvedGuests[carpoolGroup.driverId].phoneNumber,
+                            startLocation: this.state.event.approvedGuests[carpoolGroup.driverId].startLocation
+                        },
+                        passengers: []
+                    };
+
+                    carpoolGroup.setPassengers.forEach(passenger => {
+                        passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
+                        passenger.phoneNumber = this.state.event.approvedGuests[passenger.guestId].phoneNumber;
+                        groupDetails.passengers.push(passenger);
+                    });
+
+                    groupDetails.eventName = this.state.event.name;
+
+                    return groupDetails;
+                });
+
                 this.setState((prevState) => ({
                     event: {
                         ...prevState.event,
-                        carpoolGroups: data
+                        carpoolGroups: carpoolGroups
                     }
                 }));
             });
@@ -129,8 +126,8 @@ class EventPage extends Component {
     saveCarpoolGroups() {
         this.setState({isCarpoolGroupsConfirmed: true});
         const groupObjects = {};
-        this.state.event.carpoolGroups.forEach(group => {
-           groupObjects[group.driverId] = group;
+        this.state.event.carpoolGroups.forEach(carpoolGroup => {
+           groupObjects[carpoolGroup.driver.id] = carpoolGroup;
         });
 
         eventsRef.child(this.state.eventId + '/carpoolGroups').set(groupObjects);

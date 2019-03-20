@@ -11,6 +11,7 @@ import { AppHeader } from '../headers/AppHeader';
 import { MyEventsPage } from '../pages/MyEventsPage';
 import { EventPage } from '../pages/EventPage';
 import { NewGuestPage } from '../pages/NewGuestPage';
+import { CarpoolGroupPage } from '../pages/CarpoolGroupPage';
 import auth from '../config/auth';
 
 class AppRouter extends Component {
@@ -40,6 +41,7 @@ class AppRouter extends Component {
                         <Route path='/events' component={MyEventsPage} />
                         <Route path='/event/:id' exact={true} component={EventPage}/>
                         <Route path='/event/:eventId/newGuest/:guestId' component={NewGuestPage}/>
+                        <Route path='/event/:eventId/carpoolGroup/:groupId' component={CarpoolGroupPage}/>
                         {/*<Route path='/event/:eventId/guest/:guestId' component={}/>*/}
                         <Redirect from="/" to="/login" />
                     </Switch>

@@ -60,7 +60,7 @@ public class RoutesBL implements IRoutes{
 
     private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId, Integer freeSeatsNum) {
         final Semaphore semaphore = new Semaphore(0);
-        final Integer[] numOfHaandledPoints = {lstRoutePoints.size()};
+        final Integer[] numOfHandledPoints = {lstRoutePoints.size()};
 
         lstRoutePoints.forEach(latLng -> {
             // Save the LatLng as a geolocation object in the DB
@@ -69,10 +69,10 @@ public class RoutesBL implements IRoutes{
             Geofire.getInstance(eventId).setLocation(geoLocationKey, geoLocation, new GeoFire.CompletionListener() {
                 @Override
                 public void onComplete(String s, DatabaseError databaseError) {
-                    synchronized (numOfHaandledPoints[0]) {
-                        numOfHaandledPoints[0]--;
+                    synchronized (numOfHandledPoints[0]) {
+                        numOfHandledPoints[0]--;
 
-                        if (numOfHaandledPoints[0] == 0) {
+                        if (numOfHandledPoints[0] == 0) {
                             semaphore.release();
                         }
                     }

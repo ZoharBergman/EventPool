@@ -56,7 +56,7 @@ public class PotentialMatchThread extends Thread{
                                     @Override
                                     public void onDataChange(DataSnapshot driversSnapshot) {
                                         // Going over the drivers
-                                        ((Map)driversSnapshot.getValue()).forEach((driverId, freeSeatsNum) -> {
+                                        ((Map)driversSnapshot.getValue()).keySet().forEach(driverId -> {
                                             Driver driver;
                                             synchronized (mapDriversById) {
                                                 if (mapDriversById.containsKey(driverId)) {
@@ -96,7 +96,13 @@ public class PotentialMatchThread extends Thread{
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
+                                        synchronized (numOfHandledGeoLocations) {
+                                            numOfHandledGeoLocations--;
 
+                                            if (numOfHandledGeoLocations == 0) {
+                                                counterIsZero.release();
+                                            }
+                                        }
                                     }
                                 });
                     }
@@ -129,8 +135,6 @@ public class PotentialMatchThread extends Thread{
             if (numOfHandledGeoLocations > 0) {
                 counterIsZero.acquire();
             }
-
-            getDriversFreeSeatsNum(eventId, mapDriversById);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -151,43 +155,5 @@ public class PotentialMatchThread extends Thread{
 
             return (dist);
         }
-    }
-
-    private static void getDriversFreeSeatsNum(String eventId, ConcurrentMap<String, Driver> mapDriversById) {
-        if (mapDriversById.size() == 0) {
-            return;
-        }
-
-        // For synchronize against Firebase
-        final Semaphore semaphore = new Semaphore(0);
-
-        // Get drivers
-        ApprovedGuest.getReference(eventId)
-                .orderByChild(ApprovedGuest.IS_CAR).equalTo(true)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        dataSnapshot.getChildren().forEach(driverSnapshot ->
-                            mapDriversById.get(((Map)driverSnapshot.getValue()).get(ApprovedGuest.GUEST_ID))
-                                    .setFreeSeatsNum(
-                                            Integer.parseInt(((Map)driverSnapshot.getValue())
-                                                    .get(ApprovedGuest.FREE_SEATS_NUM).toString())
-                                    )
-                        );
-
-                        semaphore.release();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        semaphore.release();
-                    }
-        });
-
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        };
     }
 }

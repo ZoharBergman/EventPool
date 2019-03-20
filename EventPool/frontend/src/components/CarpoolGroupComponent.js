@@ -2,38 +2,18 @@ import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom';
+import ListComponent from './ListComponent';
 
 class CarpoolGroupComponent extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            driver: props.driver,
-            passengers: props.passengers
-        };
-    }
-
-    generate(listItems, attribute, keyAttribute) {
-        return listItems.map((item) => {
-            return (
-            <ListItem key={item[keyAttribute]}>
-                <ListItemText primary={item[attribute]}/>
-            </ListItem>
-            );
-        });
-    }
-
     render() {
         return (
             <Card>
-                <CardHeader title={"Driver: " + this.state.driver.name}/>
+                <Link to={`/event/${this.props.eventId}/carpoolGroup/${this.props.driver.id}`}>
+                    <CardHeader title={"Driver: " + this.props.driver.name}/>
+                </Link>
                 <CardContent>
-                    <List dense={false}>
-                        {this.generate(this.props.passengers, "name", "guestId")}
-                    </List>
+                    {ListComponent(this.props.passengers, "guestId", "name")}
                 </CardContent>
             </Card>
         );

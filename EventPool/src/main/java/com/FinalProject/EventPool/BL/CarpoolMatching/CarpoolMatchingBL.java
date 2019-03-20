@@ -114,7 +114,47 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
             }
         });
 
+        getDriversFreeSeatsNum(eventId, mapDriversById);
+
         return potentialMatches;
+    }
+
+    private static void getDriversFreeSeatsNum(String eventId, ConcurrentMap<String, Driver> mapDriversById) {
+        if (mapDriversById.size() == 0) {
+            return;
+        }
+
+        // For synchronize against Firebase
+        final Semaphore semaphore = new Semaphore(0);
+
+        // Get drivers
+        ApprovedGuest.getReference(eventId)
+                .orderByChild(ApprovedGuest.IS_CAR).equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        dataSnapshot.getChildren().forEach(driverSnapshot ->
+                                mapDriversById.get(((Map)driverSnapshot.getValue()).get(ApprovedGuest.GUEST_ID))
+                                        .setFreeSeatsNum(
+                                                Integer.parseInt(((Map)driverSnapshot.getValue())
+                                                        .get(ApprovedGuest.FREE_SEATS_NUM).toString())
+                                        )
+                        );
+
+                        semaphore.release();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        semaphore.release();
+                    }
+                });
+
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Passenger> getPassengers(String eventId) throws InterruptedException {
