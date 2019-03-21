@@ -63,7 +63,7 @@ public class PotentialMatchThread extends Thread{
                                                     driver = mapDriversById.get(driverId);
                                                 } else {
                                                     driver = new Driver(driverId.toString());
-                                                    mapDriversById.put(driver.getDriverId(), driver);
+                                                    mapDriversById.put(driver.getId(), driver);
                                                 }
                                             }
 

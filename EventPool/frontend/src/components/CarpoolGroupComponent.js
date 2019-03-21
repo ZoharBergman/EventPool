@@ -13,7 +13,7 @@ class CarpoolGroupComponent extends Component {
                     <CardHeader title={"Driver: " + this.props.driver.name}/>
                 </Link>
                 <CardContent>
-                    {ListComponent(this.props.passengers, "guestId", "name")}
+                    {ListComponent(this.props.passengers, "id", "name")}
                 </CardContent>
             </Card>
         );

@@ -3,31 +3,27 @@ package com.FinalProject.EventPool.Models;
 /**
  * Created by Zohar on 02/01/2019.
  */
-public class Driver {
+public class Driver extends ApprovedGuest{
+    // Consts
+    public static final String FREE_SEATS_NUM = "freeSeatsNum";
+
     // Properties
-    private String driverId;
     private Integer freeSeatsNum;
 
     // Ctor
-    public Driver(String driverId) {
-        this.driverId = driverId;
+    public Driver() {super();}
+
+    public Driver(String id) {
+        super(id, true, true);
         this.freeSeatsNum = 0;
     }
 
-    public Driver(String driverId, Integer freeSeatsNum) {
-        this.driverId = driverId;
+    public Driver(String id, Integer freeSeatsNum) {
+        super(id, true, true);
         this.freeSeatsNum = freeSeatsNum;
     }
 
     // Getters & Setters
-    public String getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
-    }
-
     public Integer getFreeSeatsNum() {
         return freeSeatsNum;
     }

@@ -9,6 +9,8 @@ import com.google.firebase.database.DatabaseReference;
 public class Event {
     //Consts
     public static final String COLLECTION_NAME = "events";
+    public static final String ADDRESS = "address";
+    public static final String LOCATION = "location";
 
     // Methods
     public static DatabaseReference getReference() {

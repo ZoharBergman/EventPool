@@ -7,8 +7,8 @@ import renderField from './RenderedField';
 
 const validate = val => {
     const errors = {};
-    if (!val.fullName) {
-        errors.fullName = 'Required';
+    if (!val.name) {
+        errors.name= 'Required';
     }
 
     if (!val.phoneNumber) {
@@ -32,7 +32,7 @@ let AddGuestForm = (props) => {
         <br />
         <form className="form" onSubmit={handleSubmit} >{/*style={{display: 'inline-flex'}}*/}
             <div className="field">
-                <Field className="input" name="fullName" component={renderField} type="text" label="Full name" />
+                <Field className="input" name="name" component={renderField} type="text" label="Full name" />
             </div>
 
             <div className="field">

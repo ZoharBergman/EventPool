@@ -72,7 +72,7 @@ class EventPage extends Component {
         return Object.keys(guests).map((guestId) => {
             return (
                 <li key={guestId}>
-                    <Link to={`/event/${this.state.eventId}/${guestsType}/${guestId}`}>{guests[guestId].fullName}</Link>
+                    <Link to={`/event/${this.state.eventId}/${guestsType}/${guestId}`}>{guests[guestId].name}</Link>
                 </li>
             );
         });
@@ -96,7 +96,7 @@ class EventPage extends Component {
                     const groupDetails = {
                         driver: {
                             id: carpoolGroup.driverId,
-                            name: this.state.event.approvedGuests[carpoolGroup.driverId].fullName,
+                            name: this.state.event.approvedGuests[carpoolGroup.driverId].name,
                             phoneNumber: this.state.event.approvedGuests[carpoolGroup.driverId].phoneNumber,
                             startLocation: this.state.event.approvedGuests[carpoolGroup.driverId].startLocation
                         },
@@ -104,8 +104,8 @@ class EventPage extends Component {
                     };
 
                     carpoolGroup.setPassengers.forEach(passenger => {
-                        passenger.name = this.state.event.approvedGuests[passenger.guestId].fullName;
-                        passenger.phoneNumber = this.state.event.approvedGuests[passenger.guestId].phoneNumber;
+                        passenger.name = this.state.event.approvedGuests[passenger.id].name;
+                        passenger.phoneNumber = this.state.event.approvedGuests[passenger.id].phoneNumber;
                         groupDetails.passengers.push(passenger);
                     });
 

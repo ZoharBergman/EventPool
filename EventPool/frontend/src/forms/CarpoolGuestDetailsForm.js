@@ -30,7 +30,7 @@ let CarpoolGuestDetailsForm = (props) => {
 
     return (
         <div>
-            <h2>{props.guest.fullName}</h2>
+            <h2>{props.guest.name}</h2>
             <form className="form" onSubmit={handleSubmit}>
                  <div className="field">
                      <label>Is coming?</label>

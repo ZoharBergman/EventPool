@@ -55,7 +55,7 @@ class CarpoolGroupPage extends Component {
                         </div>
                         <div>
                             <h3>Passengers:</h3>
-                            {ListComponent(Object.values(this.state.passengers), "guestId", "name", "phoneNumber")}
+                            {ListComponent(Object.values(this.state.passengers), "id", "name", "phoneNumber")}
                         </div>
                     </div>
                 </div>

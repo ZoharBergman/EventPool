@@ -14,7 +14,7 @@ class NewGuestPage extends Component {
 
         this.state = {
             eventId: props.match.params.eventId,
-            guestId: props.match.params.guestId,
+            id: props.match.params.guestId,
             event: {},
             newGuest: {}
         };
@@ -29,8 +29,8 @@ class NewGuestPage extends Component {
             if (snapshot.exists()) {
                 this.setState({event: new event(snapshot.val())});
 
-                if (this.state.event.notApprovedGuests[this.state.guestId]) {
-                    this.setState({newGuest: this.state.event.notApprovedGuests[this.state.guestId]})
+                if (this.state.event.notApprovedGuests[this.state.id]) {
+                    this.setState({newGuest: this.state.event.notApprovedGuests[this.state.id]})
                 }
             }
         });
@@ -38,10 +38,10 @@ class NewGuestPage extends Component {
 
     saveToDB() {
         // Save guest as approved
-        eventsRef.child(this.state.eventId).child('approvedGuests').child(this.state.guestId).set(this.state.newGuest);
+        eventsRef.child(this.state.eventId).child('approvedGuests').child(this.state.id).set(this.state.newGuest);
 
         // Delete guest as not approved
-        eventsRef.child(this.state.eventId).child('notApprovedGuests').child(this.state.guestId).remove();
+        eventsRef.child(this.state.eventId).child('notApprovedGuests').child(this.state.id).remove();
     }
 
     afterGeocode(err, geocodeResponse) {
@@ -60,7 +60,7 @@ class NewGuestPage extends Component {
                 routesService.calcAndSaveRoute(
                     `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
                     `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
-                    this.state.guestId,
+                    this.state.id,
                     this.state.eventId,
                     guestDetails.freeSeatsNum);
 
@@ -71,7 +71,7 @@ class NewGuestPage extends Component {
 
     handleSubmit(guestDetails) {
         Object.assign(guestDetails, guestDetails, this.state.newGuest);
-        guestDetails.guestId = this.state.guestId;
+        guestDetails.id = this.state.id;
 
         if (!guestDetails.isComing) {
             // Save the guest's details in the DB

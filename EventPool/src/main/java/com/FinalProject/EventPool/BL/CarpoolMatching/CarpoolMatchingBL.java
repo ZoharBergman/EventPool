@@ -1,9 +1,6 @@
 package com.FinalProject.EventPool.BL.CarpoolMatching;
 
-import android.view.GestureDetector;
 import com.FinalProject.EventPool.Models.*;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +54,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Creating a map of drivers by id
         Map<String, Driver> mapDrivers = potentialMatches.rowKeySet().stream()
-                .collect(Collectors.toMap(Driver::getDriverId, Function.identity()));
+                .collect(Collectors.toMap(Driver::getId, Function.identity()));
 
         // Optimize the matches according to the distance between the drivers and the passengers
         matches.forEach((driverId, match) -> {
@@ -134,10 +131,10 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         dataSnapshot.getChildren().forEach(driverSnapshot ->
-                                mapDriversById.get(((Map)driverSnapshot.getValue()).get(ApprovedGuest.GUEST_ID))
+                                mapDriversById.get(((Map)driverSnapshot.getValue()).get(ApprovedGuest.ID))
                                         .setFreeSeatsNum(
                                                 Integer.parseInt(((Map)driverSnapshot.getValue())
-                                                        .get(ApprovedGuest.FREE_SEATS_NUM).toString())
+                                                        .get(Driver.FREE_SEATS_NUM).toString())
                                         )
                         );
 
@@ -194,25 +191,25 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Creating a vertex for each passenger and adding edges between the source and the passengers' vertices
         potentialMatches.columnKeySet().forEach(passenger -> {
-            flowNet.addVertex(passenger.getGuestId());
-            Edge<String> e = new Edge<>(SOURCE, passenger.getGuestId(), 1);
-            flowNet.addEdge(SOURCE, passenger.getGuestId(), e);
+            flowNet.addVertex(passenger.getId());
+            Edge<String> e = new Edge<>(SOURCE, passenger.getId(), 1);
+            flowNet.addEdge(SOURCE, passenger.getId(), e);
             flowNet.setEdgeWeight(e, e.getWeight());
         });
 
         // Creating a vertex for each driver and adding edges between the drivers' vertices and the target
         potentialMatches.rowKeySet().forEach(driver -> {
-            flowNet.addVertex(driver.getDriverId());
-            Edge<String> e = new Edge<>(driver.getDriverId(), TARGET, driver.getFreeSeatsNum());
-            flowNet.addEdge(driver.getDriverId(), TARGET, e);
+            flowNet.addVertex(driver.getId());
+            Edge<String> e = new Edge<>(driver.getId(), TARGET, driver.getFreeSeatsNum());
+            flowNet.addEdge(driver.getId(), TARGET, e);
             flowNet.setEdgeWeight(e, e.getWeight());
         });
 
         // Adding edges between the passengers and the drivers that have a potential match
         potentialMatches.columnKeySet().forEach(passenger ->
                 potentialMatches.column(passenger).keySet().forEach(driver -> {
-                    Edge<String> e = new Edge<>(passenger.getGuestId(), driver.getDriverId(),1);
-                    flowNet.addEdge(passenger.getGuestId(), driver.getDriverId(), e);
+                    Edge<String> e = new Edge<>(passenger.getId(), driver.getId(),1);
+                    flowNet.addEdge(passenger.getId(), driver.getId(), e);
                     flowNet.setEdgeWeight(e, e.getWeight());
                         }
                 )
@@ -231,7 +228,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
 
         // Building a map of the passengers
         Map<String, Passenger> mapPassengers = potentialMatches.columnKeySet().stream().collect(
-                Collectors.toMap(Passenger::getGuestId, Function.identity()));
+                Collectors.toMap(Passenger::getId, Function.identity()));
 
         //Building the matches
         maximumFlow.getFlowMap().forEach((edge, flow) -> {

@@ -11,41 +11,42 @@ public class ApprovedGuest {
     public static final String COLLECTION_NAME = "approvedGuests";
     public static final String IS_COMING = "isComing";
     public static final String IS_CAR = "isCar";
-    public static final String GUEST_ID = "guestId";
-    public static final String FREE_SEATS_NUM = "freeSeatsNum";
+    public static final String ID = "id";
 
     // Properties
-    private String guestId;
-    private String fullName;
+    private String id;
+    private String name;
     private String phoneNumber;
     private Boolean isComing;
     private Boolean isCar;
     private LatLng startLocation;
-    private Integer freeSeatsNum;
-    private String routeId;
 
     // Ctor
     public ApprovedGuest() {}
+
+    public ApprovedGuest(String id, Boolean isComing, Boolean isCar) {
+        this.id = id;
+    }
 
     // Methods
     public static DatabaseReference getReference(String eventId) {
         return Event.getReference().child(eventId).getRef().child(COLLECTION_NAME);
     }
 
-    public String getGuestId() {
-        return guestId;
+    public String getId() {
+        return id;
     }
 
-    public void setGuestId(String guestId) {
-        this.guestId = guestId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhoneNumber() {
@@ -78,21 +79,5 @@ public class ApprovedGuest {
 
     public void setStartLocation(LatLng startLocation) {
         this.startLocation = startLocation;
-    }
-
-    public Integer getFreeSeatsNum() {
-        return freeSeatsNum;
-    }
-
-    public void setFreeSeatsNum(Integer freeSeatsNum) {
-        this.freeSeatsNum = freeSeatsNum;
-    }
-
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
     }
 }
