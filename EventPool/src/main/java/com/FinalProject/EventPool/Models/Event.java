@@ -11,6 +11,7 @@ public class Event {
     public static final String COLLECTION_NAME = "events";
     public static final String ADDRESS = "address";
     public static final String LOCATION = "location";
+    public static final String CARPOOL_GROUPS = "carpoolGroups";
 
     // Methods
     public static DatabaseReference getReference() {
