@@ -94,6 +94,7 @@ class EventPage extends Component {
             .then(data => {
                 const carpoolGroups = Object.values(data).map(carpoolGroup => {
                     const groupDetails = {
+                        id: carpoolGroup.driverId,
                         driver: {
                             id: carpoolGroup.driverId,
                             name: this.state.event.approvedGuests[carpoolGroup.driverId].name,

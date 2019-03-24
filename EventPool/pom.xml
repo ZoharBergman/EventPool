@@ -5,11 +5,11 @@
 
 	<groupId>com.FinalProject</groupId>
 	<artifactId>EventPool</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>jar</packaging>
 
 	<name>EventPool</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Smart Carpool Organizer for Events</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

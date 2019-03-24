@@ -66,15 +66,12 @@ public class RoutesBL implements IRoutes{
             // Save the LatLng as a geolocation object in the DB
             GeoLocation geoLocation = new GeoLocation(latLng.lat, latLng.lng);
             String geoLocationKey = Geofire.getGeoLocationKey(geoLocation);
-            Geofire.getInstance(eventId).setLocation(geoLocationKey, geoLocation, new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String s, DatabaseError databaseError) {
-                    synchronized (numOfHandledPoints[0]) {
-                        numOfHandledPoints[0]--;
+            Geofire.getInstance(eventId).setLocation(geoLocationKey, geoLocation, (s, databaseError) -> {
+                synchronized (numOfHandledPoints[0]) {
+                    numOfHandledPoints[0]--;
 
-                        if (numOfHandledPoints[0] == 0) {
-                            semaphore.release();
-                        }
+                    if (numOfHandledPoints[0] == 0) {
+                        semaphore.release();
                     }
                 }
             });

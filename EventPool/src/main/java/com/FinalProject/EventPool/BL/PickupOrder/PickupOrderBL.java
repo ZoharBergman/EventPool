@@ -15,9 +15,11 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public class PickupOrderBL implements IPickupOrder{
     @Override
-    public String[] calcPickupOrder(String eventId, String groupId) throws InterruptedException {
+    public List<String> calcPickupOrder(String eventId, String groupId) throws InterruptedException {
         CarpoolGroup carpoolGroup = getCarpoolGroup(eventId, groupId);
         LatLng eventLocation = getEventLocation(eventId);
         return getPickupOrder(carpoolGroup, eventLocation);
@@ -36,21 +38,22 @@ public class PickupOrderBL implements IPickupOrder{
         LatLng eventLocation = getEventLocation(eventId);
         List<CarpoolGroup> lstCarpoolGroups = getCarpoolGroups(eventId);
         calcPickupOrder(lstCarpoolGroups, eventLocation);
-        savePickupOrders(lstCarpoolGroups);
+        savePickupOrders(lstCarpoolGroups, eventId);
     }
 
-    private void savePickupOrders(List<CarpoolGroup> lstCarpoolGroups) {
-
+    private void savePickupOrders(List<CarpoolGroup> lstCarpoolGroups, String eventId) {
+        Event.getReference().child(eventId).child(Event.CARPOOL_GROUPS).setValue(
+                lstCarpoolGroups.stream().collect(Collectors.toMap(CarpoolGroup::getId, Function.identity())),
+                (databaseError, databaseReference) -> {
+                });
     }
 
     private void calcPickupOrder(List<CarpoolGroup> lstCarpoolGroups, LatLng eventLocation) {
         List<Thread> lstThreadsCalcPickupOrder = new LinkedList<>();
 
         lstCarpoolGroups.forEach(carpoolGroup ->
-            lstThreadsCalcPickupOrder.add(new Thread(() -> {
-                String[] pickupOrder = getPickupOrder(carpoolGroup, eventLocation);
-                carpoolGroup.setPickupOrder(pickupOrder);
-            }))
+            lstThreadsCalcPickupOrder.add(new Thread(() ->
+                    carpoolGroup.setPickupOrder(getPickupOrder(carpoolGroup, eventLocation))))
         );
 
         lstThreadsCalcPickupOrder.forEach(Thread::start);
@@ -67,7 +70,7 @@ public class PickupOrderBL implements IPickupOrder{
         final Semaphore semaphore = new Semaphore(0);
         List<CarpoolGroup> lstCarpoolGroups = new LinkedList<>();
 
-        Event.getReference().child(Event.CARPOOL_GROUPS).addListenerForSingleValueEvent(new ValueEventListener() {
+        Event.getReference().child(eventId).child(Event.CARPOOL_GROUPS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshot.getChildren().forEach(carpoolGroupSnapshot ->
@@ -87,9 +90,10 @@ public class PickupOrderBL implements IPickupOrder{
         return lstCarpoolGroups;
     }
 
-    private String[] getPickupOrder(CarpoolGroup carpoolGroup, LatLng eventLocation) {
+    private List<String> getPickupOrder(CarpoolGroup carpoolGroup, LatLng eventLocation) {
         GeoApiContext context = new GeoApiContext.Builder().apiKey(Keys.DIRECTIONS_API_KEY).build();
-        String[] pickupOrder = new String[carpoolGroup.getPassengers().size()];
+        List<String> pickupOrder = new ArrayList<>(carpoolGroup.getPassengers().size());
+        carpoolGroup.getPassengers().forEach(passenger -> pickupOrder.add(""));
 
         try {
             // Getting the directions
@@ -110,7 +114,7 @@ public class PickupOrderBL implements IPickupOrder{
                     directionsResult.routes[0].overviewPolyline != null) {
                 // Getting the pickup order
                 for (Integer curr : directionsResult.routes[0].waypointOrder) {
-                    pickupOrder[curr] = carpoolGroup.getPassengers().get(curr).getId();
+                    pickupOrder.set(curr, carpoolGroup.getPassengers().get(curr).getId());
                 }
             }
         } catch (ApiException | InterruptedException | IOException e) {

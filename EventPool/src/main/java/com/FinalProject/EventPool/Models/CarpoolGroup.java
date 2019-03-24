@@ -16,7 +16,8 @@ public class CarpoolGroup {
     private Driver driver;
     private String eventName;
     private List<Passenger> passengers;
-    private String[] pickupOrder;
+    private List<String> pickupOrder;
+    private String id;
 
     // Ctor
     public CarpoolGroup() {}
@@ -50,11 +51,19 @@ public class CarpoolGroup {
         this.passengers = passengers;
     }
 
-    public String[] getPickupOrder() {
+    public List<String> getPickupOrder() {
         return pickupOrder;
     }
 
-    public void setPickupOrder(String[] pickupOrder) {
+    public void setPickupOrder(List<String> pickupOrder) {
         this.pickupOrder = pickupOrder;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

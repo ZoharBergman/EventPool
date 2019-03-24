@@ -12,6 +12,7 @@ public class Event {
     public static final String ADDRESS = "address";
     public static final String LOCATION = "location";
     public static final String CARPOOL_GROUPS = "carpoolGroups";
+    public static final String DATE = "date";
 
     // Methods
     public static DatabaseReference getReference() {
