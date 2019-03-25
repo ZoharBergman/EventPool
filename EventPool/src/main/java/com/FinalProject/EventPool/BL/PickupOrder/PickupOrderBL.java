@@ -13,6 +13,7 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Zohar on 21/03/2019.
  */
+@Service
 public class PickupOrderBL implements IPickupOrder{
     @Override
     public List<String> calcPickupOrder(String eventId, String groupId) throws InterruptedException {
@@ -51,10 +53,13 @@ public class PickupOrderBL implements IPickupOrder{
     private void calcPickupOrder(List<CarpoolGroup> lstCarpoolGroups, LatLng eventLocation) {
         List<Thread> lstThreadsCalcPickupOrder = new LinkedList<>();
 
-        lstCarpoolGroups.forEach(carpoolGroup ->
-            lstThreadsCalcPickupOrder.add(new Thread(() ->
-                    carpoolGroup.setPickupOrder(getPickupOrder(carpoolGroup, eventLocation))))
-        );
+        lstCarpoolGroups.forEach(carpoolGroup -> {
+            if ((carpoolGroup.getPickupOrder() == null ) ||
+                (carpoolGroup.getPickupOrder() != null && carpoolGroup.getPickupOrder().size() == 0)) {
+                lstThreadsCalcPickupOrder.add(new Thread(() ->
+                        carpoolGroup.setPickupOrder(getPickupOrder(carpoolGroup, eventLocation))));
+            }
+        });
 
         lstThreadsCalcPickupOrder.forEach(Thread::start);
         lstThreadsCalcPickupOrder.forEach(thread -> {

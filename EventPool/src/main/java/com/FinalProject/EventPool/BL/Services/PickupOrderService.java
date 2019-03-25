@@ -1,39 +1,53 @@
 package com.FinalProject.EventPool.BL.Services;
 
 import com.FinalProject.EventPool.BL.PickupOrder.IPickupOrder;
+import com.FinalProject.EventPool.BL.PickupOrder.PickupOrderBL;
 import com.FinalProject.EventPool.Models.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
+import java.time.*;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Zohar on 24/03/2019.
  */
+@Service
 public class PickupOrderService implements IScheduleService, Runnable{
+    // Properties
     @Autowired
     private IPickupOrder PickupOrder;
 
+    // Methods
     @Override
-    public long getDelay() {
-        return 1;
+    public long getDelayInMillis() {
+        // One day
+        return 24 * 60 * 60 * 1000;
     }
 
     @Override
-    public TimeUnit getTimeUnit() {
-        return TimeUnit.DAYS;
+    public String getName() {
+        return "PickupOrderService";
+    }
+
+    @Override
+    public ZonedDateTime getTimeToRun() {
+        return ZonedDateTime.of(LocalDateTime.now(), ZoneId.of(Scheduler.ZONE)).withHour(2).withMinute(0).withSecond(0);
     }
 
     @Override
     public void runService() {
+        final Semaphore semaphore = new Semaphore(0);
+
         // Getting all the today events
         Event.getReference().orderByChild(Event.DATE)
-                .endAt(LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT).plusDays(1).toString())
+                .startAt(LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT)
+                        .atZone(ZoneId.of(Scheduler.ZONE)).toInstant().toEpochMilli())
+                .endAt(LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT).plusDays(1)
+                        .atZone(ZoneId.of(Scheduler.ZONE)).toInstant().toEpochMilli())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -44,13 +58,22 @@ public class PickupOrderService implements IScheduleService, Runnable{
                                 e.printStackTrace();
                             }
                         });
+
+                        semaphore.release();
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        semaphore.release();
                     }
                 });
+
+        try {
+            semaphore.acquire();
+            Scheduler.saveServiceRuntimeDetails(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
