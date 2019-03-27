@@ -22,7 +22,8 @@ class EventPage extends Component {
                 name: "",
                 notApprovedGuests: {},
                 approvedGuests: {},
-                carpoolGroups: {}
+                carpoolGroups: {},
+                id:""
             },
             isCarpoolGroupsConfirmed: false,
             isCalcCarpoolGroupsAgain: false,
@@ -38,6 +39,7 @@ class EventPage extends Component {
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
+        this.calcPickupOrders = this.calcPickupOrders.bind(this);
     }
 
     componentWillMount() {
@@ -82,7 +84,7 @@ class EventPage extends Component {
         return Object.values(carpoolGroups).map(carpoolGroup => {
            return (
                <li key={carpoolGroup.driver.id}>
-                   <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={carpoolGroup.passengers}/>
+                   <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={Object.values(carpoolGroup.passengers)}/>
                </li>
            );
         });
@@ -101,13 +103,13 @@ class EventPage extends Component {
                             phoneNumber: this.state.event.approvedGuests[carpoolGroup.driverId].phoneNumber,
                             startLocation: this.state.event.approvedGuests[carpoolGroup.driverId].startLocation
                         },
-                        passengers: []
+                        passengers: {}
                     };
 
                     carpoolGroup.setPassengers.forEach(passenger => {
                         passenger.name = this.state.event.approvedGuests[passenger.id].name;
                         passenger.phoneNumber = this.state.event.approvedGuests[passenger.id].phoneNumber;
-                        groupDetails.passengers.push(passenger);
+                        groupDetails.passengers[passenger.id] = passenger;
                     });
 
                     groupDetails.eventName = this.state.event.name;
@@ -177,6 +179,12 @@ class EventPage extends Component {
         }));
     }
 
+    calcPickupOrders() {
+        EventPoolService.calcAndSavePickupOrders(this.state.eventId).then(() => {
+
+        });
+    }
+
     openModal() {
         this.setState({ open: true })
     }
@@ -225,6 +233,7 @@ class EventPage extends Component {
                     <button onClick={this.handleCalcCarpoolGroups} hidden={Object.keys(this.state.event.approvedGuests).length <= 0 || this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
                     <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length <= 0}>Save Carpool Groups</button>
                     <button onClick={this.cancelNewCarpoolGroups} hidden={Object.keys(this.state.oldCarpoolGroups).length <= 0}>Cancel new groups calculation</button>
+                    <button onClick={this.calcPickupOrders} hidden={!this.state.isCarpoolGroupsConfirmed}>Calculate pickup order of carpool groups</button>
                     <div>
                         <button onClick={this.openModal} hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
                             Calculate Carpool Groups Again

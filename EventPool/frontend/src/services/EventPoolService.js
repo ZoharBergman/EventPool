@@ -12,6 +12,14 @@ class EventPoolService {
     static calcCarpoolMatching(eventId, deviationRadius) {
         return RequestsService.request(`calcCarpoolMatching/${eventId}/${deviationRadius}`);
     }
+
+    static calcAndSavePickupOrders(eventId) {
+        return RequestsService.request(`calcAndSavePickupOrders/${eventId}`)
+    }
+
+    static calcAndSavePickupOrder(eventId, groupId) {
+        return RequestsService.request(`calcAndSavePickupOrder/${eventId}/${groupId}`)
+    }
 }
 
 export default EventPoolService;

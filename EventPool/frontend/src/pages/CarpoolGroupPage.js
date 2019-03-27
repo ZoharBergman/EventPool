@@ -4,10 +4,14 @@
 import React, { Component } from 'react';
 import { eventsRef } from '../config/firebase';
 import ListComponent from '../components/ListComponent';
+import EventPoolService from '../services/EventPoolService';
+import Stepper from 'react-stepper-horizontal/lib/index';
 
 class CarpoolGroupPage extends Component {
     constructor(props) {
         super(props);
+
+        this.WAZE_URL = "https://www.waze.com/he/livemap?navigate=yes&zoom=17&ll=";
 
         this.state = {
             eventId: props.match.params.eventId,
@@ -15,10 +19,13 @@ class CarpoolGroupPage extends Component {
             driver: {},
             passengers: {},
             eventName: "",
-            pickupOrder: []
-        }
+            pickupOrder: [],
+            eventLocation: {}
+        };
 
         this.check = this.check.bind(this);
+        this.calcPickupOrder = this.calcPickupOrder.bind(this);
+        this.buildPickupOrderStepper = this.buildPickupOrderStepper.bind(this);
     }
 
     check() {
@@ -31,17 +38,51 @@ class CarpoolGroupPage extends Component {
             if (snapshot.exists()) {
                 const val = snapshot.val();
 
-                this.setState(val);
+                eventsRef.child(this.state.eventId).child('address').child('location').once('value')
+                    .then((eventLocationSnapshot) => {
+                    if (eventLocationSnapshot.exists()) {
+                        this.setState({
+                            ...val,
+                            eventLocation: eventLocationSnapshot.val()
+                        });
+                    }
+                    });
             }
         });
     }
 
+    calcPickupOrder() {
+        EventPoolService.calcAndSavePickupOrder(this.state.eventId, this.state.groupId)
+            .then(response => response.json())
+            .then(pickupOrder => {
+                this.setState({pickupOrder: pickupOrder});
+            });
+    }
+
+    buildPickupOrderStepper(passengers, pickupOrder, eventLocation) {
+        let steps = [];
+
+        pickupOrder.forEach(curr => {
+           steps.push({
+               title: passengers[curr].name,
+               href: `${this.WAZE_URL}${passengers[curr].startLocation.lat},${passengers[curr].startLocation.lng}`
+           })
+        });
+
+        steps.push({
+            title: "Event",
+            href: `${this.WAZE_URL}${eventLocation.lat},${eventLocation.lng}`
+        });
+
+        return (
+            <Stepper steps={steps} activeStep={pickupOrder.length}/>
+        )
+    }
+
     render() {
-        let pickupOrderDiv = this.state.pickupOrder.length === 0 ? "" : (
-                <div>
-                    <h2>Pickup Order</h2>
-                </div>
-        );
+        let pickupOrderDiv = this.state.pickupOrder.length === 0 ? (
+            <button onClick={this.calcPickupOrder}>Calculate pickup order</button>
+        ) : this.buildPickupOrderStepper(this.state.passengers, this.state.pickupOrder, this.state.eventLocation);
 
         return (
             <div>
@@ -59,7 +100,10 @@ class CarpoolGroupPage extends Component {
                         </div>
                     </div>
                 </div>
-                {pickupOrderDiv}
+                <div>
+                    <h2>Pickup Order</h2>
+                    {pickupOrderDiv}
+                </div>
             </div>
         );
     }

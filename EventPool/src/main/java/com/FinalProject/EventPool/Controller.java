@@ -1,18 +1,17 @@
 package com.FinalProject.EventPool;
 
 import com.FinalProject.EventPool.BL.CarpoolMatching.ICarpoolMatching;
+import com.FinalProject.EventPool.BL.PickupOrder.IPickupOrder;
+import com.FinalProject.EventPool.Models.Event;
 import com.FinalProject.EventPool.Models.Match;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import com.FinalProject.EventPool.BL.Routes.IRoutes;
 
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Zohar on 31/10/2018.
@@ -24,6 +23,8 @@ public class Controller {
     private IRoutes Routes;
     @Autowired
     private ICarpoolMatching CarpoolMatching;
+    @Autowired
+    private IPickupOrder PickupOrder;
 
     // Const
     public final static String SUPPORTED_URL = "http://localhost:3000";
@@ -47,5 +48,27 @@ public class Controller {
         }
 
         return null;
+    }
+
+    @CrossOrigin(origins = SUPPORTED_URL)
+    @GetMapping("/calcAndSavePickupOrder/{eventId}/{groupId}")
+    public List<String> calcAndSavePickupOrder(@PathVariable String eventId, @PathVariable String groupId) {
+        try {
+            return PickupOrder.calcAndSavePickupOrder(eventId, groupId);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @CrossOrigin(origins = SUPPORTED_URL)
+    @GetMapping("/calcAndSavePickupOrders/{eventId}")
+    public void calcAndSavePickupOrders(@PathVariable String eventId) {
+        try {
+            PickupOrder.calcAndSavePickupOrders(eventId);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

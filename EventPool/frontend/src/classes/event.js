@@ -3,6 +3,7 @@
  */
 class event {
     constructor(event) {
+        this.id = event.id;
         this.name = event.name;
         this.address = event.address;
         this.date = event.date;

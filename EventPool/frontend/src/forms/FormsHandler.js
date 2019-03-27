@@ -19,6 +19,7 @@ const handleCreateEvent = (newEvent) => {
 
         // Saving the new event to the DB
         const eventId = eventsRef.push().key;
+        newEvent.id = eventId;
         const eventObject = {};
         eventObject[eventId] = newEvent;
         eventsRef.update(eventObject);

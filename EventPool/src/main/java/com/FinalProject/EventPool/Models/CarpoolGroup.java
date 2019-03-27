@@ -3,6 +3,7 @@ package com.FinalProject.EventPool.Models;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,11 +12,12 @@ import java.util.Set;
 public class CarpoolGroup {
     // Consts
     public static final String COLLECTION_NAME = "carpoolGroups";
+    public static final String PICKUP_ORDER = "pickupOrder";
 
     // Properties
     private Driver driver;
     private String eventName;
-    private List<Passenger> passengers;
+    private Map<String, Passenger> passengers;
     private List<String> pickupOrder;
     private String id;
 
@@ -45,11 +47,11 @@ public class CarpoolGroup {
         this.eventName = eventName;
     }
 
-    public List<Passenger> getPassengers() {
+    public Map<String, Passenger> getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(List<Passenger> passengers) {
+    public void setPassengers(Map<String, Passenger> passengers) {
         this.passengers = passengers;
     }
 

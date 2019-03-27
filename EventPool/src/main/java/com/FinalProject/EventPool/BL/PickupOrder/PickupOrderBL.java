@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
@@ -29,29 +30,44 @@ import java.util.stream.Collectors;
 @Service
 public class PickupOrderBL implements IPickupOrder{
     @Override
-    public List<String> calcPickupOrder(String eventId, String groupId) throws InterruptedException {
+    public List<String> calcAndSavePickupOrder(String eventId, String groupId) throws InterruptedException {
         CarpoolGroup carpoolGroup = getCarpoolGroup(eventId, groupId);
         LatLng eventLocation = getEventLocation(eventId);
-        return getPickupOrder(carpoolGroup, eventLocation);
+        List<String> lstPickupOrder = getPickupOrder(carpoolGroup, eventLocation);
+        savePickupOrder(groupId, eventId, lstPickupOrder);
+        return lstPickupOrder;
     }
 
     @Override
     public void calcAndSavePickupOrders(Event event) throws InterruptedException {
-        calcPickupOrder(new ArrayList<>(event.getCarpoolGroups().values()), event.getAddress().getLocation());
-        savePickupOrders(new ArrayList<>(event.getCarpoolGroups().values()), event.getId());
+        calcPickupOrder(event.getCarpoolGroups().values(), event.getAddress().getLocation());
+        savePickupOrders(event.getCarpoolGroups().values(), event.getId());
     }
 
-    private void savePickupOrders(List<CarpoolGroup> lstCarpoolGroups, String eventId) {
+    @Override
+    public void calcAndSavePickupOrders(String eventId) throws InterruptedException {
+        LatLng eventLocation = getEventLocation(eventId);
+        List<CarpoolGroup> lstCarpoolGroups = getCarpoolGroups(eventId);
+        calcPickupOrder(lstCarpoolGroups, eventLocation);
+        savePickupOrders(lstCarpoolGroups, eventId);
+    }
+
+    private void savePickupOrders(Collection<CarpoolGroup> carpoolGroups, String eventId) {
         Event.getReference().child(eventId).child(Event.CARPOOL_GROUPS).setValue(
-                lstCarpoolGroups.stream().collect(Collectors.toMap(CarpoolGroup::getId, Function.identity())),
+                carpoolGroups.stream().collect(Collectors.toMap(CarpoolGroup::getId, Function.identity())),
                 (databaseError, databaseReference) -> {
                 });
     }
 
-    private void calcPickupOrder(List<CarpoolGroup> lstCarpoolGroups, LatLng eventLocation) {
+    private void savePickupOrder(String groupId, String eventId, List<String> lstPickupOrder) {
+        CarpoolGroup.getReference(eventId, groupId).child(CarpoolGroup.PICKUP_ORDER)
+                .setValue(lstPickupOrder, (databaseError, databaseReference) -> {});
+    }
+
+    private void calcPickupOrder(Collection<CarpoolGroup> carpoolGroups, LatLng eventLocation) {
         List<Thread> lstThreadsCalcPickupOrder = new LinkedList<>();
 
-        lstCarpoolGroups.forEach(carpoolGroup -> {
+        carpoolGroups.forEach(carpoolGroup -> {
             if ((carpoolGroup.getPickupOrder() == null ) ||
                 (carpoolGroup.getPickupOrder() != null && carpoolGroup.getPickupOrder().size() == 0)) {
                 lstThreadsCalcPickupOrder.add(new Thread(() ->
@@ -95,18 +111,19 @@ public class PickupOrderBL implements IPickupOrder{
 
     private List<String> getPickupOrder(CarpoolGroup carpoolGroup, LatLng eventLocation) {
         GeoApiContext context = new GeoApiContext.Builder().apiKey(Keys.DIRECTIONS_API_KEY).build();
-        List<String> pickupOrder = new ArrayList<>(carpoolGroup.getPassengers().size());
-        carpoolGroup.getPassengers().forEach(passenger -> pickupOrder.add(""));
+        List<Passenger> lstPassengers = new ArrayList<>(carpoolGroup.getPassengers().values());
+        List<String> pickupOrder = new ArrayList<>(lstPassengers.size());
+        lstPassengers.forEach(passenger -> pickupOrder.add(""));
 
         try {
             // Getting the directions
             DirectionsResult directionsResult = DirectionsApi
                     .getDirections(context, carpoolGroup.getDriver().getStartLocation().toString(), eventLocation.toString())
                     .mode(TravelMode.DRIVING)
-                    .waypoints(carpoolGroup.getPassengers().stream()
+                    .waypoints(lstPassengers.stream()
                             .map(Passenger::getStartLocation)
                             .collect(Collectors.toList())
-                            .toArray(new LatLng[carpoolGroup.getPassengers().size()]))
+                            .toArray(new LatLng[lstPassengers.size()]))
                     .optimizeWaypoints(true)
                     .await();
 
@@ -116,8 +133,8 @@ public class PickupOrderBL implements IPickupOrder{
                     directionsResult.routes[0] != null &&
                     directionsResult.routes[0].overviewPolyline != null) {
                 // Getting the pickup order
-                for (Integer curr : directionsResult.routes[0].waypointOrder) {
-                    pickupOrder.set(curr, carpoolGroup.getPassengers().get(curr).getId());
+                for (int curr = 0; curr < directionsResult.routes[0].waypointOrder.length; curr++) {
+                    pickupOrder.set(curr, lstPassengers.get(directionsResult.routes[0].waypointOrder[curr]).getId());
                 }
             }
         } catch (ApiException | InterruptedException | IOException e) {
