@@ -57,19 +57,19 @@ public class ApprovedGuest {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getComing() {
+    public Boolean getIsComing() {
         return isComing;
     }
 
-    public void setComing(Boolean coming) {
+    public void setIsComing(Boolean coming) {
         isComing = coming;
     }
 
-    public Boolean getCar() {
+    public Boolean getIsCar() {
         return isCar;
     }
 
-    public void setCar(Boolean car) {
+    public void setIsCar(Boolean car) {
         isCar = car;
     }
 

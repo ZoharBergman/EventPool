@@ -1,5 +1,7 @@
 package com.FinalProject.EventPool.BL.PickupOrder;
 
+import com.FinalProject.EventPool.Models.Event;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  */
 public interface IPickupOrder {
     List<String> calcPickupOrder(String eventId, String groupId) throws InterruptedException;
-    void calcAndSavePickupOrders(String eventId) throws InterruptedException;
+    void calcAndSavePickupOrders(Event event) throws InterruptedException;
 }

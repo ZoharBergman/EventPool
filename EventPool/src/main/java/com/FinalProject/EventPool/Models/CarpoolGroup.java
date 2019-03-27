@@ -20,7 +20,9 @@ public class CarpoolGroup {
     private String id;
 
     // Ctor
-    public CarpoolGroup() {}
+    public CarpoolGroup() {
+
+    }
 
     // Methods
     public static DatabaseReference getReference(String eventId, String groupId) {

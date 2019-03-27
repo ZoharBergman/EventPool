@@ -36,11 +36,9 @@ public class PickupOrderBL implements IPickupOrder{
     }
 
     @Override
-    public void calcAndSavePickupOrders(String eventId) throws InterruptedException {
-        LatLng eventLocation = getEventLocation(eventId);
-        List<CarpoolGroup> lstCarpoolGroups = getCarpoolGroups(eventId);
-        calcPickupOrder(lstCarpoolGroups, eventLocation);
-        savePickupOrders(lstCarpoolGroups, eventId);
+    public void calcAndSavePickupOrders(Event event) throws InterruptedException {
+        calcPickupOrder(new ArrayList<>(event.getCarpoolGroups().values()), event.getAddress().getLocation());
+        savePickupOrders(new ArrayList<>(event.getCarpoolGroups().values()), event.getId());
     }
 
     private void savePickupOrders(List<CarpoolGroup> lstCarpoolGroups, String eventId) {
@@ -129,9 +127,9 @@ public class PickupOrderBL implements IPickupOrder{
         return pickupOrder;
     }
 
-    private LatLng getEventLocation(String eventId) throws InterruptedException {
+    private LatLng getEventLocation(String eventId) {
         final Semaphore semaphore = new Semaphore(0);
-        final LatLng[] eventLocation = {null};
+        final LatLng[] eventLocation = new LatLng[1];
 
         Event.getReference().child(eventId).child(Event.ADDRESS).child(Event.LOCATION)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +145,11 @@ public class PickupOrderBL implements IPickupOrder{
                     }
                 });
 
-        semaphore.acquire();
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return eventLocation[0];
     }

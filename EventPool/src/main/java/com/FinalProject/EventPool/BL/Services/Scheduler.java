@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.*;
 import java.time.chrono.ChronoLocalDateTime;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Semaphore;
@@ -79,7 +80,17 @@ public class Scheduler {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    localDateTime[0] = dataSnapshot.getValue(Service.class).getRuntime();
+                    Map runtime = (Map) ((Map) dataSnapshot.getValue()).get("runtime");
+                    localDateTime[0] = LocalDateTime.of(
+                            Integer.parseInt(runtime.get("year").toString()),
+                            Integer.parseInt(runtime.get("monthValue").toString()),
+                            Integer.parseInt(runtime.get("dayOfMonth").toString()),
+                            Integer.parseInt(runtime.get("hour").toString()),
+                            Integer.parseInt(runtime.get("minute").toString()),
+                            Integer.parseInt(runtime.get("second").toString()),
+                            Integer.parseInt(runtime.get("nano").toString())
+                            );
+
                 }
                 semaphore.release();
             }

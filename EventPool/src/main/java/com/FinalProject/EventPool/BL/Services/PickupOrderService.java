@@ -1,7 +1,6 @@
 package com.FinalProject.EventPool.BL.Services;
 
 import com.FinalProject.EventPool.BL.PickupOrder.IPickupOrder;
-import com.FinalProject.EventPool.BL.PickupOrder.PickupOrderBL;
 import com.FinalProject.EventPool.Models.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -51,9 +52,24 @@ public class PickupOrderService implements IScheduleService, Runnable{
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Thread> lstEventThreads = new LinkedList<>();
+
                         dataSnapshot.getChildren().forEach(eventSnapshot -> {
+                            Event event = eventSnapshot.getValue(Event.class);
+                            event.setId(eventSnapshot.getKey());
+                            lstEventThreads.add(new Thread(() -> {
+                                  try {
+                                    PickupOrder.calcAndSavePickupOrders(event);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }));
+                        });
+
+                        lstEventThreads.forEach(Thread::start);
+                        lstEventThreads.forEach(thread -> {
                             try {
-                                PickupOrder.calcAndSavePickupOrders(eventSnapshot.getKey());
+                                thread.join();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
