@@ -1,6 +1,7 @@
 package com.FinalProject.EventPool.BL.PickupOrder;
 
 import com.FinalProject.EventPool.Config.Keys;
+import com.FinalProject.EventPool.Models.Address;
 import com.FinalProject.EventPool.Models.CarpoolGroup;
 import com.FinalProject.EventPool.Models.Event;
 import com.FinalProject.EventPool.Models.Passenger;
@@ -118,10 +119,10 @@ public class PickupOrderBL implements IPickupOrder{
         try {
             // Getting the directions
             DirectionsResult directionsResult = DirectionsApi
-                    .getDirections(context, carpoolGroup.getDriver().getStartLocation().toString(), eventLocation.toString())
+                    .getDirections(context, carpoolGroup.getDriver().getStartAddress().getLocation().toString(), eventLocation.toString())
                     .mode(TravelMode.DRIVING)
                     .waypoints(lstPassengers.stream()
-                            .map(Passenger::getStartLocation)
+                            .map(passenger -> passenger.getStartAddress().getLocation())
                             .collect(Collectors.toList())
                             .toArray(new LatLng[lstPassengers.size()]))
                     .optimizeWaypoints(true)

@@ -41,7 +41,8 @@ public class PotentialMatchThread extends Thread{
         Semaphore counterIsZero = new Semaphore(0);
 
         // Find the locations of the drivers that are driving near the passenger
-        Geofire.getInstance(eventId).queryAtLocation(new GeoLocation(passenger.getStartLocation().lat, passenger.getStartLocation().lng),
+        Geofire.getInstance(eventId).queryAtLocation(
+                new GeoLocation(passenger.getStartAddress().getLocation().lat, passenger.getStartAddress().getLocation().lng),
                 deviationRadius)
                 .addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
                     @Override
@@ -68,8 +69,8 @@ public class PotentialMatchThread extends Thread{
                                             }
 
                                             Double distance = distanceInKm(
-                                                    passenger.getStartLocation().lat,
-                                                    passenger.getStartLocation().lng,
+                                                    passenger.getStartAddress().getLocation().lat,
+                                                    passenger.getStartAddress().getLocation().lng,
                                                     geoLocation.latitude,
                                                     geoLocation.longitude);
 

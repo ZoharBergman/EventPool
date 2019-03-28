@@ -48,8 +48,10 @@ class NewGuestPage extends Component {
         if (!err) {
             // Setting the geocoded address on the guest detail
             const guestDetails = this.state.newGuest;
-            guestDetails.startLocation = geocodeResponse.json.results[0].geometry.location;
-            delete guestDetails.startAddress;
+            guestDetails.startAddress = {
+                name: geocodeResponse.json.results[0].formatted_address,
+                location: geocodeResponse.json.results[0].geometry.location
+            };
 
             // Checking if the guest is a driver
             if (!guestDetails.isCar) { // The guest is a passenger
@@ -58,7 +60,7 @@ class NewGuestPage extends Component {
             } else { // The guest is a driver
                 // Calculate and save the route of the driver
                 routesService.calcAndSaveRoute(
-                    `${guestDetails.startLocation.lat},${guestDetails.startLocation.lng}`,
+                    `${guestDetails.startAddress.location.lat},${guestDetails.startAddress.location.lng}`,
                     `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
                     this.state.id,
                     this.state.eventId,

@@ -110,7 +110,7 @@ class EventPage extends Component {
                             id: carpoolGroup.driverId,
                             name: this.state.event.approvedGuests[carpoolGroup.driverId].name,
                             phoneNumber: this.state.event.approvedGuests[carpoolGroup.driverId].phoneNumber,
-                            startLocation: this.state.event.approvedGuests[carpoolGroup.driverId].startLocation
+                            startAddress: this.state.event.approvedGuests[carpoolGroup.driverId].startAddress
                         },
                         passengers: {}
                     };

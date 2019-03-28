@@ -65,7 +65,7 @@ class CarpoolGroupPage extends Component {
         pickupOrder.forEach(curr => {
            steps.push({
                title: passengers[curr].name,
-               href: `${this.WAZE_URL}${passengers[curr].startLocation.lat},${passengers[curr].startLocation.lng}`
+               href: `${this.WAZE_URL}${passengers[curr].startAddress.location.lat},${passengers[curr].startAddress.location.lng}`
            })
         });
 
@@ -92,11 +92,11 @@ class CarpoolGroupPage extends Component {
                     <div>
                         <div>
                             <h3>Driver:</h3>
-                            {ListComponent([this.state.driver], "id", "name", "phoneNumber")}
+                            {ListComponent([this.state.driver], "id", "name", "phoneNumber", "startAddress.name")}
                         </div>
                         <div>
                             <h3>Passengers:</h3>
-                            {ListComponent(Object.values(this.state.passengers), "id", "name", "phoneNumber")}
+                            {ListComponent(Object.values(this.state.passengers), "id", "name", "phoneNumber", "startAddress.name")}
                         </div>
                     </div>
                 </div>

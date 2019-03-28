@@ -19,7 +19,7 @@ public class ApprovedGuest {
     private String phoneNumber;
     private Boolean isComing;
     private Boolean isCar;
-    private LatLng startLocation;
+    private Address startAddress;
 
     // Ctor
     public ApprovedGuest() {}
@@ -73,11 +73,11 @@ public class ApprovedGuest {
         isCar = car;
     }
 
-    public LatLng getStartLocation() {
-        return startLocation;
+    public Address getStartAddress() {
+        return startAddress;
     }
 
-    public void setStartLocation(LatLng startLocation) {
-        this.startLocation = startLocation;
+    public void setStartAddress(Address startAddress) {
+        this.startAddress = startAddress;
     }
 }

@@ -2,13 +2,13 @@
  * Created by Zohar on 20/11/2018.
  */
 import { createClient } from '@google/maps';
-import { GOOGLE_GEOCODE_API_KEY } from '../config/keys';
+import googleApiKeys from '../config/keys';
 import polylineDecoder from 'decode-google-map-polyline';
 
 let googleMapsClient;
 
 function initialize() {
-    googleMapsClient = createClient({key: GOOGLE_GEOCODE_API_KEY});
+    googleMapsClient = createClient({key: googleApiKeys.GOOGLE_GEOCODE_API_KEY});
 }
 
 function getGoogleMapsClient() {

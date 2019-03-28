@@ -6,13 +6,17 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const getNestedAttributeValue = function (item, attribute) {
+    return attribute.split(".").reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
+};
+
 const ListComponent = function(listItems, keyAttribute, ...attributes) {
     return(
         listItems.map((item) => {
         return (
             <List dense={false}>
                 <ListItem key={item[keyAttribute]}>
-                    {attributes.map(attribute => <ListItemText primary={item[attribute]}/>)}
+                    {attributes.map(attribute => <ListItemText primary={getNestedAttributeValue(item, attribute)}/>)}
                 </ListItem>
             </List>
         );
