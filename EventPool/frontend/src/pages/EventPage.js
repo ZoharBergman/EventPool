@@ -42,6 +42,7 @@ class EventPage extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
         this.calcPickupOrders = this.calcPickupOrders.bind(this);
+        this.sendMessagesAfterCarpoolGroupsSaved = this.sendMessagesAfterCarpoolGroupsSaved.bind(this);
     }
 
     componentWillMount() {
@@ -143,6 +144,8 @@ class EventPage extends Component {
 
         eventsRef.child(this.state.eventId + '/carpoolGroups').set(groupObjects);
 
+        this.sendMessagesAfterCarpoolGroupsSaved();
+
         if (this.state.isCalcCarpoolGroupsAgain) {
             eventsRef.child(this.state.eventId).update({maxRadiusInKm: this.state.event.maxRadiusInKm});
             this.setState({
@@ -150,6 +153,32 @@ class EventPage extends Component {
                 oldCarpoolGroups: {}
             });
         }
+    }
+
+    sendMessagesAfterCarpoolGroupsSaved() {
+        let messages = [];
+        let setMatchedPassengersIds = new Set();
+
+        this.state.event.carpoolGroups.forEach(carpoolGroup => {
+            const messageText = `You were matched to a carpool group for the event '${this.state.event.name}'. Watch your carpool group's details in the following link: /event/${this.state.eventId}/carpoolGroup/${carpoolGroup.driver.id}`;
+
+            messages.push(new message(messageText, carpoolGroup.driver.phoneNumber));
+            setMatchedPassengersIds.add(carpoolGroup.driver.id);
+
+            Object.values(carpoolGroup.passengers).forEach(passenger => {
+                messages.push(new message(messageText, passenger.phoneNumber));
+                setMatchedPassengersIds.add(passenger.id);
+            });
+        });
+
+        Object.values(this.state.event.approvedGuests).forEach(approvedGuest => {
+            if (approvedGuest.id && approvedGuest.isComing && !setMatchedPassengersIds.has(approvedGuest.id)) {
+                messages.push(new message(`you were not matched to a carpool group for the event '${this.state.event.name}'.`,
+                approvedGuest.phoneNumber));
+            }
+        });
+
+        Messaging.sendMessages(this.state.eventId, messages);
     }
 
     calcCarpoolGroupsAgain(data) {
