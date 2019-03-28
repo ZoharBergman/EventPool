@@ -11,6 +11,8 @@ import event from '../classes/event';
 import EventPoolService from '../services/EventPoolService';
 import CarpoolGroupComponent from '../components/CarpoolGroupComponent';
 import NewDeviationRadiusForm from '../forms/NewDeviationRadiusForm';
+import Messaging from '../util/Messaging';
+import message from '../classes/message';
 
 class EventPage extends Component {
     constructor(props) {
@@ -59,6 +61,12 @@ class EventPage extends Component {
         // Saving the new guest in the DB
         const newGuestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
         eventsRef.child(this.state.eventId + '/notApprovedGuests/' + newGuestId).update(newGuest);
+
+        // Send message to the new guest
+        Messaging.sendMessage(this.state.eventId,
+            new message(`You have been invited to the event '${this.state.event.name}'. 
+            Please fill your details in the following link: /event/${this.state.eventId}/newGuest/${newGuestId}`,
+                newGuest.phoneNumber));
 
         // Updating the state
         let event = this.state.event;

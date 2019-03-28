@@ -4,6 +4,7 @@
 import * as firebase from "firebase";
 import userEvenet from '../classes/userEvent';
 import event from '../classes/event';
+import message from '../classes/message';
 
 const config = {
     apiKey: "AIzaSyBMZVAJEOouJVnrgaE6VKi_ajW_V0Mpomc",
@@ -24,3 +25,4 @@ export const database = firebase.database();
 
 export const eventsRef = databaseRef.child(event.collectionName());
 export const userEventsRef = databaseRef.child(userEvenet.collectionName());
+export const messagesRef = databaseRef.child(message.collectionName());
