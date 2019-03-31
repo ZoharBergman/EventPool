@@ -3,15 +3,21 @@
  */
 import React, { Component } from 'react';
 import CreateEventForm from '../forms/CreateEventForm';
-
 import { eventsRef, userEventsRef } from '../config/firebase';
 import geocoding from '../util/Geocoding';
 import auth from '../config/auth';
 import userEvent from '../classes/userEvent';
+import Loader from '../components/Loader';
 
 class CreateEventPage extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loading: false
+        };
+
+        this.loader = React.createRef();
 
         this.saveNewEvent = this.saveNewEvent.bind(this);
         this.saveEventToUser = this.saveEventToUser.bind(this);
@@ -57,6 +63,7 @@ class CreateEventPage extends Component {
     }
 
     handleCreateEvent(newEvent) {
+        this.loader.current.openLoader();
         let that = this;
         geocoding.codeAddress(newEvent.address, (err, response) => {
             if (!err) {
@@ -65,12 +72,17 @@ class CreateEventPage extends Component {
                 that.saveEventToUser(user, eventId, newEvent);
                 that.props.history.push("/event/" + eventId);
             }
+
+            that.loader.current.closeLoader();
         });
     }
 
     render() {
         return (
-            <CreateEventForm onSubmit={this.handleCreateEvent}/>
+            <div>
+                <Loader ref={this.loader}/>
+                <CreateEventForm onSubmit={this.handleCreateEvent}/>
+            </div>
         );
     }
 }

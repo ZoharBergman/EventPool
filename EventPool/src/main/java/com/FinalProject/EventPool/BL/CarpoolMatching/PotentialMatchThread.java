@@ -89,7 +89,7 @@ public class PotentialMatchThread extends Thread{
                                         synchronized (numOfHandledGeoLocations) {
                                             numOfHandledGeoLocations--;
 
-                                            if (numOfHandledGeoLocations == 0) {
+                                            if (numOfHandledGeoLocations <= 0) {
                                                 counterIsZero.release();
                                             }
                                         }

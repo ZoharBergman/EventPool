@@ -13,10 +13,13 @@ import CarpoolGroupComponent from '../components/CarpoolGroupComponent';
 import NewDeviationRadiusForm from '../forms/NewDeviationRadiusForm';
 import Messaging from '../util/Messaging';
 import message from '../classes/message';
+import Loader from '../components/Loader';
 
 class EventPage extends Component {
     constructor(props) {
         super(props);
+
+        this.loader = React.createRef();
 
         this.state = {
             eventId: props.match.params.id,
@@ -100,6 +103,7 @@ class EventPage extends Component {
     }
 
     handleCalcCarpoolGroups() {
+        this.loader.current.openLoader();
         EventPoolService.calcCarpoolMatching(this.state.eventId, this.state.event.maxRadiusInKm)
             .then(response => response.json())
             .then(data => {
@@ -131,7 +135,7 @@ class EventPage extends Component {
                         ...prevState.event,
                         carpoolGroups: carpoolGroups
                     }
-                }));
+                }), this.loader.current.closeLoader);
             });
     }
 
@@ -217,8 +221,9 @@ class EventPage extends Component {
     }
 
     calcPickupOrders() {
+        this.loader.current.openLoader();
         EventPoolService.calcAndSavePickupOrders(this.state.eventId).then(() => {
-
+            this.loader.current.closeLoader();
         });
     }
 
@@ -253,6 +258,7 @@ class EventPage extends Component {
 
         return (
             <div>
+                <Loader ref={this.loader}/>
                 <h1>{this.state.event.name}</h1>
                 <div>
                     <h2>Details</h2>

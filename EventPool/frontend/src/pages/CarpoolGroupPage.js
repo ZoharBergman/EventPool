@@ -6,6 +6,7 @@ import { eventsRef } from '../config/firebase';
 import ListComponent from '../components/ListComponent';
 import EventPoolService from '../services/EventPoolService';
 import Stepper from 'react-stepper-horizontal/lib/index';
+import Loader from '../components/Loader';
 
 class CarpoolGroupPage extends Component {
     constructor(props) {
@@ -22,6 +23,8 @@ class CarpoolGroupPage extends Component {
             pickupOrder: [],
             eventLocation: {}
         };
+
+        this.loader = React.createRef();
 
         this.check = this.check.bind(this);
         this.calcPickupOrder = this.calcPickupOrder.bind(this);
@@ -52,10 +55,11 @@ class CarpoolGroupPage extends Component {
     }
 
     calcPickupOrder() {
+        this.loader.current.openLoader();
         EventPoolService.calcAndSavePickupOrder(this.state.eventId, this.state.groupId)
             .then(response => response.json())
             .then(pickupOrder => {
-                this.setState({pickupOrder: pickupOrder});
+                this.setState({pickupOrder: pickupOrder}, this.loader.current.closeLoader);
             });
     }
 
@@ -86,6 +90,7 @@ class CarpoolGroupPage extends Component {
 
         return (
             <div>
+                <Loader ref={this.loader}/>
                 <h1>{this.state.eventName}</h1>
                 <div>
                     <h2>Carpool Group Details</h2>
