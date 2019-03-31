@@ -4,19 +4,16 @@
     <bookmark url="file://$PROJECT_DIR$/frontend/package.json" line="10" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="484d9a08-2983-452d-abe9-57c2e1152d4a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js" />
+    <list default="true" id="484d9a08-2983-452d-abe9-57c2e1152d4a" name="Default" comment="Change the format of the guests' address.&#10;Start working on search address autocomplete component.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/src/forms/PlaceField.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/package-lock.json" afterPath="$PROJECT_DIR$/frontend/package-lock.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/package.json" afterPath="$PROJECT_DIR$/frontend/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/components/ListComponent.js" afterPath="$PROJECT_DIR$/frontend/src/components/ListComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/CarpoolGroupPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/CarpoolGroupPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/EventPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/EventPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/util/Geocoding.js" afterPath="$PROJECT_DIR$/frontend/src/util/Geocoding.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/PotentialMatchThread.java" afterPath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/PotentialMatchThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java" afterPath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java" afterPath="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/public/index.html" afterPath="$PROJECT_DIR$/frontend/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js" afterPath="$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js" afterPath="$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js" afterPath="$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,61 +26,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PickupOrderBL.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java">
+      <file leaf-file-name="CreateEventForm.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="124" column="88" lean-forward="false" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
+            <state relative-caret-position="119">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PotentialMatchThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/PotentialMatchThread.java">
+      <file leaf-file-name="CreateEventPage.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="72" column="93" lean-forward="false" selection-start-line="72" selection-start-column="93" selection-end-line="72" selection-end-column="93" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Passenger.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Passenger.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CarpoolGroupPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/pages/CarpoolGroupPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="98" column="129" lean-forward="false" selection-start-line="98" selection-start-column="129" selection-end-line="98" selection-end-column="129" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListComponent.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/ListComponent.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="18" column="113" lean-forward="false" selection-start-line="18" selection-start-column="113" selection-end-line="18" selection-end-column="113" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewGuestPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="57" column="43" lean-forward="false" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+            <state relative-caret-position="145">
+              <caret line="60" column="24" lean-forward="false" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
               <folding>
                 <element signature="e#43#84#0" expanded="true" />
               </folding>
@@ -91,15 +48,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/package.json">
+      <file leaf-file-name="Geocoding.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/util/Geocoding.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            <state relative-caret-position="187">
+              <caret line="13" column="9" lean-forward="false" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
               <folding>
-                <marker date="1553788564862" expanded="true" signature="83:1008" ph="{&quot;@google/maps&quot;: &quot;^0.5.5&quot;...}" />
-                <marker date="1553788564862" expanded="true" signature="1023:1169" ph="{&quot;start&quot;: &quot;react-scripts start&quot;...}" />
-                <marker date="1553788564862" expanded="true" signature="1189:1221" ph="{&quot;extends&quot;: &quot;react-app&quot;...}" />
+                <element signature="e#43#87#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,31 +63,46 @@
       <file leaf-file-name="SearchAddressComponent.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="29" column="33" lean-forward="false" selection-start-line="29" selection-start-column="33" selection-end-line="39" selection-end-column="35" />
+            <state relative-caret-position="119">
+              <caret line="28" column="63" lean-forward="false" selection-start-line="28" selection-start-column="63" selection-end-line="28" selection-end-column="63" />
               <folding>
-                <element signature="e#54#95#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#43#84#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="keys.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/config/keys.js">
+      <file leaf-file-name="NewGuestPage.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="25" />
+            <state relative-caret-position="255">
+              <caret line="77" column="25" lean-forward="false" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Geocoding.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/util/Geocoding.js">
+      <file leaf-file-name="PlaceField.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/forms/PlaceField.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="68">
+              <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+              <folding>
+                <element signature="e#43#69#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RenderedField.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/forms/RenderedField.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="97" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -151,41 +121,42 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>calcAndSavePickupOrders</find>
-      <find>react-stepper-horizontal</find>
-      <find>getpass</find>
-      <find>pickupOrder</find>
-      <find>co</find>
-      <find>const</find>
-      <find>passengers</find>
-      <find>saveNewEvent</find>
-      <find>l</find>
-      <find>local</find>
-      <find>localh</find>
-      <find>localho</find>
-      <find>localhost</find>
-      <find>localhost:</find>
-      <find>localhost:3</find>
-      <find>localhost:30</find>
-      <find>localhost:300</find>
-      <find>localhost:3000</find>
-      <find>carpoolGroup.passengers</find>
-      <find>sendMessagesToCarpoolGroupsMembers</find>
-      <find>se</find>
-      <find>react-lo</find>
-      <find>startLocation</find>
-      <find>react-load-script</find>
-      <find>a</find>
-      <find>api</find>
-      <find>api_</find>
-      <find>api_ke</find>
-      <find>api_key</find>
+      <find>pla</find>
+      <find>autocomplete</find>
+      <find>0.9</find>
+      <find>ver</find>
+      <find>name</find>
+      <find>wit</find>
+      <find>GoogleAutocomplete</find>
+      <find>GOOGLE_PLACES_URL</find>
+      <find>handleScriptLoad</find>
+      <find>render</find>
       <find>GOOGLE_GEOCODE_API_KEY</find>
+      <find>&lt;</find>
+      <find>&lt;sc</find>
+      <find>&lt;scr</find>
+      <find>&lt;scri</find>
+      <find>&lt;scrip</find>
+      <find>props</find>
+      <find>&lt;script</find>
+      <find>&quot;</find>
+      <find>&quot;add</find>
+      <find>&quot;addre</find>
+      <find>&quot;addres</find>
+      <find>&quot;address</find>
+      <find>&quot;address&quot;</find>
+      <find>&quot;s&quot;</find>
+      <find>&quot;st&quot;</find>
+      <find>&quot;sta&quot;</find>
+      <find>&quot;star&quot;</find>
+      <find>&quot;start&quot;</find>
+      <find>&quot;start</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\frontend\node_modules\react-google-maps</dir>
       <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\frontend\src</dir>
       <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\src\main\java\com\FinalProject\EventPool\BL</dir>
+      <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\frontend\src\forms</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -199,9 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/PotentialMatch.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Match.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/ICarpoolMatching.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Edge.java" />
         <option value="$PROJECT_DIR$/frontend/src/CarpoolGroupComponent.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/NewDeviationRadiusPopup.js" />
@@ -213,7 +181,6 @@
         <option value="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/List.js" />
         <option value="$PROJECT_DIR$/frontend/src/forms/AddGuestForm.js" />
-        <option value="$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/CarpoolGroupComponent.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Driver.java" />
@@ -233,9 +200,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/IPickupOrder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Controller.java" />
         <option value="$PROJECT_DIR$/frontend/src/services/EventPoolService.js" />
-        <option value="$PROJECT_DIR$/frontend/package.json" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/CarpoolGroup.java" />
-        <option value="$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/forms/FormsHandler.js" />
         <option value="$PROJECT_DIR$/frontend/src/classes/message.js" />
         <option value="$PROJECT_DIR$/frontend/src/config/firebase.js" />
@@ -249,7 +214,13 @@
         <option value="$PROJECT_DIR$/frontend/src/pages/CarpoolGroupPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/config/keys.js" />
         <option value="$PROJECT_DIR$/frontend/src/util/Geocoding.js" />
+        <option value="$PROJECT_DIR$/frontend/package.json" />
+        <option value="$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js" />
+        <option value="$PROJECT_DIR$/frontend/public/index.html" />
+        <option value="$PROJECT_DIR$/frontend/src/forms/PlaceField.js" />
+        <option value="$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js" />
+        <option value="$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js" />
       </list>
     </option>
   </component>
@@ -353,7 +324,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
+              <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -367,9 +338,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;carpool&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;create&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;newg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;addg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;carp&#9;null&#9;null&#10;even&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;event&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;addgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;fire&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/firebase.js&#10;ברק&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;picku&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;carpoo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pickup&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;pac&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;package.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;carpoolgrou&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pick&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Services/PickupOrderService.java&#10;serv&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/services/EventPoolService.js&#10;eventpage&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;appro&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java&#10;PICK&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;pickuporderb&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;route&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Routes/RoutesBL.java&#10;match&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;CARPOOL&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;ma&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;eventpoolse&#9;null&#9;null&#10;eventpoola&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/EventPoolApplication.java&#10;carpoolgr&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;car&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;app&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java&#10;render&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;ca&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;rout&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Routes/RoutesBL.java&#10;e&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;form&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/CarpoolGuestDetailsForm.js&#10;createe&#9;null&#9;null&#10;forms&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/FormsHandler.js&#10;mat&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;formhandle&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/FormsHandler.js&#10;TouchRipple&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/node_modules/@material-ui/core/ButtonBase/TouchRipple.js&#10;pack&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;newgu&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;material&#9;PSI&#9;JAVA://com.sun.prism.Material&#10;he&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;String&#9;PSI&#9;JAVA://java.lang.String&#10;pom&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/pom.xml&#10;event.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/classes/event.js&#10;GeoLocat&#9;FILE&#9;jar://C:/Users/Zuzu/.m2/repository/com/firebase/geofire-java/2.2.0/geofire-java-2.2.0.jar!/com/firebase/geofire/GeoLocation.class" />
+    <property name="SearchEverywhereHistoryKey" value="newgu&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;index&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/public/index.html&#10;keys&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/keys.js&#10;createe&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage/CreateEventPage.js&#10;pack&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;crea&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/CreateEventForm.js&#10;carpool&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;create&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;newg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;addg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;carp&#9;null&#9;null&#10;even&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;event&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;addgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;fire&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/firebase.js&#10;ברק&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;picku&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;carpoo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pickup&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;pac&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;package.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;carpoolgrou&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pick&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Services/PickupOrderService.java&#10;serv&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/services/EventPoolService.js&#10;eventpage&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;appro&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java&#10;PICK&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;pickuporderb&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;route&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Routes/RoutesBL.java&#10;match&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;CARPOOL&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;ma&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;eventpoolse&#9;null&#9;null&#10;eventpoola&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/EventPoolApplication.java&#10;carpoolgr&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;car&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;app&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java&#10;render&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;ca&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;rout&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Routes/RoutesBL.java&#10;e&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;form&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/CarpoolGuestDetailsForm.js&#10;forms&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/FormsHandler.js&#10;mat&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;formhandle&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/FormsHandler.js&#10;TouchRipple&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/node_modules/@material-ui/core/ButtonBase/TouchRipple.js&#10;material&#9;PSI&#9;JAVA://com.sun.prism.Material&#10;he&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;String&#9;PSI&#9;JAVA://java.lang.String&#10;pom&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/pom.xml" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3862069" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -837,7 +808,7 @@
       <workItem from="1552383558878" duration="17088000" />
       <workItem from="1552900354780" duration="58533000" />
       <workItem from="1553416978253" duration="49362000" />
-      <workItem from="1553768173688" duration="12009000" />
+      <workItem from="1553768173688" duration="30414000" />
     </task>
     <task id="LOCAL-00001" summary="Trying to config firebase (not working yet)">
       <created>1541523594045</created>
@@ -1112,11 +1083,18 @@
       <option name="project" value="LOCAL" />
       <updated>1553781727707</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Change the format of the guests' address.&#10;Start working on search address autocomplete component.">
+      <created>1553789345351</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1553789345351</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="510418000" />
+    <option name="totallyTimeSpent" value="528823000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1203,7 +1181,6 @@
       <path value="$PROJECT_DIR$/frontend" />
       <path value="$PROJECT_DIR$/" />
     </ignored-roots>
-    <MESSAGE value="Implement table structure (without checking yet)" />
     <MESSAGE value="Find potential matches. Start implementing matching methods" />
     <MESSAGE value="Write matching algorithm (without testing)" />
     <MESSAGE value="Test matching algorithm + little fixes" />
@@ -1228,7 +1205,8 @@
     <MESSAGE value="Fix bug in calc pickup order.&#10;Add stepper of pickup order in carpool group page.&#10;Calc pickup order from event page and carpool group page" />
     <MESSAGE value="Create messaging utility and send message to new guest." />
     <MESSAGE value="Send messages to approved guest that want to take a part in the carpool" />
-    <option name="LAST_COMMIT_MESSAGE" value="Send messages to approved guest that want to take a part in the carpool" />
+    <MESSAGE value="Change the format of the guests' address.&#10;Start working on search address autocomplete component." />
+    <option name="LAST_COMMIT_MESSAGE" value="Change the format of the guests' address.&#10;Start working on search address autocomplete component." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1240,7 +1218,7 @@
           <option name="timeStamp" value="304" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="305" />
+      <option name="time" value="306" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1249,214 +1227,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/time/LocalTime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="140" column="34" lean-forward="false" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/concurrent/Executors.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="283" column="73" lean-forward="true" selection-start-line="283" selection-start-column="73" selection-end-line="283" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/time/temporal/TemporalAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2025">
-          <caret line="102" column="17" lean-forward="false" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/time/ZoneId.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="461" column="38" lean-forward="false" selection-start-line="461" selection-start-column="38" selection-end-line="461" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/concurrent/ScheduledExecutorService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="153" column="49" lean-forward="false" selection-start-line="153" selection-start-column="30" selection-end-line="153" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/GeofireToDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Routes/RoutesBL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="81" column="100" lean-forward="false" selection-start-line="81" selection-start-column="100" selection-end-line="81" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Routes/IRoutes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/firebase/firebase-admin/6.6.0/firebase-admin-6.6.0.jar!/com/google/firebase/database/DataSnapshot.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/EventPoolApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#506#507#0" expanded="false" />
-            <element signature="e#568#569#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Services/IScheduleService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/firebase/firebase-admin/6.6.0/firebase-admin-6.6.0.jar!/com/google/firebase/database/Query.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Service.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/time/chrono/ChronoLocalDateTime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="119" column="17" lean-forward="false" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/time/LocalDateTime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="135" column="56" lean-forward="true" selection-start-line="135" selection-start-column="56" selection-end-line="135" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="237" column="12" lean-forward="false" selection-start-line="237" selection-start-column="12" selection-end-line="237" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/concurrent/Semaphore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="155" column="13" lean-forward="false" selection-start-line="155" selection-start-column="13" selection-end-line="155" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Address.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <element signature="e#343#344#0" expanded="false" />
-            <element signature="e#391#392#0" expanded="false" />
-            <element signature="e#431#432#0" expanded="false" />
-            <element signature="e#462#463#0" expanded="false" />
-            <element signature="e#489#490#0" expanded="false" />
-            <element signature="e#529#530#0" expanded="false" />
-            <element signature="e#561#562#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Services/Scheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#4400#4401#0" expanded="false" />
-            <element signature="e#4451#4452#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage/CreateEventPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/classes/event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Services/PickupOrderService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="53" column="59" lean-forward="false" selection-start-line="53" selection-start-column="59" selection-end-line="53" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/IPickupOrder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/services/EventPoolService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1591,14 +1361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-199">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/util/Messaging.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -1628,16 +1390,6 @@
         <state relative-caret-position="357">
           <caret line="25" column="4" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="26" selection-end-column="10" />
-          <folding>
-            <element signature="e#43#84#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1693,50 +1445,267 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/google-maps/lib/Google.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="35" lean-forward="false" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui-search-bar/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui-search-bar/lib/components/SearchBar/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/@material-ui/core/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="96" column="6" lean-forward="false" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui-search-bar/lib/components/SearchBar/SearchBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="18" column="34" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/.staging/@material-ui/core-69ed22b2/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui-search-bar/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="70" column="5" lean-forward="false" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1054">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="9727" column="5" lean-forward="false" selection-start-line="9727" selection-start-column="5" selection-end-line="9727" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" column="11" lean-forward="true" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/redux-form/es/createField.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12">
+          <caret line="131" column="7" lean-forward="false" selection-start-line="131" selection-start-column="7" selection-end-line="131" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/redux-form/es/Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/material-ui/styles/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="13" column="31" lean-forward="false" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage/CreateEventPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/config/keys.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="70" lean-forward="true" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-places-autocomplete/dist/PlacesAutocomplete.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-places-autocomplete/dist/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="9" column="53" lean-forward="true" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/build/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="466" lean-forward="false" selection-start-line="0" selection-start-column="466" selection-end-line="0" selection-end-column="466" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#26#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-dom/cjs/react-dom.development.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="14313" column="7" lean-forward="true" selection-start-line="14313" selection-start-column="7" selection-end-line="14313" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="57" column="43" lean-forward="false" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+        <state relative-caret-position="255">
+          <caret line="77" column="25" lean-forward="false" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/forms/RenderedField.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="97" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/forms/PlaceField.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding>
+            <element signature="e#43#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="45" column="75" lean-forward="true" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+          <folding>
+            <element signature="e#43#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/forms/CreateEventForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="60" column="24" lean-forward="false" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
           <folding>
             <element signature="e#43#84#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-          <folding>
-            <marker date="1553788564862" expanded="true" signature="83:1008" ph="{&quot;@google/maps&quot;: &quot;^0.5.5&quot;...}" />
-            <marker date="1553788564862" expanded="true" signature="1023:1169" ph="{&quot;start&quot;: &quot;react-scripts start&quot;...}" />
-            <marker date="1553788564862" expanded="true" signature="1189:1221" ph="{&quot;extends&quot;: &quot;react-app&quot;...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/util/Geocoding.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/config/keys.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="187">
+          <caret line="13" column="9" lean-forward="false" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+          <folding>
+            <element signature="e#43#87#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="29" column="33" lean-forward="false" selection-start-line="29" selection-start-column="33" selection-end-line="39" selection-end-column="35" />
+        <state relative-caret-position="119">
+          <caret line="28" column="63" lean-forward="false" selection-start-line="28" selection-start-column="63" selection-end-line="28" selection-end-column="63" />
           <folding>
-            <element signature="e#54#95#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#43#84#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1750,7 +1719,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.3862069" />
               </list>
             </option>
           </splitter-proportions>
@@ -1762,7 +1731,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.3862069" />
               </list>
             </option>
           </splitter-proportions>
@@ -1773,7 +1742,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.3862069" />
               </list>
             </option>
           </splitter-proportions>
@@ -1785,7 +1754,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.3862069" />
               </list>
             </option>
           </splitter-proportions>
@@ -1793,12 +1762,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>EventPool</last-edited>
+          <last-edited>Spring|EventPool</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
-                <option value="0.6" />
+                <option value="0.3862069" />
               </list>
             </option>
           </splitter-proportions>

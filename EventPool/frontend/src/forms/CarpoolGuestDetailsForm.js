@@ -4,6 +4,7 @@
 import React from "react";
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
+import PlaceField from './PlaceField';
 
 const validate = (val)=> {
     const errors = {};
@@ -42,8 +43,7 @@ let CarpoolGuestDetailsForm = (props) => {
                 <div>
                     <div className="field">
                         <label>Start address</label>
-                        <Field className="input" name="startAddress" component="input" type="text"
-                               input={{ disabled: props.isDisabled}}/>
+                        <Field name="startAddress" component={PlaceField}/>
                     </div>
 
                     <div className="field">

@@ -7,6 +7,7 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from "moment";
 import momentLocalizer from 'react-widgets-moment';
 import renderField from './RenderedField';
+import PlaceField from './PlaceField';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
@@ -57,6 +58,10 @@ const validate = val => {
      return errors;
 };
 
+const handleAddressSelected = (state) => {
+    debugger;
+};
+
 let CreateEventForm = props => {
     let { handleSubmit, valid  } = props;
 
@@ -74,8 +79,8 @@ let CreateEventForm = props => {
                        label="Event date"/>
             </div>
 
-            <div>
-                <Field className="input" name="address" component={renderField} type="text" label="Address" />
+            <div className="field">
+                <Field name="address" component={PlaceField}/>
             </div>
 
             <div className="field">
