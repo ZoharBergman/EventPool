@@ -5,6 +5,7 @@ import React from "react";
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import PlaceField from './PlaceField';
+import Formatters from '../util/Formatters';
 
 const validate = (val)=> {
     const errors = {};
@@ -27,14 +28,17 @@ const validate = (val)=> {
 };
 
 let CarpoolGuestDetailsForm = (props) => {
-    let { handleSubmit, valid, isComingValue, isCarValue } = props;
+    let { handleSubmit, valid, isComingValue, isCarValue, event } = props;
 
     return (
         <div>
             <h2>{props.guest.name}</h2>
+            <div>
+                You were invited to the event {event.name} on {Formatters.dateFormatter(event.date)}.
+            </div>
             <form className="form" onSubmit={handleSubmit}>
                  <div className="field">
-                     <label>Is coming?</label>
+                     <label>Are you coming?</label>
                     <Field className="input" name="isComing" id="isComing" component="input" type="checkbox"
                            input={{ disabled: props.isDisabled}}/>
                 </div>
@@ -47,7 +51,7 @@ let CarpoolGuestDetailsForm = (props) => {
                     </div>
 
                     <div className="field">
-                        <label>Is coming with car?</label>
+                        <label>Are you coming with car?</label>
                         <Field className="input" name="isCar" id="isCar" component="input" type="checkbox"
                                input={{disabled: props.isDisabled}}/>
                     </div>
@@ -55,7 +59,7 @@ let CarpoolGuestDetailsForm = (props) => {
                     {isCarValue &&
                         <div>
                             <div className="field">
-                                <label>Number of free seats</label>
+                                <label>Number of free seats in your car</label>
                                 <Field className="input" name="freeSeatsNum" component="input" type="Number"
                                        input={{disabled: props.isDisabled}}/>
                             </div>

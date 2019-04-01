@@ -47,11 +47,20 @@ class CarpoolGroupPage extends Component {
                         this.setState({
                             ...val,
                             eventLocation: eventLocationSnapshot.val()
-                        });
+                        }, this.loader.current.closeLoader);
                     }
                     });
+            } else {
+                this.loader.current.closeLoader();
             }
         });
+    }
+
+    componentDidMount() {
+        // Checking if the event data from the DB have not loaded yet
+        if (Object.keys(this.state.driver) <= 0) {
+            this.loader.current.openLoader();
+        }
     }
 
     calcPickupOrder() {

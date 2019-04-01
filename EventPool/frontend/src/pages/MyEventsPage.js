@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { userEventsRef } from '../config/firebase';
 import auth from '../config/auth';
 import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 class MyEventsPage extends Component {
     constructor(props) {
@@ -12,8 +13,11 @@ class MyEventsPage extends Component {
 
         this.state = {
             asOrganizer: [],
-            asGuest: []
+            asGuest: [],
+            isLoaded: false
         };
+
+        this.loader = React.createRef();
     }
 
     componentWillMount() {
@@ -36,10 +40,19 @@ class MyEventsPage extends Component {
                          userEvents.asGuest = Object.values(Object.values(snapshot.val())[0].asGuest);
                      }
 
-                     this.setState(userEvents);
+                     this.setState({...userEvents, isLoaded: true}, this.loader.current.closeLoader);
                     }
+                } else {
+                    this.loader.current.closeLoader();
                 }
             });
+    }
+
+    componentDidMount() {
+        // Checking if the event data from the DB have not loaded yet
+        if (!this.state.isLoaded) {
+            this.loader.current.openLoader();
+        }
     }
 
     buildEventsList(events) {
@@ -54,7 +67,7 @@ class MyEventsPage extends Component {
 
     render() {
         let asOrganizer;
-        let asGuest;
+        // let asGuest;
 
         if (this.state.asOrganizer.length > 0) {
             asOrganizer = this.buildEventsList(this.state.asOrganizer);
@@ -62,21 +75,17 @@ class MyEventsPage extends Component {
             asOrganizer = "No events as organizer.";
         }
 
-        if (this.state.asGuest.length > 0) {
-            asOrganizer = this.buildEventsList(this.state.asGuest);
-        } else {
-            asGuest = "No events as guest.";
-        }
+        // if (this.state.asGuest.length > 0) {
+        //     asGuest = this.buildEventsList(this.state.asGuest);
+        // } else {
+        //     asGuest = "No events as guest.";
+        // }
 
         return (
             <div>
+                <Loader ref={this.loader}/>
                 <div>
-                    <h1>As organizer</h1>
                     {asOrganizer}
-                </div>
-                <div>
-                    <h1>As guest</h1>
-                    {asGuest}
                 </div>
             </div>
         );

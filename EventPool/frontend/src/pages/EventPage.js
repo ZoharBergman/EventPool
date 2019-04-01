@@ -14,6 +14,8 @@ import NewDeviationRadiusForm from '../forms/NewDeviationRadiusForm';
 import Messaging from '../util/Messaging';
 import message from '../classes/message';
 import Loader from '../components/Loader';
+import TextField from "@material-ui/core/es/TextField/TextField";
+import Formatters from '../util/Formatters';
 
 class EventPage extends Component {
     constructor(props) {
@@ -56,12 +58,23 @@ class EventPage extends Component {
                 this.setState({
                     event: new event(val),
                     isCarpoolGroupsConfirmed: val.hasOwnProperty("carpoolGroups") && Object.keys(val.carpoolGroups).length > 0
-                });
+                }, this.loader.current.closeLoader);
+            } else {
+                this.loader.current.closeLoader();
             }
         });
     }
 
+    componentDidMount() {
+        // Checking if the event data from the DB have not loaded yet
+        if (this.state.event.id === "") {
+            this.loader.current.openLoader();
+        }
+    }
+
     handleAddGuest(newGuest) {
+        this.loader.current.openLoader();
+
         // Saving the new guest in the DB
         const newGuestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
         eventsRef.child(this.state.eventId + '/notApprovedGuests/' + newGuestId).update(newGuest);
@@ -79,7 +92,7 @@ class EventPage extends Component {
         }
 
         event.notApprovedGuests[newGuestId] = newGuest;
-        this.setState({event: event});
+        this.setState({event: event}, this.loader.current.closeLoader);
     }
 
     buildGuestsList(guests, guestsType) {
@@ -236,6 +249,7 @@ class EventPage extends Component {
     }
 
     render() {
+        let eventDetails;
         let approvedGuests;
         let notApprovedGuests;
         let carpoolGroups;
@@ -256,12 +270,26 @@ class EventPage extends Component {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
         }
 
+        if (this.state.event.hasOwnProperty("id") && this.state.event.id !== "") {
+            eventDetails = (
+                <div>
+                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
+                    <br/>
+                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Location:" value={this.state.event.address.name}/>
+                    <br/>
+                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Max deviation radius from original route in KM:"
+                               value={this.state.event.maxRadiusInKm}/>
+                </div>
+            );
+        }
+
         return (
             <div>
                 <Loader ref={this.loader}/>
                 <h1>{this.state.event.name}</h1>
                 <div>
                     <h2>Details</h2>
+                    {eventDetails}
                 </div>
                 <div>
                     <h2>Guests</h2>

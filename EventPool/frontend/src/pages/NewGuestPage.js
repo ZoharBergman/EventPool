@@ -7,6 +7,7 @@ import { eventsRef } from '../config/firebase';
 import event from '../classes/event';
 import geocoding from '../util/Geocoding';
 import routesService from '../services/EventPoolService';
+import Loader from '../components/Loader';
 
 class NewGuestPage extends Component {
     constructor(props) {
@@ -19,6 +20,8 @@ class NewGuestPage extends Component {
             newGuest: {}
         };
 
+        this.loader = React.createRef();
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.afterGeocode = this.afterGeocode.bind(this);
         this.saveToDB = this.saveToDB.bind(this);
@@ -30,10 +33,21 @@ class NewGuestPage extends Component {
                 this.setState({event: new event(snapshot.val())});
 
                 if (this.state.event.notApprovedGuests[this.state.id]) {
-                    this.setState({newGuest: this.state.event.notApprovedGuests[this.state.id]})
+                    this.setState({
+                        newGuest: this.state.event.notApprovedGuests[this.state.id]
+                    }, this.loader.current.closeLoader);
                 }
+            } else {
+                this.loader.current.closeLoader();
             }
         });
+    }
+
+    componentDidMount() {
+        // Checking if the event data from the DB have not loaded yet
+        if (Object.keys(this.state.event) <= 0) {
+            this.loader.current.openLoader();
+        }
     }
 
     saveToDB() {
@@ -91,6 +105,7 @@ class NewGuestPage extends Component {
     render() {
         return (
             <div>
+                <Loader ref={this.loader}/>
                 <CarpoolGuestDetailsForm isDisabled={false} guest={this.state.newGuest} event={this.state.event}
                                          onSubmit={this.handleSubmit}/>
             </div>
