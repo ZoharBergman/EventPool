@@ -16,6 +16,7 @@ import message from '../classes/message';
 import Loader from '../components/Loader';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Formatters from '../util/Formatters';
+import {OutTable, ExcelRenderer} from 'react-excel-renderer';
 
 class EventPage extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class EventPage extends Component {
         this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
         this.calcPickupOrders = this.calcPickupOrders.bind(this);
         this.sendMessagesAfterCarpoolGroupsSaved = this.sendMessagesAfterCarpoolGroupsSaved.bind(this);
+        this.fileHandler = this.fileHandler.bind(this);
     }
 
     componentWillMount() {
@@ -240,6 +242,37 @@ class EventPage extends Component {
         });
     }
 
+    fileHandler = (event) => {
+        debugger;
+        let fileObj = event.target.files[0];
+        //just pass the fileObj as parameter
+        ExcelRenderer(fileObj, (err, resp) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                const nameIndex = resp.rows[0].indexOf("Name");
+                const phoneNumberIndex = resp.rows[0].indexOf("Phone Number");
+
+                let newGuestsFromExcel = {};
+
+                resp.rows.slice(1).forEach(guestData => {
+                    let phoneNumber = guestData[phoneNumberIndex].replace(/[()-]+/g, "");
+
+                    if (phoneNumber[0] === "0" && !isNaN(phoneNumber)) {
+                        newGuestsFromExcel[eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key] = {
+                            name: guestData[nameIndex],
+                            phoneNumber: guestData[phoneNumberIndex]
+                        }
+                    }
+                });
+
+                // Save the new guests in the DB
+                eventsRef.child(this.state.eventId + '/notApprovedGuests/').update(newGuestsFromExcel);
+            }
+        });
+    }
+
     openModal() {
         this.setState({ open: true })
     }
@@ -294,10 +327,16 @@ class EventPage extends Component {
                 <div>
                     <h2>Guests</h2>
                     <AddGuestForm onSubmit={this.handleAddGuest}/>
-                    <span style={{textDecoration: 'underline'}}>Not approved guests</span>
-                    <div>{notApprovedGuests}</div>
-                    <span style={{textDecoration: 'underline'}}>Approved guests</span>
-                    <div>{approvedGuests}</div>
+                    <div>
+                        Import guests' Excel file
+                        <input type="file" onChange={this.fileHandler} style={{"padding":"10px"}}/>
+                    </div>
+                    <div>
+                        <span style={{textDecoration: 'underline'}}>Not approved guests</span>
+                        <div>{notApprovedGuests}</div>
+                        <span style={{textDecoration: 'underline'}}>Approved guests</span>
+                        <div>{approvedGuests}</div>
+                    </div>
                 </div>
                 <div>
                     <h2>Carpool Groups</h2>
