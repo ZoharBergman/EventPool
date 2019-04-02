@@ -2,22 +2,32 @@
  * Created by Zohar on 05/12/2018.
  */
 import React, { Component } from 'react';
-import { eventsRef } from '../config/firebase';
-import AddGuestForm from '../forms/AddGuestForm';
+import { eventsRef } from '../../config/firebase';
+import AddGuestForm from '../../forms/AddGuestForm';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
-import event from '../classes/event';
-import EventPoolService from '../services/EventPoolService';
-import CarpoolGroupComponent from '../components/CarpoolGroupComponent';
-import NewDeviationRadiusForm from '../forms/NewDeviationRadiusForm';
-import Messaging from '../util/Messaging';
-import message from '../classes/message';
-import Loader from '../components/Loader';
+import event from '../../classes/event';
+import EventPoolService from '../../services/EventPoolService';
+import CarpoolGroupComponent from '../../components/CarpoolGroupComponent';
+import NewDeviationRadiusForm from '../../forms/NewDeviationRadiusForm';
+import Messaging from '../../util/Messaging';
+import message from '../../classes/message';
+import Loader from '../../components/Loader';
+
 import TextField from "@material-ui/core/es/TextField/TextField";
-import Formatters from '../util/Formatters';
+import Grid from '@material-ui/core/Grid';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import MaterialTable from 'material-table';
+
+import Formatters from '../../util/Formatters';
 import {OutTable, ExcelRenderer} from 'react-excel-renderer';
-import GuestsExcelTemplateComponent from '../components/GuestsExcelTemplateComponent';
+import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateComponent';
+
+import './Style.css'
+
 
 class EventPage extends Component {
     constructor(props) {
@@ -80,6 +90,7 @@ class EventPage extends Component {
 
         // Saving the new guest in the DB
         const newGuestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
+        newGuest["id"] = newGuestId;
         eventsRef.child(this.state.eventId + '/notApprovedGuests/' + newGuestId).update(newGuest);
 
         // Send message to the new guest
@@ -264,7 +275,9 @@ class EventPage extends Component {
                                     let phoneNumber = guestData[phoneNumberIndex].replace(/[()-]+/g, "");
 
                                     if (phoneNumber[0] === "0" && !isNaN(phoneNumber) && phoneNumber.length === 10) {
-                                        newGuestsFromExcel[eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key] = {
+                                        const guestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
+                                        newGuestsFromExcel[guestId] = {
+                                            id: guestId,
                                             name: guestData[nameIndex],
                                             phoneNumber: phoneNumber
                                         }
@@ -325,25 +338,34 @@ class EventPage extends Component {
 
         if (this.state.event.hasOwnProperty("id") && this.state.event.id !== "") {
             eventDetails = (
-                <div>
-                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
-                    <br/>
-                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Location:" value={this.state.event.address.name}/>
-                    <br/>
-                    <TextField style={{marginTop: "5px", marginBottom: "5px"}} type="text" label="Max deviation radius from original route in KM:"
-                               value={this.state.event.maxRadiusInKm}/>
-                </div>
+                <Grid container spacing={24}>
+                    <Grid item sm={4} xs={12}>
+                        <TextField type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
+                    </Grid>
+                    <Grid item sm={4} xs={12}>
+                        <TextField type="text" label="Location:" value={this.state.event.address.name}/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField type="text" label="Max deviation radius in KM:"
+                                   value={this.state.event.maxRadiusInKm}/>
+                    </Grid>
+                </Grid>
             );
         }
 
         return (
             <div>
                 <Loader ref={this.loader}/>
-                <h1>{this.state.event.name}</h1>
-                <div>
-                    <h2>Details</h2>
+                <div className="container">
+                    <h1 style={{"textAlign": "center"}}>{this.state.event.name}</h1>
                     {eventDetails}
                 </div>
+                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto"}}>
+                    <Tabs onChange={this.handleChange}>
+                        <Tab value="one" label="Manage guests" centered/>
+                        <Tab value="two" label="Manage carpool groups" centered/>
+                    </Tabs>
+                </AppBar>
                 <div>
                     <h2>Guests</h2>
                     <AddGuestForm onSubmit={this.handleAddGuest}/>
@@ -354,6 +376,7 @@ class EventPage extends Component {
                         Import guests' excel file
                         <input type="file" onChange={this.handleImportGuestsExcelFile} style={{"padding":"10px"}}/>
                     </div>
+
                     <div>
                         <span style={{textDecoration: 'underline'}}>Not approved guests</span>
                         <div>{notApprovedGuests}</div>

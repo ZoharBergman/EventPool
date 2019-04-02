@@ -9,7 +9,7 @@ import LoginPage from '../pages/LoginPage';
 import { CreateEventPage } from '../pages/CreateEventPage';
 import { AppHeader } from '../headers/AppHeader';
 import { MyEventsPage } from '../pages/MyEventsPage';
-import { EventPage } from '../pages/EventPage';
+import { EventPage } from '../pages/EventPage/EventPage';
 import { NewGuestPage } from '../pages/NewGuestPage';
 import { CarpoolGroupPage } from '../pages/CarpoolGroupPage';
 import auth from '../config/auth';
