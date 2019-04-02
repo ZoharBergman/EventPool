@@ -130,13 +130,15 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        dataSnapshot.getChildren().forEach(driverSnapshot ->
-                                mapDriversById.get(((Map)driverSnapshot.getValue()).get(ApprovedGuest.ID))
+                        dataSnapshot.getChildren().forEach(driverSnapshot -> {
+                            if (mapDriversById.containsKey(((Map)driverSnapshot.getValue()).get(ApprovedGuest.ID))) {
+                                mapDriversById.get(((Map) driverSnapshot.getValue()).get(ApprovedGuest.ID))
                                         .setFreeSeatsNum(
-                                                Integer.parseInt(((Map)driverSnapshot.getValue())
+                                                Integer.parseInt(((Map) driverSnapshot.getValue())
                                                         .get(Driver.FREE_SEATS_NUM).toString())
-                                        )
-                        );
+                                        );
+                            }
+                        });
 
                         semaphore.release();
                     }
