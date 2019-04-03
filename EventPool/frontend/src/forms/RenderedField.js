@@ -8,8 +8,8 @@ const renderField = ({input, label, meta: { touched, error }, ...custom}) => (
     <TextField
         variant="outlined"
         label={label}
-        floatingLabelText={label}
-        errorText={touched && error}
+        floatinglabeltext={label}
+        errortext={touched && error ? error : ""}
         {...input}
         {...custom}
     />

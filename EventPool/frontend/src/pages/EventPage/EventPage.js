@@ -384,10 +384,10 @@ class EventPage extends Component {
             <div>
                 <Loader ref={this.loader}/>
                 {eventDetails}
-                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto", "z-index": 0}}>
+                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto", "zIndex": 0}}>
                     <Tabs value={this.state.manageTabsValue} onChange={this.handleManageTabsChange}>
-                        <Tab value={this.MANAGE_GUESTS} label={this.MANAGE_GUESTS} centered/>
-                        <Tab value={this.MANAGE_CARPOOL_GROUPS} label={this.MANAGE_CARPOOL_GROUPS} centered/>
+                        <Tab value={this.MANAGE_GUESTS} label={this.MANAGE_GUESTS} />
+                        <Tab value={this.MANAGE_CARPOOL_GROUPS} label={this.MANAGE_CARPOOL_GROUPS} />
                     </Tabs>
                 </AppBar>
                 {this.state.manageTabsValue === this.MANAGE_GUESTS &&

@@ -79,7 +79,7 @@ const GuestsTableComponent = (props) => {
             title=""
             options={{
                 filtering: true,
-                headerStyle: {"text-align": "center"},
+                headerStyle: {"textAlign": "center"},
                 pageSizeOptions: [25, 50, 100],
                 pageSize: 25,
                 // paginationType: 'stepped'
