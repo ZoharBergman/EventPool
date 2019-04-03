@@ -20,7 +20,7 @@ public class Event {
     // Properties
     private String id;
     private Address address;
-    private Map<String, ApprovedGuest> approvedGuests;
+    private Map<String, ApprovedGuest> guests;
     private Map<String, CarpoolGroup> carpoolGroups;
     private Long date;
     private Double maxRadiusInKm;
@@ -51,12 +51,12 @@ public class Event {
         this.address = address;
     }
 
-    public Map<String, ApprovedGuest> getApprovedGuests() {
-        return approvedGuests;
+    public Map<String, ApprovedGuest> getGuests() {
+        return guests;
     }
 
-    public void setApprovedGuests(Map<String, ApprovedGuest> approvedGuests) {
-        this.approvedGuests = approvedGuests;
+    public void setGuests(Map<String, ApprovedGuest> guests) {
+        this.guests = guests;
     }
 
     public Map<String, CarpoolGroup> getCarpoolGroups() {

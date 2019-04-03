@@ -11,7 +11,7 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const dataSet1 = [
     {
         name: "Example",
-        phoneNumber: "052-1234567"
+        phoneNumber: "0521234567"
     }
 ];
 

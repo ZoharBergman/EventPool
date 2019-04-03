@@ -14,13 +14,15 @@ import NewDeviationRadiusForm from '../../forms/NewDeviationRadiusForm';
 import Messaging from '../../util/Messaging';
 import message from '../../classes/message';
 import Loader from '../../components/Loader';
+import GuestsTableComponent from '../../components/GuestsTableComponent';
+import TabContainer from '../../components/TabContainer';
 
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import MaterialTable from 'material-table';
+import Button from '@material-ui/core/Button';
 
 import Formatters from '../../util/Formatters';
 import {OutTable, ExcelRenderer} from 'react-excel-renderer';
@@ -34,33 +36,40 @@ class EventPage extends Component {
         super(props);
 
         this.loader = React.createRef();
+        this.MANAGE_GUESTS = "Manage guests";
+        this.MANAGE_CARPOOL_GROUPS = "Manage carpool groups";
 
         this.state = {
             eventId: props.match.params.id,
             event: {
                 name: "",
-                notApprovedGuests: {},
-                approvedGuests: {},
+                guests: {},
                 carpoolGroups: {},
                 id:""
             },
             isCarpoolGroupsConfirmed: false,
             isCalcCarpoolGroupsAgain: false,
-            open: false,
+            isOpenNewRadiusPopup: false,
+            isOpenImportGuestsPopup:false,
             oldCarpoolGroups: {},
-            oldRadius: ""
+            oldRadius: "",
+            manageTabsValue: this.MANAGE_GUESTS
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
         this.handleCalcCarpoolGroups = this.handleCalcCarpoolGroups.bind(this);
         this.saveCarpoolGroups = this.saveCarpoolGroups.bind(this);
         this.calcCarpoolGroupsAgain = this.calcCarpoolGroupsAgain.bind(this);
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.openNewRadiusModal = this.openNewRadiusModal.bind(this);
+        this.closeNewRadiusModal = this.closeNewRadiusModal.bind(this);
+        this.openImportGuestsModal = this.openImportGuestsModal.bind(this);
+        this.closeImportGuestsModal = this.closeImportGuestsModal.bind(this);
         this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
         this.calcPickupOrders = this.calcPickupOrders.bind(this);
         this.sendMessagesAfterCarpoolGroupsSaved = this.sendMessagesAfterCarpoolGroupsSaved.bind(this);
         this.handleImportGuestsExcelFile = this.handleImportGuestsExcelFile.bind(this);
+        this.handleGuestClicked = this.handleGuestClicked.bind(this);
+        this.handleManageTabsChange = this.handleManageTabsChange.bind(this);
     }
 
     componentWillMount() {
@@ -89,9 +98,9 @@ class EventPage extends Component {
         this.loader.current.openLoader();
 
         // Saving the new guest in the DB
-        const newGuestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
+        const newGuestId = eventsRef.child(this.state.eventId + '/guests').push().key;
         newGuest["id"] = newGuestId;
-        eventsRef.child(this.state.eventId + '/notApprovedGuests/' + newGuestId).update(newGuest);
+        eventsRef.child(this.state.eventId + '/guests/' + newGuestId).update(newGuest);
 
         // Send message to the new guest
         Messaging.sendMessage(this.state.eventId,
@@ -100,13 +109,18 @@ class EventPage extends Component {
                 newGuest.phoneNumber));
 
         // Updating the state
-        let event = this.state.event;
-        if (!event.notApprovedGuests) {
-            event.notApprovedGuests = {};
-        }
+        let guestObj = {};
+        guestObj[newGuestId] = newGuest;
 
-        event.notApprovedGuests[newGuestId] = newGuest;
-        this.setState({event: event}, this.loader.current.closeLoader);
+        this.setState((prevState) => ({
+            event: {
+                ...prevState.event,
+                guests: {
+                    ...prevState.event.guests,
+                    ...guestObj
+                }
+            }
+        }), this.loader.current.closeLoader);
     }
 
     buildGuestsList(guests, guestsType) {
@@ -139,16 +153,16 @@ class EventPage extends Component {
                         id: carpoolGroup.driverId,
                         driver: {
                             id: carpoolGroup.driverId,
-                            name: this.state.event.approvedGuests[carpoolGroup.driverId].name,
-                            phoneNumber: this.state.event.approvedGuests[carpoolGroup.driverId].phoneNumber,
-                            startAddress: this.state.event.approvedGuests[carpoolGroup.driverId].startAddress
+                            name: this.state.event.guests[carpoolGroup.driverId].name,
+                            phoneNumber: this.state.event.guests[carpoolGroup.driverId].phoneNumber,
+                            startAddress: this.state.event.guests[carpoolGroup.driverId].startAddress
                         },
                         passengers: {}
                     };
 
                     carpoolGroup.setPassengers.forEach(passenger => {
-                        passenger.name = this.state.event.approvedGuests[passenger.id].name;
-                        passenger.phoneNumber = this.state.event.approvedGuests[passenger.id].phoneNumber;
+                        passenger.name = this.state.event.guests[passenger.id].name;
+                        passenger.phoneNumber = this.state.event.guests[passenger.id].phoneNumber;
                         groupDetails.passengers[passenger.id] = passenger;
                     });
 
@@ -202,10 +216,10 @@ class EventPage extends Component {
             });
         });
 
-        Object.values(this.state.event.approvedGuests).forEach(approvedGuest => {
-            if (approvedGuest.id && approvedGuest.isComing && !setMatchedPassengersIds.has(approvedGuest.id)) {
+        Object.values(this.state.event.guests).forEach(guest => {
+            if (guest.isComing && !setMatchedPassengersIds.has(guest.id)) {
                 messages.push(new message(`you were not matched to a carpool group for the event '${this.state.event.name}'.`,
-                approvedGuest.phoneNumber));
+                guest.phoneNumber));
             }
         });
 
@@ -213,7 +227,7 @@ class EventPage extends Component {
     }
 
     calcCarpoolGroupsAgain(data) {
-        this.closeModal();
+        this.closeNewRadiusModal();
 
         if (Object.keys(this.state.oldCarpoolGroups).length === 0) {
             this.setState({
@@ -255,6 +269,7 @@ class EventPage extends Component {
     }
 
     handleImportGuestsExcelFile(event) {
+        this.closeImportGuestsModal();
         this.loader.current.openLoader();
         let fileObj = event.target.files[0];
         //just pass the fileObj as parameter
@@ -275,7 +290,7 @@ class EventPage extends Component {
                                     let phoneNumber = guestData[phoneNumberIndex].replace(/[()-]+/g, "");
 
                                     if (phoneNumber[0] === "0" && !isNaN(phoneNumber) && phoneNumber.length === 10) {
-                                        const guestId = eventsRef.child(this.state.eventId + '/notApprovedGuests').push().key;
+                                        const guestId = eventsRef.child(this.state.eventId + '/guests').push().key;
                                         newGuestsFromExcel[guestId] = {
                                             id: guestId,
                                             name: guestData[nameIndex],
@@ -287,13 +302,13 @@ class EventPage extends Component {
                         });
 
                         // Save the new guests in the DB
-                        eventsRef.child(this.state.eventId + '/notApprovedGuests/').update(newGuestsFromExcel);
+                        eventsRef.child(this.state.eventId + '/guests/').update(newGuestsFromExcel);
 
                         this.setState((prevState) => ({
                             event: {
                                 ...prevState.event,
-                                notApprovedGuests: {
-                                    ...prevState.event.notApprovedGuests,
+                                guests: {
+                                    ...prevState.event.guests,
                                     ...newGuestsFromExcel
                                 }
                             }
@@ -306,31 +321,35 @@ class EventPage extends Component {
         });
     }
 
-    openModal() {
-        this.setState({ open: true })
+    handleGuestClicked(event, rowData) {
+        if (!rowData.hasOwnProperty('isComing')) {
+            this.props.history.push(`/event/${this.state.eventId}/newGuest/${rowData.id}`);
+        }
     }
 
-    closeModal() {
-        this.setState({ open: false })
+    handleManageTabsChange(event, value) {
+        this.setState({manageTabsValue: value});
+    }
+
+    openNewRadiusModal() {
+        this.setState({ isOpenNewRadiusPopup: true });
+    }
+
+    closeNewRadiusModal() {
+        this.setState({ isOpenNewRadiusPopup: false });
+    }
+
+    openImportGuestsModal() {
+        this.setState({ isOpenImportGuestsPopup: true });
+    }
+
+    closeImportGuestsModal() {
+        this.setState({ isOpenImportGuestsPopup: false });
     }
 
     render() {
         let eventDetails;
-        let approvedGuests;
-        let notApprovedGuests;
         let carpoolGroups;
-
-        if (Object.keys(this.state.event.notApprovedGuests).length > 0) {
-            notApprovedGuests = this.buildGuestsList(this.state.event.notApprovedGuests, 'newGuest');
-        } else {
-            notApprovedGuests = "No Not Approved guests.";
-        }
-
-        if (Object.keys(this.state.event.approvedGuests).length > 0) {
-            approvedGuests = this.buildGuestsList(this.state.event.approvedGuests, 'guest');
-        } else {
-            approvedGuests = "No Approved guests.";
-        }
 
         if (Object.keys(this.state.event.carpoolGroups).length > 0) {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
@@ -338,68 +357,113 @@ class EventPage extends Component {
 
         if (this.state.event.hasOwnProperty("id") && this.state.event.id !== "") {
             eventDetails = (
-                <Grid container spacing={24}>
-                    <Grid item sm={4} xs={12}>
-                        <TextField type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
+                <div className="container">
+                    <h1 style={{"textAlign": "center"}}>{this.state.event.name}</h1>
+                    <Grid container spacing={24}>
+                        <Grid item sm={4} xs={12}>
+                            <TextField type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
+                        </Grid>
+                        <Grid item sm={4} xs={12}>
+                            <TextField type="text" label="Location:" value={this.state.event.address.name}/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <TextField type="text" label="Max deviation radius in KM:"
+                                       value={this.state.event.maxRadiusInKm}/>
+                        </Grid>
                     </Grid>
-                    <Grid item sm={4} xs={12}>
-                        <TextField type="text" label="Location:" value={this.state.event.address.name}/>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField type="text" label="Max deviation radius in KM:"
-                                   value={this.state.event.maxRadiusInKm}/>
-                    </Grid>
-                </Grid>
+                </div>
             );
         }
+
+        // Checking if there is at least one driver and one passenger
+        const isCarpoolGroupsCalcAvailable =
+            Object.values(this.state.event.guests).find(guest => guest.isCar === true) !== undefined &&
+            Object.values(this.state.event.guests).find(guest => guest.isComing === true && guest.isCar === false) !== undefined;
 
         return (
             <div>
                 <Loader ref={this.loader}/>
-                <div className="container">
-                    <h1 style={{"textAlign": "center"}}>{this.state.event.name}</h1>
-                    {eventDetails}
-                </div>
-                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto"}}>
-                    <Tabs onChange={this.handleChange}>
-                        <Tab value="one" label="Manage guests" centered/>
-                        <Tab value="two" label="Manage carpool groups" centered/>
+                {eventDetails}
+                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto", "z-index": 0}}>
+                    <Tabs value={this.state.manageTabsValue} onChange={this.handleManageTabsChange}>
+                        <Tab value={this.MANAGE_GUESTS} label={this.MANAGE_GUESTS} centered/>
+                        <Tab value={this.MANAGE_CARPOOL_GROUPS} label={this.MANAGE_CARPOOL_GROUPS} centered/>
                     </Tabs>
                 </AppBar>
-                <div>
-                    <h2>Guests</h2>
-                    <AddGuestForm onSubmit={this.handleAddGuest}/>
-                    <div>
-                        Download guests' template sheet
-                        <GuestsExcelTemplateComponent/>
-                        <br/>
-                        Import guests' excel file
-                        <input type="file" onChange={this.handleImportGuestsExcelFile} style={{"padding":"10px"}}/>
-                    </div>
+                {this.state.manageTabsValue === this.MANAGE_GUESTS &&
+                    <TabContainer>
+                            <div className="container">
+                                <h2>Add guests</h2>
+                                <Grid container spacing={24}>
+                                    <Grid item>
+                                        <AddGuestForm onSubmit={this.handleAddGuest}/>
+                                    </Grid>
+                                    <Grid item>
+                                        <Popup modal open={this.state.isOpenImportGuestsPopup} trigger={<Button variant="contained">Import</Button>}>
+                                            <div>
+                                                <h1>Import guests from excel</h1>
+                                                Download guests' template sheet
+                                                <br/>
+                                                <GuestsExcelTemplateComponent/>
+                                                <br/>
+                                                Import guests' excel file
+                                                <br/>
+                                                <input type="file" onChange={this.handleImportGuestsExcelFile} style={{"padding":"10px"}}/>
+                                            </div>
+                                        </Popup>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            <div className="container" style={{"padding": "1%"}}>
+                                <GuestsTableComponent guests={Object.values(this.state.event.guests)} onGuestClicked={this.handleGuestClicked}/>
+                            </div>
+                    </TabContainer>
+                }
 
-                    <div>
-                        <span style={{textDecoration: 'underline'}}>Not approved guests</span>
-                        <div>{notApprovedGuests}</div>
-                        <span style={{textDecoration: 'underline'}}>Approved guests</span>
-                        <div>{approvedGuests}</div>
-                    </div>
-                </div>
-                <div>
-                    <h2>Carpool Groups</h2>
-                    <button onClick={this.handleCalcCarpoolGroups} hidden={Object.keys(this.state.event.approvedGuests).length <= 0 || this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length > 0}>Calculate Carpool Groups</button>
-                    <button onClick={this.saveCarpoolGroups} hidden={this.state.isCarpoolGroupsConfirmed || Object.keys(this.state.event.carpoolGroups).length <= 0}>Save Carpool Groups</button>
-                    <button onClick={this.cancelNewCarpoolGroups} hidden={Object.keys(this.state.oldCarpoolGroups).length <= 0}>Cancel new groups calculation</button>
-                    <button onClick={this.calcPickupOrders} hidden={!this.state.isCarpoolGroupsConfirmed}>Calculate pickup order of carpool groups</button>
-                    <div>
-                        <button onClick={this.openModal} hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
-                            Calculate Carpool Groups Again
-                        </button>
-                        <Popup open={this.state.open} onClose={this.closeModal} closeOnDocumentClick modal>
-                            <NewDeviationRadiusForm maxRadiusInKm={this.state.event.maxRadiusInKm} onSubmit={this.calcCarpoolGroupsAgain}/>
-                        </Popup>
-                    </div>
-                    {carpoolGroups}
-                </div>
+                {this.state.manageTabsValue === this.MANAGE_CARPOOL_GROUPS &&
+                    <TabContainer>
+                        <h2>Carpool Groups</h2>
+                        <Button variant="contained"
+                                onClick={this.handleCalcCarpoolGroups}
+                                hidden={
+                                    !isCarpoolGroupsCalcAvailable ||
+                                    this.state.isCarpoolGroupsConfirmed ||
+                                    Object.keys(this.state.event.carpoolGroups).length > 0
+                                }>Calculate Carpool Groups
+                        </Button>
+                        <Button variant="contained"
+                                onClick={this.saveCarpoolGroups}
+                                hidden={
+                                    this.state.isCarpoolGroupsConfirmed ||
+                                    Object.keys(this.state.event.carpoolGroups).length <= 0
+                                }>Save Carpool Groups
+                        </Button>
+                        <Button variant="contained"
+                                onClick={this.cancelNewCarpoolGroups}
+                                hidden={
+                                    Object.keys(this.state.oldCarpoolGroups).length <= 0
+                                }>Cancel new groups calculation
+                        </Button>
+                        <Button variant="contained"
+                                onClick={this.calcPickupOrders}
+                                hidden={!this.state.isCarpoolGroupsConfirmed}>
+                            Calculate pickup order of carpool groups
+                        </Button>
+                        <div>
+                            <Button variant="contained"
+                                    onClick={this.openNewRadiusModal}
+                                    hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
+                                Calculate Carpool Groups Again
+                            </Button>
+                            <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
+                                <NewDeviationRadiusForm
+                                    maxRadiusInKm={this.state.event.maxRadiusInKm}
+                                    onSubmit={this.calcCarpoolGroupsAgain}/>
+                            </Popup>
+                        </div>
+                        {carpoolGroups}
+                    </TabContainer>
+                }
             </div>
         );
     }

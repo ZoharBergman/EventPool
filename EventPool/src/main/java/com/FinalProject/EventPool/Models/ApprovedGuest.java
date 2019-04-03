@@ -8,7 +8,7 @@ import com.google.maps.model.LatLng;
  */
 public class ApprovedGuest {
     // Consts
-    public static final String COLLECTION_NAME = "approvedGuests";
+    public static final String COLLECTION_NAME = "guests";
     public static final String IS_COMING = "isComing";
     public static final String IS_CAR = "isCar";
     public static final String ID = "id";

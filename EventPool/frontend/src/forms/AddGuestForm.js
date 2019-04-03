@@ -4,6 +4,7 @@
 import React from "react";
 import { reduxForm, Field } from 'redux-form';
 import renderField from './RenderedField';
+import Grid from '@material-ui/core/Grid';
 
 const validate = val => {
     const errors = {};
@@ -27,23 +28,21 @@ let AddGuestForm = (props) => {
     let { handleSubmit, valid  } = props;
 
     return (
-    <div>
-        <label style={{textDecoration: 'underline'}}>Add new guest</label>
-        <br />
-        <form className="form" onSubmit={handleSubmit} >{/*style={{display: 'inline-flex'}}*/}
-            <div className="field">
-                <Field className="input" name="name" component={renderField} type="text" label="Full name" />
-            </div>
+    <form className="form" onSubmit={handleSubmit} >
+        <Grid container spacing={24}>
+            <Grid item>
+                <Field name="name" component={renderField} type="text" label="Full name" />
+            </Grid>
 
-            <div className="field">
-                <Field className="input" name="phoneNumber" component={renderField} type="Number" label="Phone number" />
-            </div>
+            <Grid item>
+                <Field name="phoneNumber" component={renderField} type="Number" label="Phone number" />
+            </Grid>
 
-            <div className="field">
+            <Grid item>
                 <button disabled={!valid}>Add</button>
-            </div>
-        </form>
-    </div>
+            </Grid>
+        </Grid>
+    </form>
     );
 };
 

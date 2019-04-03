@@ -29,9 +29,10 @@ class CreateEventPage extends Component {
         newEvent.date = newEvent.date.getTime();
         newEvent.organizersIds = [user];
         newEvent.address = {
-            name: geocodeResponse.json.results[0].formatted_address,
+            name: newEvent.addressName,
             location: geocodeResponse.json.results[0].geometry.location,
         };
+        delete newEvent.addressName;
 
         // Saving the new event to the DB
         const eventId = eventsRef.push().key;
@@ -65,7 +66,7 @@ class CreateEventPage extends Component {
     handleCreateEvent(newEvent) {
         this.loader.current.openLoader();
         let that = this;
-        geocoding.codeAddress(newEvent.address, (err, response) => {
+        geocoding.codeAddress(newEvent.addressName, (err, response) => {
             if (!err) {
                 const user = localStorage.getItem(auth.appTokenKey);
                 const eventId = that.saveNewEvent(user, response, newEvent);

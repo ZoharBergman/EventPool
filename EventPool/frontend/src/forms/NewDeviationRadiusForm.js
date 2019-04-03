@@ -39,7 +39,7 @@ let NewDeviationRadiusForm = (props) => {
                 </div>
 
                 <div className="field">
-                    <button disabled={!valid}>Calculate Carpool Groups Again</button>
+                    <button variant="contained" disabled={!valid}>Calculate Carpool Groups Again</button>
                 </div>
             </form>
         </div>

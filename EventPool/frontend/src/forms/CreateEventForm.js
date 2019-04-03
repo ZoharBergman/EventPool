@@ -43,8 +43,8 @@ const validate = val => {
          }
      }
 
-     if (!val.address) {
-         errors.address = 'Required';
+     if (!val.addressName) {
+         errors.addressName = 'Required';
      }
 
      if (!val.maxRadiusInKm) {
@@ -56,10 +56,6 @@ const validate = val => {
      }
 
      return errors;
-};
-
-const handleAddressSelected = (state) => {
-    debugger;
 };
 
 let CreateEventForm = props => {
@@ -75,20 +71,19 @@ let CreateEventForm = props => {
                 <Field name="date"
                        showTime={true}
                        component={renderDateTimePicker}
-                       placeholder="Event date"
-                       label="Event date"/>
+                       placeholder="Event date"/>
             </div>
 
             <div className="field">
-                <Field name="address" component={PlaceField}/>
+                <Field name="addressName" component={PlaceField}/>
             </div>
 
             <div className="field">
-                <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius from original route in KM"/>
+                <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius in KM"/>
             </div>
 
             <div className="field">
-                <button disabled={!valid}>Create event</button>
+                <button variant="contained" disabled={!valid}>Create event</button>
             </div>
         </form>
     );

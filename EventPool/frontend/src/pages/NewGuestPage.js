@@ -32,9 +32,9 @@ class NewGuestPage extends Component {
             if (snapshot.exists()) {
                 this.setState({event: new event(snapshot.val())});
 
-                if (this.state.event.notApprovedGuests[this.state.id]) {
+                if (this.state.event.guests[this.state.id]) {
                     this.setState({
-                        newGuest: this.state.event.notApprovedGuests[this.state.id]
+                        newGuest: this.state.event.guests[this.state.id]
                     }, this.loader.current.closeLoader);
                 }
             } else {
@@ -52,10 +52,7 @@ class NewGuestPage extends Component {
 
     saveToDB() {
         // Save guest as approved
-        eventsRef.child(this.state.eventId).child('approvedGuests').child(this.state.id).set(this.state.newGuest);
-
-        // Delete guest as not approved
-        eventsRef.child(this.state.eventId).child('notApprovedGuests').child(this.state.id).remove();
+        eventsRef.child(this.state.eventId).child('guests').child(this.state.id).update(this.state.newGuest);
     }
 
     afterGeocode(err, geocodeResponse) {
@@ -86,19 +83,23 @@ class NewGuestPage extends Component {
     };
 
     handleSubmit(guestDetails) {
+        debugger;
         Object.assign(guestDetails, guestDetails, this.state.newGuest);
-        guestDetails.id = this.state.id;
 
-        if (!guestDetails.isComing) {
-            // Save the guest's details in the DB
-            this.saveToDB();
-        } else if (guestDetails.isComing && guestDetails.isCar && guestDetails.freeSeatsNum === "0") {
-            this.setState({newGuest: guestDetails}, this.saveToDB);
-        } else {
+        if (guestDetails.isComing && guestDetails.isCar) {
             this.setState({newGuest: guestDetails}, () => {
                 // Geocoding the start location of the guest
                 geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
             });
+        } else {
+            if (!guestDetails.hasOwnProperty("isComing")) {
+                guestDetails.isComing = false;
+            } else if (!guestDetails.hasOwnProperty("isCar")) {
+                guestDetails.isCar = false;
+            }
+
+            // Save the guest's details in the DB
+            this.setState({newGuest: guestDetails}, this.saveToDB);
         }
     }
 
