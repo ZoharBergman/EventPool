@@ -6,6 +6,7 @@ import { eventsRef } from '../../config/firebase';
 import AddGuestForm from '../../forms/AddGuestForm';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import {ExcelRenderer} from 'react-excel-renderer';
 
 import event from '../../classes/event';
 import EventPoolService from '../../services/EventPoolService';
@@ -16,6 +17,9 @@ import message from '../../classes/message';
 import Loader from '../../components/Loader';
 import GuestsTableComponent from '../../components/GuestsTableComponent';
 import TabContainer from '../../components/TabContainer';
+import Formatters from '../../util/Formatters';
+import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateComponent';
+import ErrorPopupComponent from '../../components/ErrorPopupComponent';
 
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Grid from '@material-ui/core/Grid';
@@ -23,10 +27,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-
-import Formatters from '../../util/Formatters';
-import {OutTable, ExcelRenderer} from 'react-excel-renderer';
-import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateComponent';
 
 import './Style.css'
 
@@ -36,6 +36,8 @@ class EventPage extends Component {
         super(props);
 
         this.loader = React.createRef();
+        this.errorPopup = React.createRef();
+
         this.MANAGE_GUESTS = "Manage guests";
         this.MANAGE_CARPOOL_GROUPS = "Manage carpool groups";
 
@@ -53,7 +55,8 @@ class EventPage extends Component {
             isOpenImportGuestsPopup:false,
             oldCarpoolGroups: {},
             oldRadius: "",
-            manageTabsValue: this.MANAGE_GUESTS
+            manageTabsValue: this.MANAGE_GUESTS,
+            errorMessage: ""
         };
 
         this.handleAddGuest = this.handleAddGuest.bind(this);
@@ -66,7 +69,7 @@ class EventPage extends Component {
         this.closeImportGuestsModal = this.closeImportGuestsModal.bind(this);
         this.cancelNewCarpoolGroups = this.cancelNewCarpoolGroups.bind(this);
         this.calcPickupOrders = this.calcPickupOrders.bind(this);
-        this.sendMessagesAfterCarpoolGroupsSaved = this.sendMessagesAfterCarpoolGroupsSaved.bind(this);
+        this.sendCarpoolMatchingMessagesToGuests = this.sendCarpoolMatchingMessagesToGuests.bind(this);
         this.handleImportGuestsExcelFile = this.handleImportGuestsExcelFile.bind(this);
         this.handleGuestClicked = this.handleGuestClicked.bind(this);
         this.handleManageTabsChange = this.handleManageTabsChange.bind(this);
@@ -177,6 +180,11 @@ class EventPage extends Component {
                         carpoolGroups: carpoolGroups
                     }
                 }), this.loader.current.closeLoader);
+            })
+            .catch(() => {
+                this.loader.current.closeLoader();
+                this.setState({errorMessage: "Error while trying to calculate the carpool groups."},
+                    this.errorPopup.current.openErrorPopup);
             });
     }
 
@@ -189,8 +197,6 @@ class EventPage extends Component {
 
         eventsRef.child(this.state.eventId + '/carpoolGroups').set(groupObjects);
 
-        this.sendMessagesAfterCarpoolGroupsSaved();
-
         if (this.state.isCalcCarpoolGroupsAgain) {
             eventsRef.child(this.state.eventId).update({maxRadiusInKm: this.state.event.maxRadiusInKm});
             this.setState({
@@ -200,11 +206,12 @@ class EventPage extends Component {
         }
     }
 
-    sendMessagesAfterCarpoolGroupsSaved() {
+    sendCarpoolMatchingMessagesToGuests() {
+        this.loader.current.openLoader();
         let messages = [];
         let setMatchedPassengersIds = new Set();
 
-        this.state.event.carpoolGroups.forEach(carpoolGroup => {
+        Object.values(this.state.event.carpoolGroups).forEach(carpoolGroup => {
             const messageText = `You were matched to a carpool group for the event '${this.state.event.name}'. Watch your carpool group's details in the following link: /event/${this.state.eventId}/carpoolGroup/${carpoolGroup.driver.id}`;
 
             messages.push(new message(messageText, carpoolGroup.driver.phoneNumber));
@@ -218,12 +225,13 @@ class EventPage extends Component {
 
         Object.values(this.state.event.guests).forEach(guest => {
             if (guest.isComing && !setMatchedPassengersIds.has(guest.id)) {
-                messages.push(new message(`you were not matched to a carpool group for the event '${this.state.event.name}'.`,
+                messages.push(new message(`You were not matched to a carpool group for the event '${this.state.event.name}'.`,
                 guest.phoneNumber));
             }
         });
 
         Messaging.sendMessages(this.state.eventId, messages);
+        this.loader.current.closeLoader();
     }
 
     calcCarpoolGroupsAgain(data) {
@@ -263,19 +271,27 @@ class EventPage extends Component {
 
     calcPickupOrders() {
         this.loader.current.openLoader();
-        EventPoolService.calcAndSavePickupOrders(this.state.eventId).then(() => {
+        EventPoolService.calcAndSavePickupOrders(this.state.eventId)
+        .then(() => {
             this.loader.current.closeLoader();
+        })
+        .catch(() => {
+            this.loader.current.closeLoader();
+            this.setState({errorMessage: "Error while trying to calculate the pickup orders."},
+                this.errorPopup.current.openErrorPopup);
         });
     }
 
-    handleImportGuestsExcelFile(event) {
+    handleImportGuestsExcelFile(e) {
         this.closeImportGuestsModal();
         this.loader.current.openLoader();
-        let fileObj = event.target.files[0];
-        //just pass the fileObj as parameter
+        let fileObj = e.target.files[0];
+
         ExcelRenderer(fileObj, (err, resp) => {
             if(err){
-                console.log(err);
+                this.loader.current.closeLoader();
+                this.setState({errorMessage: "Error while importing the guests' file. The error is: " + err},
+                    this.errorPopup.current.openErrorPopup);
             } else {
                 if (resp.rows.length > 0) {
                     const nameIndex = resp.rows[0].indexOf("Name");
@@ -383,6 +399,7 @@ class EventPage extends Component {
         return (
             <div>
                 <Loader ref={this.loader}/>
+                <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
                 {eventDetails}
                 <AppBar position="relative" style={{"width": "fit-content", "margin": "auto", "zIndex": 0}}>
                     <Tabs value={this.state.manageTabsValue} onChange={this.handleManageTabsChange}>
@@ -399,7 +416,8 @@ class EventPage extends Component {
                                         <AddGuestForm onSubmit={this.handleAddGuest}/>
                                     </Grid>
                                     <Grid item>
-                                        <Popup modal open={this.state.isOpenImportGuestsPopup} trigger={<Button variant="contained">Import</Button>}>
+                                        <Button variant="contained" onClick={this.openImportGuestsModal}>Import</Button>
+                                        <Popup modal open={this.state.isOpenImportGuestsPopup}>
                                             <div>
                                                 <h1>Import guests from excel</h1>
                                                 Download guests' template sheet
@@ -443,6 +461,12 @@ class EventPage extends Component {
                                 hidden={
                                     Object.keys(this.state.oldCarpoolGroups).length <= 0
                                 }>Cancel new groups calculation
+                        </Button>
+                        <Button variant="contained"
+                                onClick={this.sendCarpoolMatchingMessagesToGuests}
+                                hidden={
+                                    !this.state.isCarpoolGroupsConfirmed
+                                }>Send carpool matching messages to guests
                         </Button>
                         <Button variant="contained"
                                 onClick={this.calcPickupOrders}

@@ -8,6 +8,7 @@ import event from '../classes/event';
 import geocoding from '../util/Geocoding';
 import routesService from '../services/EventPoolService';
 import Loader from '../components/Loader';
+import ErrorPopupComponent from '../components/ErrorPopupComponent';
 
 class NewGuestPage extends Component {
     constructor(props) {
@@ -17,10 +18,12 @@ class NewGuestPage extends Component {
             eventId: props.match.params.eventId,
             id: props.match.params.guestId,
             event: {},
-            newGuest: {}
+            newGuest: {},
+            errorMessage: ""
         };
 
         this.loader = React.createRef();
+        this.errorPopup = React.createRef();
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.afterGeocode = this.afterGeocode.bind(this);
@@ -56,7 +59,10 @@ class NewGuestPage extends Component {
     }
 
     afterGeocode(err, geocodeResponse) {
-        if (!err) {
+        if (err || geocodeResponse.json.results.length === 0) {
+            this.loader.current.closeLoader();
+            this.setState({errorMessage: "Error while geocoding the address."}, this.errorPopup.current.openErrorPopup);
+        } else {
             // Setting the geocoded address on the guest detail
             const guestDetails = this.state.newGuest;
             guestDetails.startAddress = {
@@ -67,7 +73,10 @@ class NewGuestPage extends Component {
             // Checking if the guest is a driver
             if (!guestDetails.isCar) { // The guest is a passenger
                 guestDetails.isCar = false;
-                this.setState({newGuest: guestDetails}, this.saveToDB);
+                this.setState({newGuest: guestDetails}, () => {
+                    this.saveToDB();
+                    this.loader.current.closeLoader();
+                });
             } else { // The guest is a driver
                 // Calculate and save the route of the driver
                 routesService.calcAndSaveRoute(
@@ -75,31 +84,36 @@ class NewGuestPage extends Component {
                     `${this.state.event.address.location.lat},${this.state.event.address.location.lng}`,
                     this.state.id,
                     this.state.eventId,
-                    guestDetails.freeSeatsNum);
-
-                this.saveToDB();
+                    guestDetails.freeSeatsNum)
+                    .then(() => {
+                        this.saveToDB();
+                        this.loader.current.closeLoader();
+                    })
+                    .catch(() => {
+                        this.loader.current.closeLoader();
+                        this.setState({errorMessage: "Error while trying to calculate and save the route."},
+                            this.errorPopup.current.openErrorPopup);
+                    });
             }
         }
     };
 
     handleSubmit(guestDetails) {
-        debugger;
+        this.loader.current.openLoader();
+
         Object.assign(guestDetails, guestDetails, this.state.newGuest);
 
-        if (guestDetails.isComing && guestDetails.isCar) {
+        if (guestDetails.hasOwnProperty("isComing")) {
             this.setState({newGuest: guestDetails}, () => {
                 // Geocoding the start location of the guest
                 geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
             });
         } else {
-            if (!guestDetails.hasOwnProperty("isComing")) {
-                guestDetails.isComing = false;
-            } else if (!guestDetails.hasOwnProperty("isCar")) {
-                guestDetails.isCar = false;
-            }
-
-            // Save the guest's details in the DB
-            this.setState({newGuest: guestDetails}, this.saveToDB);
+            guestDetails.isComing = false;
+            this.setState({newGuest: guestDetails}, () => {
+                this.saveToDB();
+                this.loader.current.closeLoader();
+            });
         }
     }
 
@@ -107,6 +121,7 @@ class NewGuestPage extends Component {
         return (
             <div>
                 <Loader ref={this.loader}/>
+                <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
                 <CarpoolGuestDetailsForm isDisabled={false} guest={this.state.newGuest} event={this.state.event}
                                          onSubmit={this.handleSubmit}/>
             </div>

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * Created by Zohar on 30/12/2018.
@@ -28,10 +29,9 @@ public class Firebase {
                     .build();
 
             app = FirebaseApp.initializeApp(options);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

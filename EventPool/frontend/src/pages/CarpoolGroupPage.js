@@ -7,6 +7,7 @@ import ListComponent from '../components/ListComponent';
 import EventPoolService from '../services/EventPoolService';
 import Stepper from 'react-stepper-horizontal/lib/index';
 import Loader from '../components/Loader';
+import ErrorPopupComponent from '../components/ErrorPopupComponent';
 
 class CarpoolGroupPage extends Component {
     constructor(props) {
@@ -21,10 +22,12 @@ class CarpoolGroupPage extends Component {
             passengers: {},
             eventName: "",
             pickupOrder: [],
-            eventLocation: {}
+            eventLocation: {},
+            errorMessage: ""
         };
 
         this.loader = React.createRef();
+        this.errorPopup = React.createRef();
 
         this.check = this.check.bind(this);
         this.calcPickupOrder = this.calcPickupOrder.bind(this);
@@ -69,7 +72,12 @@ class CarpoolGroupPage extends Component {
             .then(response => response.json())
             .then(pickupOrder => {
                 this.setState({pickupOrder: pickupOrder}, this.loader.current.closeLoader);
-            });
+            })
+            .catch(() => {
+                this.loader.current.closeLoader();
+                this.setState({errorMessage: "Error while trying to calculate the pickup order."},
+                    this.errorPopup.current.openErrorPopup);
+        });
     }
 
     buildPickupOrderStepper(passengers, pickupOrder, eventLocation) {
@@ -100,6 +108,7 @@ class CarpoolGroupPage extends Component {
         return (
             <div>
                 <Loader ref={this.loader}/>
+                <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
                 <h1>{this.state.eventName}</h1>
                 <div>
                     <h2>Carpool Group Details</h2>

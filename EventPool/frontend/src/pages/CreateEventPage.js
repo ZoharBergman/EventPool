@@ -8,16 +8,19 @@ import geocoding from '../util/Geocoding';
 import auth from '../config/auth';
 import userEvent from '../classes/userEvent';
 import Loader from '../components/Loader';
+import ErrorPopupComponent from '../components/ErrorPopupComponent';
 
 class CreateEventPage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            loading: false
+            loading: false,
+            errorMessage: ""
         };
 
         this.loader = React.createRef();
+        this.errorPopup = React.createRef();
 
         this.saveNewEvent = this.saveNewEvent.bind(this);
         this.saveEventToUser = this.saveEventToUser.bind(this);
@@ -67,7 +70,10 @@ class CreateEventPage extends Component {
         this.loader.current.openLoader();
         let that = this;
         geocoding.codeAddress(newEvent.addressName, (err, response) => {
-            if (!err) {
+            if (err || response.json.results.length === 0) {
+                this.loader.current.closeLoader();
+                this.setState({errorMessage: "Error while geocoding the address."}, this.errorPopup.current.openErrorPopup);
+            } else {
                 const user = localStorage.getItem(auth.appTokenKey);
                 const eventId = that.saveNewEvent(user, response, newEvent);
                 that.saveEventToUser(user, eventId, newEvent);
@@ -81,6 +87,7 @@ class CreateEventPage extends Component {
     render() {
         return (
             <div>
+                <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
                 <Loader ref={this.loader}/>
                 <CreateEventForm onSubmit={this.handleCreateEvent}/>
             </div>

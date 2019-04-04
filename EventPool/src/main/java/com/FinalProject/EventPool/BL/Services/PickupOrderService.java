@@ -1,6 +1,7 @@
 package com.FinalProject.EventPool.BL.Services;
 
 import com.FinalProject.EventPool.BL.PickupOrder.IPickupOrder;
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,6 +13,7 @@ import java.time.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 /**
  * Created by Zohar on 24/03/2019.
@@ -61,7 +63,7 @@ public class PickupOrderService implements IScheduleService, Runnable{
                                   try {
                                     PickupOrder.calcAndSavePickupOrders(event);
                                 } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                      Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
                                 }
                             }));
                         });
@@ -71,7 +73,7 @@ public class PickupOrderService implements IScheduleService, Runnable{
                             try {
                                 thread.join();
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
                             }
                         });
 
@@ -88,7 +90,7 @@ public class PickupOrderService implements IScheduleService, Runnable{
             semaphore.acquire();
             Scheduler.saveServiceRuntimeDetails(this);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

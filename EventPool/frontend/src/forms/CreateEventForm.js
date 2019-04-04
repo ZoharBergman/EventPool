@@ -31,7 +31,7 @@ const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, pla
 
 const validate = val => {
     const errors = {};
-     if (!val.name) {
+     if (!val.name || val.name.trim().length === 0) {
          errors.name = 'Required';
      }
 
@@ -43,7 +43,7 @@ const validate = val => {
          }
      }
 
-     if (!val.addressName) {
+     if (!val.addressName || val.addressName.trim().length === 0) {
          errors.addressName = 'Required';
      }
 

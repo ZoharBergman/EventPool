@@ -1,5 +1,6 @@
 package com.FinalProject.EventPool.BL.CarpoolMatching;
 
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.*;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -16,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Semaphore;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 /**
@@ -108,6 +110,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
                 potentialMatchThread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
             }
         });
 
@@ -152,7 +155,7 @@ public class CarpoolMatchingBL implements ICarpoolMatching {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

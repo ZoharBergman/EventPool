@@ -1,5 +1,6 @@
 package com.FinalProject.EventPool.BL.Services;
 
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.Service;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 /**
  * Created by Zohar on 24/03/2019.
@@ -104,7 +106,7 @@ public class Scheduler {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
         }
 
         return localDateTime[0];

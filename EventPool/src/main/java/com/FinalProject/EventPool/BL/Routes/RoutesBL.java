@@ -1,6 +1,7 @@
 package com.FinalProject.EventPool.BL.Routes;
 
 import com.FinalProject.EventPool.Config.Keys;
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.Geofire;
 import com.FinalProject.EventPool.Models.GeofireToDriver;
 import com.firebase.geofire.GeoFire;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 /**
  * Created by Zohar on 27/12/2018.
@@ -26,10 +28,9 @@ import java.util.concurrent.Semaphore;
 @Service
 public class RoutesBL implements IRoutes{
     @Override
-    public List<LatLng> calcRoute(String origin, String destination) {
+    public List<LatLng> calcRoute(String origin, String destination) throws InterruptedException, ApiException, IOException {
         GeoApiContext context = new GeoApiContext.Builder().apiKey(Keys.DIRECTIONS_API_KEY).build();
 
-        try {
             // Getting the directions
             DirectionsResult directionsResult =
                     DirectionsApi.getDirections(context, origin, destination).mode(TravelMode.DRIVING).await();
@@ -42,15 +43,12 @@ public class RoutesBL implements IRoutes{
                 // Getting the points of the calculated route
                 return directionsResult.routes[0].overviewPolyline.decodePath();
             }
-        } catch (ApiException | InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
 
         return null;
     }
 
     @Override
-    public void calcAndSaveRoute(String origin, String destination, String driverId, String eventId, Integer freeSeatsNum) {
+    public void calcAndSaveRoute(String origin, String destination, String driverId, String eventId, Integer freeSeatsNum) throws InterruptedException, ApiException, IOException {
         List<LatLng> lstRoutePoints = calcRoute(origin, destination);
 
         if (lstRoutePoints.size() > 0) {
@@ -58,7 +56,7 @@ public class RoutesBL implements IRoutes{
         }
     }
 
-    private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId, Integer freeSeatsNum) {
+    private void saveRoute(List<LatLng> lstRoutePoints, String driverId, String eventId, Integer freeSeatsNum) throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final Integer[] numOfHandledPoints = {lstRoutePoints.size()};
 
@@ -82,10 +80,6 @@ public class RoutesBL implements IRoutes{
             GeofireToDriver.getReference().child(eventId).child(geoLocationKey).updateChildren(mapDriver, null);
         });
 
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        semaphore.acquire();
     }
 }

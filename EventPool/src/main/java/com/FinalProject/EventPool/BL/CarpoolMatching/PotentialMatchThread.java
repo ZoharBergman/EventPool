@@ -1,5 +1,6 @@
 package com.FinalProject.EventPool.BL.CarpoolMatching;
 
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.*;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryDataEventListener;
@@ -11,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 /**
  * Created by Zohar on 17/03/2019.
@@ -137,7 +139,7 @@ public class PotentialMatchThread extends Thread{
                 counterIsZero.acquire();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

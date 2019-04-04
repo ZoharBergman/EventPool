@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 const validate = val => {
     const errors = {};
-    if (!val.name) {
+    if (!val.name || val.name.trim().length === 0) {
         errors.name= 'Required';
     }
 

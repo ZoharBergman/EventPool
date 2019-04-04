@@ -1,6 +1,7 @@
 package com.FinalProject.EventPool.BL.PickupOrder;
 
 import com.FinalProject.EventPool.Config.Keys;
+import com.FinalProject.EventPool.Config.Log;
 import com.FinalProject.EventPool.Models.Address;
 import com.FinalProject.EventPool.Models.CarpoolGroup;
 import com.FinalProject.EventPool.Models.Event;
@@ -23,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +33,7 @@ import java.util.stream.Collectors;
 @Service
 public class PickupOrderBL implements IPickupOrder{
     @Override
-    public List<String> calcAndSavePickupOrder(String eventId, String groupId) throws InterruptedException {
+    public List<String> calcAndSavePickupOrder(String eventId, String groupId) throws InterruptedException, IOException, ApiException {
         CarpoolGroup carpoolGroup = getCarpoolGroup(eventId, groupId);
         LatLng eventLocation = getEventLocation(eventId);
         List<String> lstPickupOrder = getPickupOrder(carpoolGroup, eventLocation);
@@ -71,8 +73,14 @@ public class PickupOrderBL implements IPickupOrder{
         carpoolGroups.forEach(carpoolGroup -> {
             if ((carpoolGroup.getPickupOrder() == null ) ||
                 (carpoolGroup.getPickupOrder() != null && carpoolGroup.getPickupOrder().size() == 0)) {
-                lstThreadsCalcPickupOrder.add(new Thread(() ->
-                        carpoolGroup.setPickupOrder(getPickupOrder(carpoolGroup, eventLocation))));
+                lstThreadsCalcPickupOrder.add(new Thread(() -> {
+                    try {
+                        carpoolGroup.setPickupOrder(getPickupOrder(carpoolGroup, eventLocation));
+                    } catch (InterruptedException | ApiException | IOException e) {
+                        e.printStackTrace();
+                        Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
+                    }
+                }));
             }
         });
 
@@ -82,6 +90,7 @@ public class PickupOrderBL implements IPickupOrder{
                 thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Log.getInstance().log(Level.SEVERE, e.getMessage(), e);
             }
         });
     }
@@ -110,42 +119,38 @@ public class PickupOrderBL implements IPickupOrder{
         return lstCarpoolGroups;
     }
 
-    private List<String> getPickupOrder(CarpoolGroup carpoolGroup, LatLng eventLocation) {
+    private List<String> getPickupOrder(CarpoolGroup carpoolGroup, LatLng eventLocation) throws InterruptedException, ApiException, IOException {
         GeoApiContext context = new GeoApiContext.Builder().apiKey(Keys.DIRECTIONS_API_KEY).build();
         List<Passenger> lstPassengers = new ArrayList<>(carpoolGroup.getPassengers().values());
         List<String> pickupOrder = new ArrayList<>(lstPassengers.size());
         lstPassengers.forEach(passenger -> pickupOrder.add(""));
 
-        try {
-            // Getting the directions
-            DirectionsResult directionsResult = DirectionsApi
-                    .getDirections(context, carpoolGroup.getDriver().getStartAddress().getLocation().toString(), eventLocation.toString())
-                    .mode(TravelMode.DRIVING)
-                    .waypoints(lstPassengers.stream()
-                            .map(passenger -> passenger.getStartAddress().getLocation())
-                            .collect(Collectors.toList())
-                            .toArray(new LatLng[lstPassengers.size()]))
-                    .optimizeWaypoints(true)
-                    .await();
+        // Getting the directions
+        DirectionsResult directionsResult = DirectionsApi
+                .getDirections(context, carpoolGroup.getDriver().getStartAddress().getLocation().toString(), eventLocation.toString())
+                .mode(TravelMode.DRIVING)
+                .waypoints(lstPassengers.stream()
+                        .map(passenger -> passenger.getStartAddress().getLocation())
+                        .collect(Collectors.toList())
+                        .toArray(new LatLng[lstPassengers.size()]))
+                .optimizeWaypoints(true)
+                .await();
 
-            // Validating that we got a route
-            if (directionsResult != null &&
-                    directionsResult.routes != null &&
-                    directionsResult.routes[0] != null &&
-                    directionsResult.routes[0].overviewPolyline != null) {
-                // Getting the pickup order
-                for (int curr = 0; curr < directionsResult.routes[0].waypointOrder.length; curr++) {
-                    pickupOrder.set(curr, lstPassengers.get(directionsResult.routes[0].waypointOrder[curr]).getId());
-                }
+        // Validating that we got a route
+        if (directionsResult != null &&
+                directionsResult.routes != null &&
+                directionsResult.routes[0] != null &&
+                directionsResult.routes[0].overviewPolyline != null) {
+            // Getting the pickup order
+            for (int curr = 0; curr < directionsResult.routes[0].waypointOrder.length; curr++) {
+                pickupOrder.set(curr, lstPassengers.get(directionsResult.routes[0].waypointOrder[curr]).getId());
             }
-        } catch (ApiException | InterruptedException | IOException e) {
-            e.printStackTrace();
         }
 
         return pickupOrder;
     }
 
-    private LatLng getEventLocation(String eventId) {
+    private LatLng getEventLocation(String eventId) throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final LatLng[] eventLocation = new LatLng[1];
 
@@ -163,11 +168,7 @@ public class PickupOrderBL implements IPickupOrder{
                     }
                 });
 
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        semaphore.acquire();
 
         return eventLocation[0];
     }
