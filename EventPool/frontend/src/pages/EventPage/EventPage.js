@@ -366,9 +366,35 @@ class EventPage extends Component {
     render() {
         let eventDetails;
         let carpoolGroups;
+        let carpoolGroupsSummary;
 
         if (Object.keys(this.state.event.carpoolGroups).length > 0) {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
+            carpoolGroupsSummary = (
+                <div className="container">
+                    <h2>Participating guests in carpool</h2>
+                    <Grid container spacing={24}>
+                        <Grid item xs={6}>
+                            <TextField type="text" label="Passengers:" value={
+                                `${Object.values(this.state.event.carpoolGroups).map((carpoolGroup) => {
+                                    return Object.keys(carpoolGroup.passengers).length
+                                }).reduce((l1, l2) => l1 + l2)} of ${
+                                    Object.values(this.state.event.guests)
+                                        .filter((guest) => guest.isComing && !guest.isCar).length
+                                }`
+                            }/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField type="text" label="Drivers:" value={
+                                `${Object.keys(this.state.event.carpoolGroups).length} of ${
+                                    Object.values(this.state.event.guests)
+                                        .filter((guest) => guest.isComing && guest.isCar).length
+                                    }`
+                            }/>
+                        </Grid>
+                    </Grid>
+                </div>
+            );
         }
 
         if (this.state.event.hasOwnProperty("id") && this.state.event.id !== "") {
@@ -440,7 +466,6 @@ class EventPage extends Component {
 
                 {this.state.manageTabsValue === this.MANAGE_CARPOOL_GROUPS &&
                     <TabContainer>
-                        <h2>Carpool Groups</h2>
                         <Button variant="contained"
                                 onClick={this.handleCalcCarpoolGroups}
                                 hidden={
@@ -485,6 +510,7 @@ class EventPage extends Component {
                                     onSubmit={this.calcCarpoolGroupsAgain}/>
                             </Popup>
                         </div>
+                        {carpoolGroupsSummary}
                         {carpoolGroups}
                     </TabContainer>
                 }

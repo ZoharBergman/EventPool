@@ -108,6 +108,8 @@ class NewGuestPage extends Component {
                 // Geocoding the start location of the guest
                 geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);
             });
+        } else if(guestDetails.isComing && guestDetails.isCar && guestDetails.freeSeatsNum === 0) {
+            this.saveToDB();
         } else {
             guestDetails.isComing = false;
             this.setState({newGuest: guestDetails}, () => {
