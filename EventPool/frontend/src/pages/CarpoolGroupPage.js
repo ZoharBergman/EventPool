@@ -9,6 +9,10 @@ import Stepper from 'react-stepper-horizontal/lib/index';
 import Loader from '../components/Loader';
 import ErrorPopupComponent from '../components/ErrorPopupComponent';
 
+import Grid from '@material-ui/core/Grid';
+import TextField from "@material-ui/core/es/TextField/TextField";
+import Button from '@material-ui/core/Button';
+
 class CarpoolGroupPage extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +36,7 @@ class CarpoolGroupPage extends Component {
         this.check = this.check.bind(this);
         this.calcPickupOrder = this.calcPickupOrder.bind(this);
         this.buildPickupOrderStepper = this.buildPickupOrderStepper.bind(this);
+        this.buildGuestDetails = this.buildGuestDetails.bind(this);
     }
 
     check() {
@@ -61,7 +66,7 @@ class CarpoolGroupPage extends Component {
 
     componentDidMount() {
         // Checking if the event data from the DB have not loaded yet
-        if (Object.keys(this.state.driver) <= 0) {
+        if (Object.keys(this.state.driver).length <= 0) {
             this.loader.current.openLoader();
         }
     }
@@ -96,34 +101,56 @@ class CarpoolGroupPage extends Component {
         });
 
         return (
-            <Stepper steps={steps} activeStep={pickupOrder.length}/>
+            <div>
+                Click on a passenger to get directions.
+                <Stepper steps={steps} activeStep={pickupOrder.length}/>
+            </div>
         )
+    }
+
+    buildGuestDetails(guest) {
+        return (
+            <Grid container spacing={24}>
+                <Grid item sm={4} xs={12}>
+                    <TextField type="text" label="Name:" value={guest.name}/>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                    <TextField type="text" label="Phone number:" value={guest.phoneNumber}/>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                    <TextField type="text" fullWidth label="Start address:" value={guest.startAddress.name}/>
+                </Grid>
+            </Grid>
+        );
     }
 
     render() {
         let pickupOrderDiv = this.state.pickupOrder.length === 0 ? (
-            <button onClick={this.calcPickupOrder}>Calculate pickup order</button>
+            <Button variant="contained" onClick={this.calcPickupOrder}>Calculate pickup order</Button>
         ) : this.buildPickupOrderStepper(this.state.passengers, this.state.pickupOrder, this.state.eventLocation);
 
         return (
             <div>
                 <Loader ref={this.loader}/>
                 <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
-                <h1>{this.state.eventName}</h1>
-                <div>
-                    <h2>Carpool Group Details</h2>
-                    <div>
-                        <div>
-                            <h3>Driver:</h3>
-                            {ListComponent([this.state.driver], "id", "name", "phoneNumber", "startAddress.name")}
-                        </div>
-                        <div>
-                            <h3>Passengers:</h3>
-                            {ListComponent(Object.values(this.state.passengers), "id", "name", "phoneNumber", "startAddress.name")}
-                        </div>
-                    </div>
+                <h1 style={{textAlign: 'center'}}>{this.state.eventName}</h1>
+                <div className="container">
+                    <Grid container spacing={24}>
+                        {Object.keys(this.state.driver).length > 0 &&
+                            <Grid item xs={12}>
+                                <h2>Driver:</h2>
+                                {this.buildGuestDetails(this.state.driver)}
+                            </Grid>
+                        }
+                        {Object.keys(this.state.passengers).length > 0 &&
+                            <Grid item xs={12}>
+                                <h2>Passengers:</h2>
+                                {Object.values(this.state.passengers).map(passenger => this.buildGuestDetails(passenger))}
+                            </Grid>
+                        }
+                    </Grid>
                 </div>
-                <div>
+                <div className="container">
                     <h2>Pickup Order</h2>
                     {pickupOrderDiv}
                 </div>

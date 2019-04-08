@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import './Style.css';
 import logo from '../../images/EventpoolLogo.png';
 
-class CreateEventPage extends Component {
+class CreateEventPageForm extends Component {
     render() {
         return (
             <div class="container contact-form" style={{background: '#d6d8d9'}}>
@@ -41,4 +41,4 @@ class CreateEventPage extends Component {
     }
 }
 
-export { CreateEventPage };
+export { CreateEventPageForm };

@@ -408,7 +408,7 @@ class EventPage extends Component {
                         <Grid item sm={4} xs={12}>
                             <TextField type="text" label="Location:" value={this.state.event.address.name}/>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item sm={4} xs={12}>
                             <TextField type="text" label="Max deviation radius in KM:"
                                        value={this.state.event.maxRadiusInKm}/>
                         </Grid>
@@ -498,18 +498,16 @@ class EventPage extends Component {
                                 hidden={!this.state.isCarpoolGroupsConfirmed}>
                             Calculate pickup order of carpool groups
                         </Button>
-                        <div>
-                            <Button variant="contained"
-                                    onClick={this.openNewRadiusModal}
-                                    hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
-                                Calculate Carpool Groups Again
-                            </Button>
-                            <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
-                                <NewDeviationRadiusForm
-                                    maxRadiusInKm={this.state.event.maxRadiusInKm}
-                                    onSubmit={this.calcCarpoolGroupsAgain}/>
-                            </Popup>
-                        </div>
+                        <Button variant="contained"
+                                onClick={this.openNewRadiusModal}
+                                hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
+                            Calculate Carpool Groups Again
+                        </Button>
+                        <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
+                            <NewDeviationRadiusForm
+                                maxRadiusInKm={this.state.event.maxRadiusInKm}
+                                onSubmit={this.calcCarpoolGroupsAgain}/>
+                        </Popup>
                         {carpoolGroupsSummary}
                         {carpoolGroups}
                     </TabContainer>

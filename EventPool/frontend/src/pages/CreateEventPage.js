@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import CreateEventForm from '../forms/CreateEventForm';
+// import {CreateEventPageForm} from './CreateEventPageForm/CreateEventPageForm';
 import { eventsRef, userEventsRef } from '../config/firebase';
 import geocoding from '../util/Geocoding';
 import auth from '../config/auth';

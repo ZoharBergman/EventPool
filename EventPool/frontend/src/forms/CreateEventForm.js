@@ -8,15 +8,16 @@ import moment from "moment";
 import momentLocalizer from 'react-widgets-moment';
 import renderField from './RenderedField';
 import PlaceField from './PlaceField';
+import logo from '../images/EventpoolLogo.png';
+import Grid from '@material-ui/core/Grid';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
 momentLocalizer(moment)
 
-const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, placeholder, meta: { touched, error, warning } }) => (
-    <div>
-        <div className="control">
-            <label className="field">{label}</label>
+const renderDateTimePicker = ({input: { onChange, value }, label, showTime, placeholder, meta: { touched, error, warning, dirty }}) => {
+    return (
+        <div>
             <DateTimePicker
                 onChange={onChange}
                 format="DD MMM YYYY HH:mm"
@@ -24,10 +25,10 @@ const renderDateTimePicker = ({ input: { onChange, value }, label, showTime, pla
                 value={!value ? null : new Date(value)}
                 placeholder={placeholder}
             />
-            {((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+            {dirty && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
         </div>
-    </div>
-);
+    );
+};
 
 const validate = val => {
     const errors = {};
@@ -63,27 +64,32 @@ let CreateEventForm = props => {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <div className="field">
-                <Field className="input" name="name" component={renderField} type="text" label="Event Name" />
-            </div>
+            <div className="container">
+                <h2>Create new event</h2>
+                <Grid container spacing={24} justify="center">
+                    <Grid item xs={12} sm={6}>
+                        <Field className="input" name="name" component={renderField} type="text" label="Event Name" />
+                    </Grid>
 
-            <div className="field">
-                <Field name="date"
-                       showTime={true}
-                       component={renderDateTimePicker}
-                       placeholder="Event date"/>
-            </div>
+                    <Grid item xs={12} sm={6}>
+                        <Field name="date"
+                               showTime={true}
+                               component={renderDateTimePicker}
+                               placeholder="Event date"/>
+                    </Grid>
 
-            <div className="field">
-                <Field name="addressName" component={PlaceField}/>
-            </div>
+                    <Grid item xs={12} sm={6}>
+                        <Field name="addressName" component={PlaceField}/>
+                    </Grid>
 
-            <div className="field">
-                <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius in KM"/>
-            </div>
+                    <Grid item xs={12} sm={6}>
+                        <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius in KM"/>
+                    </Grid>
 
-            <div className="field">
-                <button variant="contained" disabled={!valid}>Create event</button>
+                    <Grid item>
+                        <button variant="contained" disabled={!valid}>Create</button>
+                    </Grid>
+                </Grid>
             </div>
         </form>
     );

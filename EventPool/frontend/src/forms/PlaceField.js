@@ -8,8 +8,8 @@ const renderFunc = ({ getInputProps, suggestions, getSuggestionItemProps, loadin
     <div>
         <input
             {...getInputProps({
-                placeholder: 'Search Places ...',
-                className: 'location-search-input',
+                placeholder: 'Search place ...',
+                className: 'form-control',
             })}
         />
         <div className="autocomplete-dropdown-container">

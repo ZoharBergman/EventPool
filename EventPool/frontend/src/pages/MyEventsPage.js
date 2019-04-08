@@ -6,6 +6,8 @@ import { userEventsRef } from '../config/firebase';
 import auth from '../config/auth';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
+import List from '@material-ui/core/List/List';
+import ListItem from '@material-ui/core/ListItem/ListItem';
 
 class MyEventsPage extends Component {
     constructor(props) {
@@ -56,30 +58,20 @@ class MyEventsPage extends Component {
     }
 
     buildEventsList(events) {
-        return events.map((event, i) => {
-            return (
-                <li key={i}>
-                    <Link to={`/event/${event.eventId}`}>{event.eventName}</Link>
-                </li>
-            );
-        });
+        return (
+            <List component="nav">
+                {events.map((event) => (
+                    <ListItem>
+                        <Link to={`/event/${event.eventId}`}>{event.eventName}</Link>
+                    </ListItem>
+                ))}
+            </List>
+        );
     }
 
     render() {
-        let asOrganizer;
-        // let asGuest;
-
-        if (this.state.asOrganizer.length > 0) {
-            asOrganizer = this.buildEventsList(this.state.asOrganizer);
-        } else {
-            asOrganizer = "No events as organizer.";
-        }
-
-        // if (this.state.asGuest.length > 0) {
-        //     asGuest = this.buildEventsList(this.state.asGuest);
-        // } else {
-        //     asGuest = "No events as guest.";
-        // }
+        let asOrganizer = this.state.asOrganizer.length > 0 ?
+            this.buildEventsList(this.state.asOrganizer) : "No events as organizer.";
 
         return (
             <div>
