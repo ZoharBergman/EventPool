@@ -7,7 +7,7 @@ import logo from '../images/EventpoolLogo.png';
 class HomePage extends Component {
     render() {
         return (
-            <img src={logo} style={{ width: '100%', height: '100%' }}/>
+            <img src={logo} style={{ width: "70%", display: "block", marginLeft: "auto", marginRight: "auto" }}/>
         );
     }
 }

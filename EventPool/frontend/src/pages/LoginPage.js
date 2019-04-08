@@ -2,10 +2,11 @@
  * Created by Zohar on 27/11/2018.
  */
 import React from "react";
-// import {FontIcon, RaisedButton} from "material-ui";
+import GoogleButton from 'react-google-button'
 import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
 import Loader from '../components/Loader';
+import logo from '../images/EventpoolLogo.png';
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 
@@ -66,23 +67,10 @@ export default class LoginPage extends React.Component {
     }
 }
 
-const iconStyles = {
-    color: "#ffffff"
-};
-
 const Login = ({handleGoogleLogin}) => (
-    <div>
-        <h1>Login</h1>
-        <div>
-            <button onClick={handleGoogleLogin}>Sign in with google</button>
-            {/*<RaisedButton*/}
-                {/*label="Sign in with Google"*/}
-                {/*labelColor={"#ffffff"}*/}
-                {/*backgroundColor="#dd4b39"*/}
-                {/*icon={<FontIcon className="fa fa-google-plus" style={iconStyles}/>}*/}
-                {/*onClick={handleGoogleLogin}*/}
-            {/*/>*/}
-        </div>
+    <div style={{margin: "0", position: "absolute", top: "40%", left: "50%", transform: "translate(-50%, -50%)"}}>
+        <img src={logo} style={{width: "70%", display: "block", marginLeft: "auto", marginRight: "auto"}}/>
+        <GoogleButton onClick={handleGoogleLogin} style={{marginLeft: "auto", marginRight: "auto", bottom: "80px"}}/>
     </div>
 );
 
