@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch, Redirect  } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import { CreateEventPage } from '../pages/CreateEventPage';
-import { AppHeader } from '../headers/AppHeader';
+import AppHeader from '../headers/AppHeader';
 import { MyEventsPage } from '../pages/MyEventsPage';
 import { EventPage } from '../pages/EventPage/EventPage';
 import { NewGuestPage } from '../pages/NewGuestPage';
@@ -17,7 +17,12 @@ import auth from '../config/auth';
 class AppRouter extends Component {
     constructor(props) {
         super(props);
-        this.state = {isAppHeader: true};
+        this.state = {
+            isAppHeader: !!localStorage.getItem(auth.appTokenKey)
+        };
+
+        this.showHeader = this.showHeader.bind(this);
+        this.hideHeader = this.hideHeader.bind(this);
     }
 
     showHeader() {
@@ -25,17 +30,16 @@ class AppRouter extends Component {
     }
 
     hideHeader() {
-        this.setState({isAppHeader: true});
+        this.setState({isAppHeader: false});
     }
 
     render() {
-        // let isAppHeader = this.state.isAppHeader ? <AppHeader onLogout={this.hideHeader}/> : undefined;
         return (
             <BrowserRouter>
                 <Fragment>
-                    <AppHeader/>
+                    {this.state.isAppHeader && <AppHeader onLogout={this.hideHeader}/>}
                     <Switch>
-                        <Route path="/login" component={LoginPage} />
+                        <Route path="/login" render={(props) => <LoginPage {...props} onAuthenticate={this.showHeader}/>} />
                         <Route path='/home' component={HomePage}/>
                         <Route path='/events/create' component={CreateEventPage} />
                         <Route path='/events' component={MyEventsPage} />

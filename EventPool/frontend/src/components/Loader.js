@@ -10,7 +10,7 @@ class Loader extends Component {
       super(props);
 
       this.state = {
-          open: false
+          open: props.hasOwnProperty("open") ? props.open : false
       };
 
       this.closeLoader = this.closeLoader.bind(this);

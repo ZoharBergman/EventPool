@@ -5,6 +5,7 @@ import React from "react";
 // import {FontIcon, RaisedButton} from "material-ui";
 import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
+import Loader from '../components/Loader';
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 
@@ -34,6 +35,7 @@ export default class LoginPage extends React.Component {
          */
         if (localStorage.getItem(auth.appTokenKey)) {
             this.props.history.push("/home");
+            this.props.onAuthenticate();
             return;
         }
 
@@ -44,10 +46,11 @@ export default class LoginPage extends React.Component {
                 // here you could authenticate with you web server to get the
                 // application specific token so that you do not have to
                 // authenticate with firebase every time a user logs in
-                localStorage.setItem(auth.appTokenKey, user.uid);
 
                 // store the token
+                localStorage.setItem(auth.appTokenKey, user.uid);
                 this.props.history.push("/home");
+                this.props.onAuthenticate();
             }
         });
     }
@@ -66,6 +69,7 @@ export default class LoginPage extends React.Component {
 const iconStyles = {
     color: "#ffffff"
 };
+
 const Login = ({handleGoogleLogin}) => (
     <div>
         <h1>Login</h1>
@@ -82,4 +86,4 @@ const Login = ({handleGoogleLogin}) => (
     </div>
 );
 
-const SplashScreen = () => (<p>Loading...</p>)
+const SplashScreen = () => (<Loader open={true}/>);

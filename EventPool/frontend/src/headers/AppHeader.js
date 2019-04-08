@@ -2,7 +2,7 @@
  * Created by Zohar on 30/11/2018.
  */
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import auth from '../config/auth';
 
 class AppHeader extends Component {
@@ -12,13 +12,12 @@ class AppHeader extends Component {
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    handleLogout(e) {
-        debugger;
+    handleLogout() {
         let that = this;
-        auth.logout().then(function () {
-            debugger;
+        auth.logout().then(() => {
             localStorage.removeItem(auth.appTokenKey);
             that.props.history.push("/login");
+            that.props.onLogout();
         });
     }
 
@@ -64,5 +63,5 @@ class AppHeader extends Component {
     }
 }
 
-export { AppHeader };
+export default withRouter (AppHeader);
 

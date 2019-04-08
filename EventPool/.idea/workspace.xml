@@ -7,9 +7,11 @@
   <component name="ChangeListManager">
     <list default="true" id="484d9a08-2983-452d-abe9-57c2e1152d4a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/components/Loader.js" afterPath="$PROJECT_DIR$/frontend/src/components/Loader.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/headers/AppHeader.js" afterPath="$PROJECT_DIR$/frontend/src/headers/AppHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" afterPath="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,46 +53,8 @@
       <file leaf-file-name="CreateEventPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="70" column="8" lean-forward="false" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="24" />
-              <folding>
-                <element signature="e#43#84#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CarpoolMatchingBL.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewGuestPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="103" column="71" lean-forward="true" selection-start-line="103" selection-start-column="71" selection-end-line="103" selection-end-column="71" />
-              <folding>
-                <element signature="e#43#84#0" expanded="true" />
-                <marker date="1554629799842" expanded="true" signature="4715:5063" ph="..." />
-                <marker date="1554629799842" expanded="true" signature="4759:5057" ph="..." />
-                <marker date="1554629799842" expanded="true" signature="4859:5057" ph="..." />
-                <marker date="1554629799842" expanded="true" signature="4973:5057" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppHeader.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/headers/AppHeader.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="113">
+              <caret line="69" column="35" lean-forward="true" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
               <folding>
                 <element signature="e#43#84#0" expanded="true" />
               </folding>
@@ -102,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+              <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -110,12 +74,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppRouter.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AppRouter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/routers/AppRouter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-              <folding />
+            <state relative-caret-position="204">
+              <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#43#94#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppHeader.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/src/headers/AppHeader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+              <folding>
+                <element signature="e#43#84#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -123,18 +102,20 @@
       <file leaf-file-name="LoginPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/pages/LoginPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-952">
-              <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="109">
+              <caret line="37" column="40" lean-forward="false" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+              <folding>
+                <element signature="e#125#159#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/config/auth.js">
+      <file leaf-file-name="Loader.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Loader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="24" column="15" lean-forward="false" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
+            <state relative-caret-position="34">
+              <caret line="12" column="60" lean-forward="false" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -154,13 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>debugge</find>
-      <find>debugger</find>
-      <find>catch</find>
-      <find>geocoding the address</find>
-      <find>w</find>
-      <find>e</find>
-      <find>error</find>
       <find>&quot;error</find>
       <find>Loader</find>
       <find>openErrorPopup</find>
@@ -181,9 +155,16 @@
       <find>carpool gro</find>
       <find>6</find>
       <find>Passenger</find>
-      <find>carpoolGroupsSummary</find>
       <find>afterGeocode</find>
       <find>handleLogout</find>
+      <find>8080</find>
+      <find>3</find>
+      <find>3000</find>
+      <find>withRouter</find>
+      <find>withro</find>
+      <find>carpoolGroupsSummary</find>
+      <find>SplashScreen</find>
+      <find>firebaseAuthKey</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\frontend\node_modules\react-google-maps</dir>
@@ -204,8 +185,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/Services/IScheduleService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Service.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Address.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/IPickupOrder.java" />
         <option value="$PROJECT_DIR$/frontend/src/services/EventPoolService.js" />
@@ -219,7 +198,6 @@
         <option value="$PROJECT_DIR$/frontend/src/util/Geocoding.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/SearchAddressComponent.js" />
         <option value="$PROJECT_DIR$/frontend/src/forms/PlaceField.js" />
-        <option value="$PROJECT_DIR$/frontend/src/components/Loader.js" />
         <option value="$PROJECT_DIR$/frontend/src/util/Formatters.js" />
         <option value="$PROJECT_DIR$/frontend/src/pages/MyEventsPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/MyDropzone.js" />
@@ -231,7 +209,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java" />
         <option value="$PROJECT_DIR$/frontend/src/components/GuestsExcelTemplateComponent.js" />
-        <option value="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
         <option value="$PROJECT_DIR$/frontend/src/forms/CarpoolGuestDetailsForm.js" />
         <option value="$PROJECT_DIR$/frontend/src/forms/NewDeviationRadiusForm.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/TabContainer.js" />
@@ -254,6 +231,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java" />
         <option value="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Loader.js" />
+        <option value="$PROJECT_DIR$/frontend/src/pages/LoginPage.js" />
+        <option value="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
         <option value="$PROJECT_DIR$/frontend/src/headers/AppHeader.js" />
       </list>
     </option>
@@ -327,7 +308,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -341,11 +322,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EventPool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EventPool" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -357,7 +364,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src" />
-    <property name="SearchEverywhereHistoryKey" value="crea&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;apphe&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;ne&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;event&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;guest&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;EventPoolLog&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/EventPoolLog.txt&#10;eve&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;carpoolgr&#9;null&#9;null&#10;eventpage&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;cre&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/CreateEventForm.js&#10;create&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;pom.xml&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/pom.xml&#10;log&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Config/Log.java&#10;render&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;table&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/GuestsTableComponent.js&#10;newgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;rout&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/routers/AppRouter.js&#10;Loa&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/Loader.js&#10;Event.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/classes/event.js&#10;rende&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;index&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/public/index.html&#10;apph&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;pack&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;ba&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/node_modules/material-ui-search-bar/lib/components/SearchBar/SearchBar.js&#10;pac&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;packa&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;car&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;MYEV&#9;null&#9;null&#10;newg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;load&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/Loader.js&#10;carpo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;mat&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;newgu&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;keys&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/keys.js&#10;createe&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage/CreateEventPage.js&#10;carpool&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;addg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;carp&#9;null&#9;null&#10;even&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;addgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;fire&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/firebase.js&#10;ברק&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;picku&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;carpoo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pickup&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;package.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;carpoolgrou&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pick&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Services/PickupOrderService.java&#10;serv&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/services/EventPoolService.js&#10;appro&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java" />
+    <property name="SearchEverywhereHistoryKey" value="Loa&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/Loader.js&#10;crea&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;apphe&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;ne&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;event&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;guest&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;EventPoolLog&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/EventPoolLog.txt&#10;eve&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;carpoolgr&#9;null&#9;null&#10;eventpage&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage/EventPage.js&#10;cre&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/CreateEventForm.js&#10;create&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;pom.xml&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/pom.xml&#10;log&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Config/Log.java&#10;render&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;table&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/GuestsTableComponent.js&#10;newgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;rout&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/routers/AppRouter.js&#10;Event.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/classes/event.js&#10;rende&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/RenderedField.js&#10;index&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/public/index.html&#10;apph&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/headers/AppHeader.js&#10;pack&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;ba&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/node_modules/material-ui-search-bar/lib/components/SearchBar/SearchBar.js&#10;pac&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;packa&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;car&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;MYEV&#9;null&#9;null&#10;newg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;load&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/components/Loader.js&#10;carpo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;mat&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/CarpoolMatching/CarpoolMatchingBL.java&#10;newgu&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/NewGuestPage.js&#10;keys&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/keys.js&#10;createe&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage/CreateEventPage.js&#10;carpool&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;addg&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;carp&#9;null&#9;null&#10;even&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/EventPage.js&#10;addgues&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/forms/AddGuestForm.js&#10;fire&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/config/firebase.js&#10;ברק&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CreateEventPage.js&#10;picku&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;carpoo&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pickup&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/PickupOrder/PickupOrderBL.java&#10;package.js&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/package.json&#10;carpoolgrou&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/pages/CarpoolGroupPage.js&#10;pick&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/BL/Services/PickupOrderService.java&#10;serv&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/frontend/src/services/EventPoolService.js&#10;appro&#9;FILE&#9;file://C:/Users/Zuzu/Desktop/GitProjects/EventPool1/1/EventPool/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -832,14 +839,7 @@
       <workItem from="1554110164226" duration="11291000" />
       <workItem from="1554184330161" duration="41500000" />
       <workItem from="1554369447587" duration="16543000" />
-      <workItem from="1554624962745" duration="7047000" />
-    </task>
-    <task id="LOCAL-00002" summary="Create event page + save in DB.&#10;Start implementing authentication.">
-      <created>1543334346117</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1543334346117</updated>
+      <workItem from="1554624962745" duration="12422000" />
     </task>
     <task id="LOCAL-00003" summary="Remove the api key to ignored file">
       <created>1543341688845</created>
@@ -1177,11 +1177,18 @@
       <option name="project" value="LOCAL" />
       <updated>1554410247086</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Add summary to carpool groups">
+      <created>1554642402856</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1554642402857</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="615308000" />
+    <option name="totallyTimeSpent" value="620683000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -1199,7 +1206,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3533123" sideWeight="0.4941435" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36119872" sideWeight="0.4941435" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55520505" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1268,7 +1275,6 @@
       <path value="$PROJECT_DIR$/frontend" />
       <path value="$PROJECT_DIR$/" />
     </ignored-roots>
-    <MESSAGE value="Make the potential match calculator into a threads' pool. Not finished yet." />
     <MESSAGE value="Finish calc potential matching with threads.&#10;Fix the bug of rendering carpool groups" />
     <MESSAGE value="Fix bug:saving route of a driver.&#10;Event page: add cancel button.&#10;Add optimization at the end of the carpool groups calculation.&#10;Calc potential matching: get the free seats number of the drivers from the drivers object." />
     <MESSAGE value="Change approach from object.keys to object.values" />
@@ -1293,7 +1299,8 @@
     <MESSAGE value="Redesign the event page&#10;Unite the approved and the not approved guests to guests." />
     <MESSAGE value="Fix warnings" />
     <MESSAGE value="Trying to add logger mechanism (not working yet).&#10;Handle with errors at the client side.&#10;Add separated SMS button." />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying to add logger mechanism (not working yet).&#10;Handle with errors at the client side.&#10;Add separated SMS button." />
+    <MESSAGE value="Add summary to carpool groups" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add summary to carpool groups" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1331,29 +1338,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="90" lean-forward="false" selection-start-line="8" selection-start-column="90" selection-end-line="8" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/ApprovedGuest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="56" lean-forward="false" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/FinalProject/EventPool/Models/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="22" column="45" lean-forward="false" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/classes/event.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1544,6 +1528,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1573,16 +1558,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/Loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="2" lean-forward="false" selection-start-line="27" selection-start-column="2" selection-end-line="37" selection-end-column="3" />
-          <folding>
-            <element signature="e#43#84#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1690,6 +1665,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/config/firebase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/config/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="true" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-router-dom/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1704,57 +1721,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/config/auth.js">
+    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="24" column="15" lean-forward="false" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
+        <state relative-caret-position="113">
+          <caret line="69" column="35" lean-forward="true" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+          <folding>
+            <element signature="e#43#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="12" column="60" lean-forward="false" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/pages/CreateEventPage.js">
+    <entry file="file://$PROJECT_DIR$/frontend/src/pages/LoginPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="70" column="8" lean-forward="false" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="24" />
+        <state relative-caret-position="109">
+          <caret line="37" column="40" lean-forward="false" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
           <folding>
-            <element signature="e#43#84#0" expanded="true" />
+            <element signature="e#125#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/routers/AppRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#43#94#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/headers/AppHeader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        <state relative-caret-position="204">
+          <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
             <element signature="e#43#84#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/pages/LoginPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-952">
-          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/routers/AppRouter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
