@@ -1,0 +1,48 @@
+.my-events-container{
+    margin: 30px auto 0;
+}
+.my-events-container .title{
+    padding-left: 16px;
+}
+.my-events-container .events-list{
+
+}
+.my-events-container .empty-state{
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    top: 150px;
+    font-size: 22px;
+    font-weight: bold;
+    width: 100%;
+}
+.my-events-container .loading{
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+}
+
+.my-events-container .events-container{
+    width: 80%;
+    margin: auto;
+}
+
+.my-events-container .event-clickable{
+    padding: 10px;
+    background: #fe9f00aa;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.my-events-container .event-clickable .event-icon{
+    margin-right: 10px;
+    color: var(--light-gray);
+}
+.my-events-container .event-clickable:hover{
+    padding: 10px;
+    background: #fe9f00;
+}

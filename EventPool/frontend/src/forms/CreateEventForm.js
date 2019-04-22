@@ -8,7 +8,7 @@ import moment from "moment";
 import momentLocalizer from 'react-widgets-moment';
 import renderField from './RenderedField';
 import PlaceField from './PlaceField';
-import logo from '../images/EventpoolLogo.png';
+import './CreateEventForm.css'
 import Grid from '@material-ui/core/Grid';
 
 import 'react-widgets/dist/css/react-widgets.css'
@@ -61,12 +61,12 @@ const validate = val => {
 
 let CreateEventForm = props => {
     let { handleSubmit, valid  } = props;
-
+    const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '')
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <div className="container">
+            <div className="container new-event-container">
                 <h2>Create new event</h2>
-                <Grid container spacing={24} justify="center">
+                <Grid className="fields-container" container spacing={24} justify="center">
                     <Grid item xs={12} sm={6}>
                         <Field className="input" name="name" component={renderField} type="text" label="Event Name" />
                     </Grid>
@@ -86,8 +86,8 @@ let CreateEventForm = props => {
                         <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius in KM"/>
                     </Grid>
 
-                    <Grid item>
-                        <button variant="contained" disabled={!valid}>Create</button>
+                    <Grid item className="submit-container">
+                        <button className={btnDisabledClass}  variant="contained" disabled={!valid}>Create</button>
                     </Grid>
                 </Grid>
             </div>

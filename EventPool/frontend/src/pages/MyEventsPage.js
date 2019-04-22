@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
 import List from '@material-ui/core/List/List';
 import ListItem from '@material-ui/core/ListItem/ListItem';
+import './MyEventsPage.css'
 
 class MyEventsPage extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class MyEventsPage extends Component {
         this.state = {
             asOrganizer: [],
             asGuest: [],
-            isLoaded: false
+            isLoaded: false,
+            initMode: true
         };
 
         this.loader = React.createRef();
@@ -42,7 +44,7 @@ class MyEventsPage extends Component {
                          userEvents.asGuest = Object.values(Object.values(snapshot.val())[0].asGuest);
                      }
 
-                     this.setState({...userEvents, isLoaded: true}, this.loader.current.closeLoader);
+                     this.setState({...userEvents, isLoaded: true, initMode: false}, this.loader.current.closeLoader);
                     }
                 } else {
                     this.loader.current.closeLoader();
@@ -59,26 +61,40 @@ class MyEventsPage extends Component {
 
     buildEventsList(events) {
         return (
-            <List component="nav">
+        <div className="events-container">
+            <h2 className="title">My Events</h2>
+            <List className="events-list" component="nav">
                 {events.map((event) => (
                     <ListItem>
-                        <Link to={`/event/${event.eventId}`}>{event.eventName}</Link>
+                        <div className="event-clickable" onClick={() =>{
+                            this.props.history.push(`/event/${event.eventId}`)
+                        }}>
+                            <i class="material-icons event-icon">stars</i>
+                            <div>{event.eventName}</div>
+                        </div>
                     </ListItem>
                 ))}
             </List>
+        </div>
         );
     }
 
     render() {
-        let asOrganizer = this.state.asOrganizer.length > 0 ?
-            this.buildEventsList(this.state.asOrganizer) : "No events as organizer.";
 
+        const hasEvents = this.state.asOrganizer.length > 0;
+        let asOrganizer = this.buildEventsList(this.state.asOrganizer);
         return (
-            <div>
+            <div className="my-events-container">
                 <Loader ref={this.loader}/>
-                <div>
-                    {asOrganizer}
-                </div>
+                {hasEvents && this.state.isLoaded && !this.state.initMode && asOrganizer}
+                {!hasEvents && !this.state.initMode && (
+                    <div className="empty-state">
+                        No events, feel free to create one.
+                    </div>
+                )}
+                {this.state.initMode && (<div className="loading">
+                    Waiting for events...
+                </div>)}
             </div>
         );
     }

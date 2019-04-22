@@ -39,7 +39,9 @@ let AddGuestForm = (props) => {
             </Grid>
 
             <Grid item>
-                <button disabled={!valid}>Add</button>
+                <button className="event-pool-btn" style={{
+                    width: 100
+                }} disabled={!valid}>Add</button>
             </Grid>
         </Grid>
     </form>

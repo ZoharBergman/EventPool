@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import auth from '../config/auth';
+import './AppHeader.css'
 
 class AppHeader extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class AppHeader extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light alert-dark">
+            <nav className="navbar navbar-expand-lg navbar-light app-header">
                 <a className="navbar-brand" href="/">
                     <i className="fab fa-react fa-2x" style={{color: 'dodgerblue'}}></i>
                 </a>
@@ -48,7 +49,7 @@ class AppHeader extends Component {
                                 <NavLink to='/events/' activeClassName='menu selected' exact={true}>My Events</NavLink>
                             </div>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item log-out-li">
                             <div className="nav-link">
                                 <NavLink to='/login'
                                          activeClassName='menu selected'

@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react';
 import { eventsRef } from '../config/firebase';
-import ListComponent from '../components/ListComponent';
 import EventPoolService from '../services/EventPoolService';
 import Stepper from 'react-stepper-horizontal/lib/index';
 import Loader from '../components/Loader';
@@ -110,7 +109,7 @@ class CarpoolGroupPage extends Component {
 
     buildGuestDetails(guest) {
         return (
-            <Grid container spacing={24}>
+            <Grid container spacing={24} id={guest.id}>
                 <Grid item sm={4} xs={12}>
                     <TextField type="text" label="Name:" value={guest.name}/>
                 </Grid>

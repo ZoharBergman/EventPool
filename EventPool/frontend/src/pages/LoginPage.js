@@ -68,9 +68,23 @@ export default class LoginPage extends React.Component {
 }
 
 const Login = ({handleGoogleLogin}) => (
-    <div style={{margin: "0", position: "absolute", top: "40%", left: "50%", transform: "translate(-50%, -50%)"}}>
-        <img src={logo} style={{width: "70%", display: "block", marginLeft: "auto", marginRight: "auto"}}/>
-        <GoogleButton onClick={handleGoogleLogin} style={{marginLeft: "auto", marginRight: "auto", bottom: "80px"}}/>
+    <div className="login-container" style={{
+        margin: "0",
+        position: "absolute",
+        top: "40%",
+        left: "50%",
+        transform: "translate(-50%, -50%)"}}>
+        <img  src={logo} style={{
+            width: "70%",
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto"}}/>
+        <GoogleButton class="login-btn" onClick={handleGoogleLogin} style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "20px",
+            bottom: "80px"
+        }}/>
     </div>
 );
 

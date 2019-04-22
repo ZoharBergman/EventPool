@@ -1,0 +1,15 @@
+.new-event-container{
+    padding-top: 30px;
+}
+
+
+.new-event-container .fields-container{
+    margin-top: 2rem;
+}
+.new-event-container .submit-container {
+    width: 100%;
+    text-align: right;
+}
+.new-event-container .submit-container button {
+    width: 8rem;
+}

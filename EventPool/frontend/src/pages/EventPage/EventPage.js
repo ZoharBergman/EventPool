@@ -137,13 +137,17 @@ class EventPage extends Component {
     }
 
     buildCarpoolGroupsList(carpoolGroups) {
-        return Object.values(carpoolGroups).map(carpoolGroup => {
-           return (
-               <li key={carpoolGroup.driver.id}>
-                   <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={Object.values(carpoolGroup.passengers)}/>
-               </li>
-           );
-        });
+        return (
+            <ul className="cars-details-container">
+                {Object.values(carpoolGroups).map(carpoolGroup => {
+                   return (
+                       <li className="group-details-container" key={carpoolGroup.driver.id}>
+                           <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={Object.values(carpoolGroup.passengers)}/>
+                       </li>
+                   );
+                })}
+            </ul>
+        );
     }
 
     handleCalcCarpoolGroups() {
@@ -371,7 +375,7 @@ class EventPage extends Component {
         if (Object.keys(this.state.event.carpoolGroups).length > 0) {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
             carpoolGroupsSummary = (
-                <div className="container">
+                <div className="car-group-container">
                     <h2>Participating guests in carpool</h2>
                     <Grid container spacing={24}>
                         <Grid item xs={6}>
@@ -399,20 +403,13 @@ class EventPage extends Component {
 
         if (this.state.event.hasOwnProperty("id") && this.state.event.id !== "") {
             eventDetails = (
-                <div className="container">
-                    <h1 style={{"textAlign": "center"}}>{this.state.event.name}</h1>
-                    <Grid container spacing={24}>
-                        <Grid item sm={4} xs={12}>
-                            <TextField type="text" label="Date:" value={Formatters.dateFormatter(this.state.event.date)}/>
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
-                            <TextField type="text" label="Location:" value={this.state.event.address.name}/>
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
-                            <TextField type="text" label="Max deviation radius in KM:"
-                                       value={this.state.event.maxRadiusInKm}/>
-                        </Grid>
-                    </Grid>
+                <div className="event-details-container">
+                    <h2>{this.state.event.name}</h2>
+                    <div className="event-metadata">
+                        <div>When: {Formatters.dateFormatter(this.state.event.date)}</div>
+                        <div>Where: {this.state.event.address.name}</div>
+                        <div>Radios (Km): {this.state.event.maxRadiusInKm}</div>
+                    </div>
                 </div>
             );
         }
@@ -423,95 +420,114 @@ class EventPage extends Component {
             Object.values(this.state.event.guests).find(guest => guest.isComing === true && guest.isCar === false) !== undefined;
 
         return (
-            <div>
+            <div className="event-container">
                 <Loader ref={this.loader}/>
                 <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
                 {eventDetails}
-                <AppBar position="relative" style={{"width": "fit-content", "margin": "auto", "zIndex": 0}}>
-                    <Tabs value={this.state.manageTabsValue} onChange={this.handleManageTabsChange}>
-                        <Tab value={this.MANAGE_GUESTS} label={this.MANAGE_GUESTS} />
-                        <Tab value={this.MANAGE_CARPOOL_GROUPS} label={this.MANAGE_CARPOOL_GROUPS} />
-                    </Tabs>
-                </AppBar>
-                {this.state.manageTabsValue === this.MANAGE_GUESTS &&
+                <div className="event-tabs-container">
+                    <AppBar className="tabs">
+                        <Tabs value={this.state.manageTabsValue} onChange={this.handleManageTabsChange}>
+                            <Tab value={this.MANAGE_GUESTS} label={this.MANAGE_GUESTS} />
+                            <Tab value={this.MANAGE_CARPOOL_GROUPS} label={this.MANAGE_CARPOOL_GROUPS} />
+                        </Tabs>
+                    </AppBar>
+                </div>
+                <div className="event-tab-content-container">
+                    {this.state.manageTabsValue === this.MANAGE_GUESTS &&
                     <TabContainer>
-                            <div className="container">
-                                <h2>Add guests</h2>
-                                <Grid container spacing={24}>
-                                    <Grid item>
-                                        <AddGuestForm onSubmit={this.handleAddGuest}/>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button variant="contained" onClick={this.openImportGuestsModal}>Import</Button>
-                                        <Popup modal open={this.state.isOpenImportGuestsPopup}>
-                                            <div>
-                                                <h1>Import guests from excel</h1>
-                                                Download guests' template sheet
-                                                <br/>
-                                                <GuestsExcelTemplateComponent/>
-                                                <br/>
-                                                Import guests' excel file
-                                                <br/>
-                                                <input type="file" onChange={this.handleImportGuestsExcelFile} style={{"padding":"10px"}}/>
-                                            </div>
-                                        </Popup>
-                                    </Grid>
+                        <div className="add-guest-container">
+                            <Grid container spacing={24}>
+                                <Grid item>
+                                    <h4>Add guests</h4>
                                 </Grid>
-                            </div>
-                            <div className="container" style={{"padding": "1%"}}>
-                                <GuestsTableComponent guests={Object.values(this.state.event.guests)} onGuestClicked={this.handleGuestClicked}/>
-                            </div>
+                                <Grid item>
+                                    <AddGuestForm onSubmit={this.handleAddGuest}/>
+                                </Grid>
+                                <Grid item>
+                                    <button  className="import-btn event-pool-btn" onClick={this.openImportGuestsModal}>Import</button>
+                                    <Popup modal open={this.state.isOpenImportGuestsPopup}>
+                                        <div className="import-popup-container">
+                                            <h1>Import guests from excel</h1>
+                                            <div className="template-form">
+                                                <div className="download-template-form">
+                                                    Download guests' template sheet
+                                                    <GuestsExcelTemplateComponent/>
+                                                </div>
+                                                <div className="import-template">
+                                                    Import guests' excel file
+                                                    <input type="file"
+                                                           onChange={this.handleImportGuestsExcelFile} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        <div className="guests-table-container" style={{"padding": "1%"}}>
+                            <GuestsTableComponent guests={Object.values(this.state.event.guests)}
+                                                  onGuestClicked={this.handleGuestClicked}/>
+                        </div>
                     </TabContainer>
-                }
+                    }
 
-                {this.state.manageTabsValue === this.MANAGE_CARPOOL_GROUPS &&
+                    {this.state.manageTabsValue === this.MANAGE_CARPOOL_GROUPS &&
                     <TabContainer>
-                        <Button variant="contained"
-                                onClick={this.handleCalcCarpoolGroups}
-                                hidden={
-                                    !isCarpoolGroupsCalcAvailable ||
-                                    this.state.isCarpoolGroupsConfirmed ||
-                                    Object.keys(this.state.event.carpoolGroups).length > 0
-                                }>Calculate Carpool Groups
-                        </Button>
-                        <Button variant="contained"
-                                onClick={this.saveCarpoolGroups}
-                                hidden={
-                                    this.state.isCarpoolGroupsConfirmed ||
-                                    Object.keys(this.state.event.carpoolGroups).length <= 0
-                                }>Save Carpool Groups
-                        </Button>
-                        <Button variant="contained"
-                                onClick={this.cancelNewCarpoolGroups}
-                                hidden={
-                                    Object.keys(this.state.oldCarpoolGroups).length <= 0
-                                }>Cancel new groups calculation
-                        </Button>
-                        <Button variant="contained"
-                                onClick={this.sendCarpoolMatchingMessagesToGuests}
-                                hidden={
-                                    !this.state.isCarpoolGroupsConfirmed
-                                }>Send carpool matching messages to guests
-                        </Button>
-                        <Button variant="contained"
-                                onClick={this.calcPickupOrders}
-                                hidden={!this.state.isCarpoolGroupsConfirmed}>
-                            Calculate pickup order of carpool groups
-                        </Button>
-                        <Button variant="contained"
-                                onClick={this.openNewRadiusModal}
-                                hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
-                            Calculate Carpool Groups Again
-                        </Button>
-                        <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
-                            <NewDeviationRadiusForm
-                                maxRadiusInKm={this.state.event.maxRadiusInKm}
-                                onSubmit={this.calcCarpoolGroupsAgain}/>
-                        </Popup>
-                        {carpoolGroupsSummary}
-                        {carpoolGroups}
+                        <div className="carpool-groups-container">
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.handleCalcCarpoolGroups}
+                                    hidden={
+                                        !isCarpoolGroupsCalcAvailable ||
+                                        this.state.isCarpoolGroupsConfirmed ||
+                                        Object.keys(this.state.event.carpoolGroups).length > 0
+                                    }>Calculate Carpool Groups
+                            </Button>
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.saveCarpoolGroups}
+                                    hidden={
+                                        this.state.isCarpoolGroupsConfirmed ||
+                                        Object.keys(this.state.event.carpoolGroups).length <= 0
+                                    }>Save Carpool Groups
+                            </Button>
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.cancelNewCarpoolGroups}
+                                    hidden={
+                                        Object.keys(this.state.oldCarpoolGroups).length <= 0
+                                    }>Cancel new groups calculation
+                            </Button>
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.sendCarpoolMatchingMessagesToGuests}
+                                    hidden={
+                                        !this.state.isCarpoolGroupsConfirmed
+                                    }>Send carpool matching messages to guests
+                            </Button>
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.calcPickupOrders}
+                                    hidden={!this.state.isCarpoolGroupsConfirmed}>
+                                Calculate pickup order of carpool groups
+                            </Button>
+                            <Button variant="contained"
+                                    className="event-pool-btn"
+                                    onClick={this.openNewRadiusModal}
+                                    hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
+                                Calculate Carpool Groups Again
+                            </Button>
+                            <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
+                                <NewDeviationRadiusForm
+                                    maxRadiusInKm={this.state.event.maxRadiusInKm}
+                                    onSubmit={this.calcCarpoolGroupsAgain}/>
+                            </Popup>
+                            {carpoolGroupsSummary}
+                            {carpoolGroups}
+                        </div>
                     </TabContainer>
-                }
+                    }
+                </div>
             </div>
         );
     }

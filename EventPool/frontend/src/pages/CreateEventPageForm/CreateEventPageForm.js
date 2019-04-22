@@ -8,7 +8,7 @@ import logo from '../../images/EventpoolLogo.png';
 class CreateEventPageForm extends Component {
     render() {
         return (
-            <div class="container contact-form" style={{background: '#d6d8d9'}}>
+            <div class="container contact-form" style={{background: '#fee870'}}>
                 <div class="contact-image">
                     <img src={logo}/>
                 </div>

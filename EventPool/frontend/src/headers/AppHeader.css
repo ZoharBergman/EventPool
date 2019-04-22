@@ -1,0 +1,29 @@
+.app-header{
+    border-bottom: 1px solid var(--orange) !important;
+}
+.app-header a{
+    color: var(--light-gray);
+    text-decoration: none;
+}
+.app-header a:hover{
+    text-decoration: none;
+    color: var(--light-gray);
+}
+.app-header .navbar-nav{
+    width: 100%;
+}
+.app-header a.menu.selected{
+    color: var(--orange);
+    font-weight: bolder;
+    border-bottom: none;
+}
+
+.app-header .navbar-nav .nav-link{
+    color: var(--gray) !important;
+}
+
+@media (min-width: 992px){
+    .app-header .log-out-li{
+        margin-left: auto;
+    }
+}

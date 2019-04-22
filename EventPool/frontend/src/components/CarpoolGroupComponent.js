@@ -10,6 +10,9 @@ class CarpoolGroupComponent extends Component {
         return (
             <Card>
                 <Link to={`/event/${this.props.eventId}/carpoolGroup/${this.props.driver.id}`}>
+                    <i className="driver-icon material-icons">
+                        drive_eta
+                    </i>
                     <CardHeader title={"Driver: " + this.props.driver.name}/>
                 </Link>
                 <CardContent>
