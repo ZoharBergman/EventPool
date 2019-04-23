@@ -406,9 +406,18 @@ class EventPage extends Component {
                 <div className="event-details-container">
                     <h2>{this.state.event.name}</h2>
                     <div className="event-metadata">
-                        <div>When: {Formatters.dateFormatter(this.state.event.date)}</div>
-                        <div>Where: {this.state.event.address.name}</div>
-                        <div>Radios (Km): {this.state.event.maxRadiusInKm}</div>
+                        <div>
+                            <i class="material-icons event-metadata-icon">schedule</i>
+                            When: {Formatters.dateFormatter(this.state.event.date)}
+                        </div>
+                        <div>
+                            <i class="material-icons event-metadata-icon">room</i>
+                            <div>Where: {this.state.event.address.name}</div>
+                        </div>
+                        <div>
+                            <i class="material-icons event-metadata-icon">call_made</i>
+                            Radius: {this.state.event.maxRadiusInKm} Km
+                        </div>
                     </div>
                 </div>
             );

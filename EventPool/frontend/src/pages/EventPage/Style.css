@@ -19,6 +19,12 @@
 }
 .event-container .event-details-container .event-metadata div {
     margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.event-container .event-details-container .event-metadata .event-metadata-icon{
+    padding-right: 10px;
 }
 
 .event-container .event-tabs-container{
@@ -37,6 +43,10 @@
     box-shadow: none !important;
     min-height: 40px !important;
     height: 40px !important;
+}
+
+.event-container .event-tabs-container header.tabs > div > div > div > span{
+    background-color: var(--orange);
 }
 
 .event-container .event-tabs-container .tabs button:focus{
@@ -98,6 +108,12 @@
 .carpool-groups-container ul.cars-details-container li.group-details-container{
     width: 30%;
     margin: 10px;
+}
+
+.carpool-groups-container ul.cars-details-container li.group-details-container > div{
+    background-color: var(--gray40);
+    border-radius: 4px;
+    border: 1px solid var(--gray);
 }
 
 .carpool-groups-container ul.cars-details-container li.group-details-container a{
