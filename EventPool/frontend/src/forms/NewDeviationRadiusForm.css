@@ -1,0 +1,27 @@
+.new-radius-popup-container {
+    padding: 40px;
+    width: 100%;
+    height: fit-content;
+    background: var(--lavender40);
+    text-align: center;
+}
+
+.new-radius-popup-container .new-radius-form-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.new-radius-popup-container .new-radius-form-field .form-control {
+    width: fit-content;
+    margin-left: 5px;
+}
+
+.new-radius-popup-container .new-radius-form-btn {
+    width: fit-content;
+    margin: 5px;
+    height: 40px;
+}

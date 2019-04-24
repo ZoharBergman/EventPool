@@ -34,7 +34,7 @@ let CarpoolGuestDetailsForm = (props) => {
         <div>
             <h2>{props.guest.name}</h2>
             <div>
-                You were invited to the event {event.name} on {Formatters.dateFormatter(event.date)}.
+                You were invited to the event '{event.name}' on {Formatters.dateFormatter(event.date)}.
             </div>
             <form className="form" onSubmit={handleSubmit}>
                  <div className="field">
