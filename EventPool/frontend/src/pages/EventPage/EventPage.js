@@ -20,6 +20,7 @@ import TabContainer from '../../components/TabContainer';
 import Formatters from '../../util/Formatters';
 import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateComponent';
 import ErrorPopupComponent from '../../components/ErrorPopupComponent';
+import CardButton from '../../components/CardButton';
 
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Grid from '@material-ui/core/Grid';
@@ -380,10 +381,10 @@ class EventPage extends Component {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
             carpoolGroupsSummary = (
                 <div className="car-group-container">
-                    <h2>Participating guests in carpool</h2>
+                    <h4>Participating guests in carpool</h4>
                     <div className="car-group-summary-container">
                         <div>
-                            <i class="material-icons car-group-summary-icon">face</i>
+                            <i className="material-icons car-group-summary-icon">face</i>
                             {`Passengers: ${Object.values(this.state.event.carpoolGroups).map((carpoolGroup) => {
                                 return Object.keys(carpoolGroup.passengers).length
                             }).reduce((l1, l2) => l1 + l2)} of ${
@@ -391,6 +392,7 @@ class EventPage extends Component {
                                     .filter((guest) => guest.isComing && !guest.isCar).length
                                 }`}
                         </div>
+                        <div className="separator">|</div>
                         <div>
                             <i class="material-icons car-group-summary-icon">
                                 commute
@@ -492,49 +494,47 @@ class EventPage extends Component {
                         {this.state.manageTabsValue === this.MANAGE_CARPOOL_GROUPS &&
                         <TabContainer>
                             <div className="carpool-groups-container">
-                                <Button variant="contained"
-                                        className="event-pool-btn"
-                                        onClick={this.openNewRadiusModal}
-                                        hidden={
-                                            !isCarpoolGroupsCalcAvailable ||
-                                            this.state.isCarpoolGroupsConfirmed ||
-                                            Object.keys(this.state.event.carpoolGroups).length > 0
-                                        }>Calculate Carpool Groups
-                                </Button>
-                                <Button variant="contained"
-                                        className="event-pool-btn"
-                                        onClick={this.saveCarpoolGroups}
-                                        hidden={
-                                            this.state.isCarpoolGroupsConfirmed ||
-                                            Object.keys(this.state.event.carpoolGroups).length <= 0
-                                        }>Save Carpool Groups
-                                </Button>
-                                <Button variant="contained"
-                                        className="event-pool-btn"
-                                        onClick={this.cancelNewCarpoolGroups}
-                                        hidden={
-                                            Object.keys(this.state.oldCarpoolGroups).length <= 0
-                                        }>Cancel new groups calculation
-                                </Button>
-                                <Button variant="contained"
-                                        className="event-pool-btn"
-                                        onClick={this.sendCarpoolMatchingMessagesToGuests}
-                                        hidden={
-                                            !this.state.isCarpoolGroupsConfirmed
-                                        }>Send carpool matching messages to guests
-                                </Button>
-                                <Button variant="contained"
-                                        className="event-pool-btn"
+                                <CardButton icon="directions_car"
+                                            text="Calculate carpool groups"
+                                            onClick={this.openNewRadiusModal}
+                                            hidden={
+                                                !isCarpoolGroupsCalcAvailable ||
+                                                this.state.isCarpoolGroupsConfirmed ||
+                                                Object.keys(this.state.event.carpoolGroups).length > 0
+                                            }
+                                />
+                                <CardButton icon="save"
+                                            text="Save carpool groups"
+                                            onClick={this.saveCarpoolGroups}
+                                            hidden={
+                                                this.state.isCarpoolGroupsConfirmed ||
+                                                Object.keys(this.state.event.carpoolGroups).length <= 0
+                                            }
+                                />
+                                <CardButton icon="cancel"
+                                            text="Cancel new groups calculation"
+                                            onClick={this.cancelNewCarpoolGroups}
+                                            hidden={
+                                                Object.keys(this.state.oldCarpoolGroups).length <= 0
+                                            }
+                                />
+                                <CardButton icon="mail_outline"
+                                            text="Send carpool matching messages to guests"
+                                            onClick={this.sendCarpoolMatchingMessagesToGuests}
+                                            hidden={
+                                                !this.state.isCarpoolGroupsConfirmed
+                                            }
+                                />
+                                <CardButton icon="group"
+                                        text="Calculate pickup order of carpool groups"
                                         onClick={this.calcPickupOrders}
-                                        hidden={!this.state.isCarpoolGroupsConfirmed}>
-                                    Calculate pickup order of carpool groups
-                                </Button>
-                                <Button variant="contained"
-                                        className="event-pool-btn"
-                                        onClick={this.openNewRadiusModal}
-                                        hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}>
-                                    Calculate Carpool Groups Again
-                                </Button>
+                                        hidden={!this.state.isCarpoolGroupsConfirmed}
+                                />
+                                <CardButton icon="autorenew"
+                                            text="Calculate Carpool Groups Again"
+                                            onClick={this.openNewRadiusModal}
+                                            hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}
+                                />
                                 <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
                                     <NewDeviationRadiusForm
                                         maxRadiusInKm={this.state.event.maxRadiusInKm}

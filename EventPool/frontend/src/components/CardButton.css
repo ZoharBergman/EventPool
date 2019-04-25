@@ -1,0 +1,16 @@
+.card-button{
+    height: 40px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.card-button:hover{
+    background: var(--orange) !important;
+    color: white;
+    border: none;
+}
+
+.card-button .card-button-icon {
+    font-size: 40px;
+    color: var(--orange);
+}

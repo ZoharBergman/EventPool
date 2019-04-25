@@ -5,6 +5,7 @@ import React from "react";
 import { reduxForm, Field } from 'redux-form';
 import renderField from './RenderedField';
 import Grid from '@material-ui/core/Grid';
+import '../App.css';
 
 const validate = val => {
     const errors = {};
@@ -26,6 +27,7 @@ const validate = val => {
 
 let AddGuestForm = (props) => {
     let { handleSubmit, valid  } = props;
+    const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '');
 
     return (
     <form className="form" onSubmit={handleSubmit} >
@@ -39,7 +41,7 @@ let AddGuestForm = (props) => {
             </Grid>
 
             <Grid item>
-                <button className="event-pool-btn" style={{
+                <button className={btnDisabledClass} style={{
                     width: 100
                 }} disabled={!valid}>Add</button>
             </Grid>

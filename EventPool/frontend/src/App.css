@@ -4,20 +4,20 @@ body{
   --aqua60: #6bbaa7aa;
   --aqua80: #6bbaa7cc;
   --aqua: #6bbaa7ff;
-  --orange20: #fba10033;
-  --orange40: #fba10077;
-  --orange60: #fba100aa;
-  --orange80: #fba100cc;
-  --orange: #fba100;
-  --lavender: #6c648b;
-  --lavender40: #6c648b77;
-  --gray: #b6a19e;
-  --gray80: #b6a19ecc;
-  --gray20: #b6a19e33;
-  --gray40: #b6a19e77;
+  --orange20: #5D2BFF33;
+  --orange40: #5D2BFF77;
+  --orange60: #5D2BFFaa;
+  --orange80: #5D2BFFcc;
+  --orange: #5D2BFF;
+  --lavender: #EDF0F3;
+  --lavender40: #EDF0F377;
+  --gray: #BFBFBF;
+  --gray80: #BFBFBFcc;
+  --gray20: #BFBFBF33;
+  --gray40: #BFBFBF77;
 
   --light-gray: #f9ddd9;
-  background: linear-gradient(#6c648b, #b6a19ecc);
+  background: linear-gradient(var(--lavender), var(--gray80));
   background-repeat: no-repeat;
 }
 html{
@@ -31,10 +31,15 @@ html{
   border: none;
   background: var(--orange80);
   cursor: pointer;
+  color: white;
 }
 .event-pool-btn:not(.disabled):hover{
   background: var(--orange);
 }
 .event-pool-btn[disabled="true"]{
-  background: var(--gray80) !important;
+  background: var(--orange20) !important;
+}
+
+.event-pool-btn.disabled:hover{
+  cursor: not-allowed !important;
 }

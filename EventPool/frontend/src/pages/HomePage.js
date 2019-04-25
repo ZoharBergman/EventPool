@@ -2,7 +2,7 @@
  * Created by Zohar on 12/11/2018.
  */
 import React, { Component } from 'react';
-import logo from '../images/EventpoolLogo.png';
+import logo from '../images/EventpoolLogo3.png';
 import './HomePage.css';
 
 class HomePage extends Component {

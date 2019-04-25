@@ -1,13 +1,14 @@
 .app-header{
-    border-bottom: 1px solid var(--orange) !important;
+    border-bottom: transparent !important;
+    /*1px solid var(--orange) !important;*/
 }
 .app-header a{
-    color: var(--light-gray);
+    color: black;
     text-decoration: none;
 }
 .app-header a:hover{
     text-decoration: none;
-    color: var(--light-gray);
+    color: black;
 }
 .app-header .navbar-nav{
     width: 100%;

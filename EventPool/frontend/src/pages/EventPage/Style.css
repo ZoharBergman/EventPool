@@ -56,6 +56,10 @@
     background-color: var(--orange);
 }
 
+.event-container .event-tabs-container .tabs button[aria-selected="true"] {
+    color: var(--orange);
+}
+
 .event-container .event-tabs-container .tabs button:focus{
     outline: none !important;
 }
@@ -82,7 +86,7 @@
     padding: 40px;
     width: 100%;
     height: 250px;
-    background: var(--lavender40);
+    background: var(--gray40);
     text-align: center;
 }
 .event-container .event-tab-content-container .add-guest-container .import-popup-container .template-form{
@@ -146,7 +150,6 @@
     display: flex;
 }
 .carpool-groups-container .car-group-container .car-group-summary-container div{
-    flex-grow: 1;
     font-size: 1rem;
     display: flex;
     align-items: center;
@@ -154,6 +157,11 @@
 .carpool-groups-container .car-group-container .car-group-summary-container .car-group-summary-icon {
     padding-right: 10px;
 }
+.carpool-groups-container .car-group-container .car-group-summary-container div.separator {
+    margin: 0 15px;
+    font-weight: bold;
+}
+
 .carpool-groups-container .cars-details-container .group-details-container{
     margin-top: 10px;
 }

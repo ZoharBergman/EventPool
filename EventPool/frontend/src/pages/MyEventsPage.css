@@ -31,7 +31,7 @@
 
 .my-events-container .event-clickable{
     padding: 10px;
-    background: #fe9f00aa;
+    background: var(--orange40);
     border-radius: 4px;
     width: 100%;
     cursor: pointer;
@@ -44,5 +44,6 @@
 }
 .my-events-container .event-clickable:hover{
     padding: 10px;
-    background: #fe9f00;
+    background: var(--orange);
+    color: white;
 }

@@ -61,14 +61,14 @@ const validate = val => {
 
 let CreateEventForm = props => {
     let { handleSubmit, valid  } = props;
-    const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '')
+    const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '');
     return (
         <form className="form" onSubmit={handleSubmit}>
             <div className="container new-event-container">
                 <h2>Create new event</h2>
                 <Grid className="fields-container" container spacing={24} justify="center">
                     <Grid item xs={12} sm={6}>
-                        <Field className="input" name="name" component={renderField} type="text" label="Event Name" />
+                        <Field className="input" name="name" component={renderField} type="text" label="Event name" />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
@@ -87,7 +87,7 @@ let CreateEventForm = props => {
                     </Grid>
 
                     <Grid item className="submit-container">
-                        <button className={btnDisabledClass}  variant="contained" disabled={!valid}>Create</button>
+                        <button className={btnDisabledClass} disabled={!valid}>Create</button>
                     </Grid>
                 </Grid>
             </div>

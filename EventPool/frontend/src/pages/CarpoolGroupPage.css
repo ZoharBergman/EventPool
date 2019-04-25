@@ -1,0 +1,54 @@
+.carpool-group-container{
+    padding-top: 30px;
+    width: 80%;
+    margin: auto;
+    padding-left: 16px;
+}
+
+.carpool-group-container .title{
+    color: var(--orange);
+}
+
+.carpool-group-container .sub-title {
+    margin-top: 20px;
+}
+
+.carpool-group-container .pickup-order-container{
+    margin-top: 40px;
+}
+
+.carpool-group-container .carpool-group-details-container{
+    margin: 20px 0;
+}
+
+.carpool-group-container .carpool-group-details-container .guests-details-container{
+    margin: 20px 0;
+}
+
+.carpool-group-container .carpool-group-details-container .guests-details-container .guests-details-content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0 20px 0;
+}
+.carpool-group-container .carpool-group-details-container .guests-details-container .guests-details-content div{
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    width: 300px;
+}
+
+/*.carpool-group-container .carpool-group-details-container .guests-details-container .guests-details-content div.separator {*/
+    /*margin: 0 15px;*/
+    /*font-weight: bold;*/
+    /*width: fit-content;*/
+/*}*/
+
+.carpool-group-container .carpool-group-details-container .guests-details-container .guests-details-content .guests-details-icon {
+    padding-right: 10px;
+}
+
+.carpool-group-container .stepper > div > div > div > div{
+    background-color: var(--orange) !important;
+}

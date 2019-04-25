@@ -7,10 +7,8 @@ import EventPoolService from '../services/EventPoolService';
 import Stepper from 'react-stepper-horizontal/lib/index';
 import Loader from '../components/Loader';
 import ErrorPopupComponent from '../components/ErrorPopupComponent';
-
-import Grid from '@material-ui/core/Grid';
-import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from '@material-ui/core/Button';
+import './CarpoolGroupPage.css';
 
 class CarpoolGroupPage extends Component {
     constructor(props) {
@@ -100,7 +98,7 @@ class CarpoolGroupPage extends Component {
         });
 
         return (
-            <div>
+            <div className="stepper">
                 Click on a passenger to get directions.
                 <Stepper steps={steps} activeStep={pickupOrder.length}/>
             </div>
@@ -109,17 +107,26 @@ class CarpoolGroupPage extends Component {
 
     buildGuestDetails(guest) {
         return (
-            <Grid container spacing={24} id={guest.id}>
-                <Grid item sm={4} xs={12}>
-                    <TextField type="text" label="Name:" value={guest.name}/>
-                </Grid>
-                <Grid item sm={4} xs={12}>
-                    <TextField type="text" label="Phone number:" value={guest.phoneNumber}/>
-                </Grid>
-                <Grid item sm={4} xs={12}>
-                    <TextField type="text" fullWidth label="Start address:" value={guest.startAddress.name}/>
-                </Grid>
-            </Grid>
+        <div className="guests-details-content">
+            <div>
+                <i className="material-icons guests-details-icon">
+                    person
+                </i>
+                {guest.name}
+            </div>
+            <div>
+                <i className="material-icons guests-details-icon">
+                    phone
+                </i>
+                {guest.phoneNumber}
+            </div>
+            <div>
+                <i className="material-icons guests-details-icon">
+                    location_on
+                </i>
+                {guest.startAddress.name}
+            </div>
+        </div>
         );
     }
 
@@ -129,28 +136,26 @@ class CarpoolGroupPage extends Component {
         ) : this.buildPickupOrderStepper(this.state.passengers, this.state.pickupOrder, this.state.eventLocation);
 
         return (
-            <div>
+            <div className="carpool-group-container">
                 <Loader ref={this.loader}/>
                 <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
-                <h1 style={{textAlign: 'center'}}>{this.state.eventName}</h1>
-                <div className="container">
-                    <Grid container spacing={24}>
-                        {Object.keys(this.state.driver).length > 0 &&
-                            <Grid item xs={12}>
-                                <h2>Driver:</h2>
-                                {this.buildGuestDetails(this.state.driver)}
-                            </Grid>
-                        }
-                        {Object.keys(this.state.passengers).length > 0 &&
-                            <Grid item xs={12}>
-                                <h2>Passengers:</h2>
-                                {Object.values(this.state.passengers).map(passenger => this.buildGuestDetails(passenger))}
-                            </Grid>
-                        }
-                    </Grid>
+                <h2 className="title">{this.state.eventName}</h2>
+                <div className="carpool-group-details-container">
+                    {Object.keys(this.state.driver).length > 0 &&
+                        <div className="guests-details-container">
+                            <h4 className="sub-title">Driver:</h4>
+                            {this.buildGuestDetails(this.state.driver)}
+                        </div>
+                    }
+                    {Object.keys(this.state.passengers).length > 0 &&
+                        <div className="guests-details-container">
+                            <h4 className="sub-title">Passengers:</h4>
+                            {Object.values(this.state.passengers).map(passenger => this.buildGuestDetails(passenger))}
+                        </div>
+                    }
                 </div>
-                <div className="container">
-                    <h2>Pickup Order</h2>
+                <div className="pickup-order-container">
+                    <h4 className="sub-title">Pickup Order</h4>
                     {pickupOrderDiv}
                 </div>
             </div>
