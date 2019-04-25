@@ -7,6 +7,7 @@
     flex-direction: row;
     width: 80%;
     margin: auto;
+    flex-wrap: wrap;
 }
 .event-container .loading{
     margin: auto;
@@ -43,7 +44,7 @@
 .event-container .event-tabs-container .tabs{
     z-index: 0;
     position: relative;
-    margin-top: -30px;
+    /*margin-top: -30px;*/
     width: fit-content;
     background-color: transparent;
     color: black;
@@ -119,6 +120,7 @@
 .carpool-groups-container ul.cars-details-container li.group-details-container{
     width: 30%;
     margin: 10px;
+    min-width: 300px;
 }
 
 .carpool-groups-container ul.cars-details-container li.group-details-container > div{
