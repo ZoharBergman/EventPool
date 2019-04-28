@@ -10,6 +10,7 @@ import renderField from './RenderedField';
 import PlaceField from './PlaceField';
 import './CreateEventForm.css'
 import Grid from '@material-ui/core/Grid';
+import Popup from 'reactjs-popup';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
@@ -60,7 +61,7 @@ const validate = val => {
 };
 
 let CreateEventForm = props => {
-    let { handleSubmit, valid  } = props;
+    let { handleSubmit, valid } = props;
     const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '');
     return (
         <form className="form" onSubmit={handleSubmit}>
@@ -82,8 +83,19 @@ let CreateEventForm = props => {
                         <Field name="addressName" component={PlaceField}/>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} className="radius-field-container">
                         <Field className="input" name="maxRadiusInKm" component={renderField} type="Number" label="Max deviation radius in KM"/>
+                        <Popup
+                            trigger={<button className="radius-info-btn">i</button>}
+                            position='bottom right'
+                            on={['click', 'hover']}
+                            closeOnDocumentClick
+                            mouseEnterDelay={0}
+                            contentStyle={{ padding: '10px', border: '1px solid var(--gray)' }}
+                            arrow={true}
+                        >
+                            Deviation radius is the maximum air distance that the drivers are allowed to deviate from their original path.
+                        </Popup>
                     </Grid>
 
                     <Grid item className="submit-container">

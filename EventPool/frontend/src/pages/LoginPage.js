@@ -6,7 +6,7 @@ import GoogleButton from 'react-google-button'
 import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
 import Loader from '../components/Loader';
-import logo from '../images/EventpoolLogo.png';
+import logo from '../images/EventpoolLogo3.png';
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 
@@ -15,7 +15,7 @@ export default class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            splashScreen: true
+            splashScreen: false
         };
 
         this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
@@ -28,21 +28,26 @@ export default class LoginPage extends React.Component {
                 localStorage.removeItem(firebaseAuthKey);
             });
         localStorage.setItem(firebaseAuthKey, "1");
+        this.setState({splashScreen: true});
     }
 
     componentWillMount() {
         /**
          * We have appToken relevant for our backend API
          */
-        if (localStorage.getItem(auth.appTokenKey)) {
+        if (localStorage.getItem(auth.appTokenKey) && !localStorage.getItem(firebaseAuthKey)) {
             this.props.history.push("/home");
             this.props.onAuthenticate();
             return;
+        } else {
+            this.setState({splashScreen: true});
         }
 
-        firebaseAuth().onAuthStateChanged(user => {
+        let that = this;
+        let unsubscribe = firebaseAuth().onAuthStateChanged((user) => {
             if (user) {
                 localStorage.removeItem(firebaseAuthKey);
+                that.setState({splashScreen: false});
 
                 // here you could authenticate with you web server to get the
                 // application specific token so that you do not have to
@@ -52,6 +57,9 @@ export default class LoginPage extends React.Component {
                 localStorage.setItem(auth.appTokenKey, user.uid);
                 this.props.history.push("/home");
                 this.props.onAuthenticate();
+                unsubscribe();
+            } else {
+                that.setState({splashScreen: false});
             }
         });
     }
@@ -59,7 +67,7 @@ export default class LoginPage extends React.Component {
     render() {
         console.log(firebaseAuthKey + "=" + localStorage.getItem(firebaseAuthKey));
 
-        if (localStorage.getItem(firebaseAuthKey) === "1") {
+        if (this.state.splashScreen) {
             return <SplashScreen />;
         }
 
@@ -79,7 +87,7 @@ const Login = ({handleGoogleLogin}) => (
             display: "block",
             marginLeft: "auto",
             marginRight: "auto"}}/>
-        <GoogleButton class="login-btn" onClick={handleGoogleLogin} style={{
+        <GoogleButton className="login-btn" onClick={handleGoogleLogin} style={{
             marginLeft: "auto",
             marginRight: "auto",
             marginTop: "20px",

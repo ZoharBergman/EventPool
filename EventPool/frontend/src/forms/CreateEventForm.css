@@ -13,3 +13,22 @@
 .new-event-container .submit-container button {
     width: 8rem;
 }
+
+.new-event-container .fields-container .radius-field-container{
+    display: flex;
+    align-items: baseline;
+}
+
+.new-event-container .fields-container .radius-field-container > div{
+    width: 100%;
+}
+
+.new-event-container .fields-container .radius-field-container .radius-info-btn{
+    margin-left: 10px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 1.5px solid var(--aqua);
+    background-color: var(--aqua40);
+    text-align: center;
+}

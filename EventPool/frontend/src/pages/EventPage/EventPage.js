@@ -22,12 +22,10 @@ import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateCo
 import ErrorPopupComponent from '../../components/ErrorPopupComponent';
 import CardButton from '../../components/CardButton';
 
-import TextField from "@material-ui/core/es/TextField/TextField";
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Button from '@material-ui/core/Button';
 
 import './Style.css'
 
@@ -377,7 +375,9 @@ class EventPage extends Component {
         let carpoolGroups;
         let carpoolGroupsSummary;
 
-        if (Object.keys(this.state.event.carpoolGroups).length > 0) {
+        const hasCarpoolGroups = Object.keys(this.state.event.carpoolGroups).length > 0;
+
+        if (hasCarpoolGroups) {
             carpoolGroups = this.buildCarpoolGroupsList(this.state.event.carpoolGroups);
             carpoolGroupsSummary = (
                 <div className="car-group-container">
@@ -394,7 +394,7 @@ class EventPage extends Component {
                         </div>
                         <div className="separator">|</div>
                         <div>
-                            <i class="material-icons car-group-summary-icon">
+                            <i className="material-icons car-group-summary-icon">
                                 commute
                             </i>
                             {`Drivers: ${Object.keys(this.state.event.carpoolGroups).length} of ${
@@ -413,15 +413,15 @@ class EventPage extends Component {
                     <h2>{this.state.event.name}</h2>
                     <div className="event-metadata">
                         <div>
-                            <i class="material-icons event-metadata-icon">schedule</i>
+                            <i className="material-icons event-metadata-icon">schedule</i>
                             When: {Formatters.dateFormatter(this.state.event.date)}
                         </div>
                         <div>
-                            <i class="material-icons event-metadata-icon">room</i>
+                            <i className="material-icons event-metadata-icon">room</i>
                             <div>Where: {this.state.event.address.name}</div>
                         </div>
                         <div>
-                            <i class="material-icons event-metadata-icon">call_made</i>
+                            <i className="material-icons event-metadata-icon">call_made</i>
                             Radius: {this.state.event.maxRadiusInKm} Km
                         </div>
                     </div>
@@ -466,6 +466,9 @@ class EventPage extends Component {
                                     <Grid item>
                                         <button  className="import-btn event-pool-btn" onClick={this.openImportGuestsModal}>Import</button>
                                         <Popup modal open={this.state.isOpenImportGuestsPopup} onClose={this.closeImportGuestsModal}>
+                                            <a className="close" onClick={this.closeImportGuestsModal}>
+                                                &times;
+                                            </a>
                                             <div className="import-popup-container">
                                                 <h1>Import guests from excel</h1>
                                                 <div className="template-form">
@@ -536,12 +539,22 @@ class EventPage extends Component {
                                             hidden={Object.keys(this.state.event.carpoolGroups).length <= 0}
                                 />
                                 <Popup open={this.state.isOpenNewRadiusPopup} onClose={this.closeNewRadiusModal} closeOnDocumentClick modal>
+                                    <a className="close" onClick={this.closeNewRadiusModal}>
+                                        &times;
+                                    </a>
                                     <NewDeviationRadiusForm
                                         maxRadiusInKm={this.state.event.maxRadiusInKm}
                                         onSubmit={this.calcCarpoolGroupsAgain}/>
                                 </Popup>
                                 {carpoolGroupsSummary}
                                 {carpoolGroups}
+                                {!hasCarpoolGroups && !this.state.initMode && (
+                                    <div className="empty-state">
+                                        No carpool groups yet.
+                                        <br/>
+                                        You can ask to calculate them after there will be at least one passenger and one driver.
+                                    </div>
+                                )}
                             </div>
                         </TabContainer>
                         }

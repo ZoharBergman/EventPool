@@ -7,7 +7,6 @@ import EventPoolService from '../services/EventPoolService';
 import Stepper from 'react-stepper-horizontal/lib/index';
 import Loader from '../components/Loader';
 import ErrorPopupComponent from '../components/ErrorPopupComponent';
-import Button from '@material-ui/core/Button';
 import './CarpoolGroupPage.css';
 
 class CarpoolGroupPage extends Component {
@@ -24,7 +23,8 @@ class CarpoolGroupPage extends Component {
             eventName: "",
             pickupOrder: [],
             eventLocation: {},
-            errorMessage: ""
+            errorMessage: "",
+            initMode: true
         };
 
         this.loader = React.createRef();
@@ -51,7 +51,8 @@ class CarpoolGroupPage extends Component {
                     if (eventLocationSnapshot.exists()) {
                         this.setState({
                             ...val,
-                            eventLocation: eventLocationSnapshot.val()
+                            eventLocation: eventLocationSnapshot.val(),
+                            initMode: false
                         }, this.loader.current.closeLoader);
                     }
                     });
@@ -132,32 +133,36 @@ class CarpoolGroupPage extends Component {
 
     render() {
         let pickupOrderDiv = this.state.pickupOrder.length === 0 ? (
-            <Button variant="contained" onClick={this.calcPickupOrder}>Calculate pickup order</Button>
+            <button className="event-pool-btn" onClick={this.calcPickupOrder}>Calculate pickup order</button>
         ) : this.buildPickupOrderStepper(this.state.passengers, this.state.pickupOrder, this.state.eventLocation);
 
         return (
             <div className="carpool-group-container">
                 <Loader ref={this.loader}/>
                 <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
-                <h2 className="title">{this.state.eventName}</h2>
-                <div className="carpool-group-details-container">
-                    {Object.keys(this.state.driver).length > 0 &&
-                        <div className="guests-details-container">
-                            <h4 className="sub-title">Driver:</h4>
-                            {this.buildGuestDetails(this.state.driver)}
+                {!this.state.initMode && (
+                    <div>
+                        <h2 className="title">{this.state.eventName}</h2>
+                        <div className="carpool-group-details-container">
+                            {Object.keys(this.state.driver).length > 0 &&
+                                <div className="guests-details-container">
+                                    <h4 className="sub-title">Driver:</h4>
+                                    {this.buildGuestDetails(this.state.driver)}
+                                </div>
+                            }
+                            {Object.keys(this.state.passengers).length > 0 &&
+                                <div className="guests-details-container">
+                                    <h4 className="sub-title">Passengers:</h4>
+                                    {Object.values(this.state.passengers).map(passenger => this.buildGuestDetails(passenger))}
+                                </div>
+                            }
                         </div>
-                    }
-                    {Object.keys(this.state.passengers).length > 0 &&
-                        <div className="guests-details-container">
-                            <h4 className="sub-title">Passengers:</h4>
-                            {Object.values(this.state.passengers).map(passenger => this.buildGuestDetails(passenger))}
+                        <div className="pickup-order-container">
+                            <h4 className="sub-title">Pickup Order</h4>
+                            {pickupOrderDiv}
                         </div>
-                    }
-                </div>
-                <div className="pickup-order-container">
-                    <h4 className="sub-title">Pickup Order</h4>
-                    {pickupOrderDiv}
-                </div>
+                    </div>
+                )}
             </div>
         );
     }

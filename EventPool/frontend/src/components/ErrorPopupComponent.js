@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
+import './ErrorPopupComponent.css';
 
 class ErrorPopupComponent extends Component {
     constructor(props) {
@@ -26,9 +27,14 @@ class ErrorPopupComponent extends Component {
 
     render() {
         return (
-            <Popup open={this.state.open} modal>
-                <h1>Ho No!</h1>
-                {this.props.errorMessage}
+            <Popup open={this.state.open} modal className="error-popup-container">
+                <div className="error-popup-container">
+                    <a className="close" onClick={this.closeErrorPopup}>
+                        &times;
+                    </a>
+                    <h1>Ho No!</h1>
+                    {this.props.errorMessage}
+                </div>
             </Popup>
         );
     }

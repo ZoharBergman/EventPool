@@ -1,0 +1,50 @@
+.guest-carpool-details-container{
+    padding-top: 30px;
+    width: 65%;
+    margin: auto;
+}
+
+.guest-carpool-details-container .title{
+    color: var(--orange);
+}
+
+.guest-carpool-details-container .invite-text{
+    margin-top: 10px;
+}
+
+.guest-carpool-details-container .guest-carpool-detail-field-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.guest-carpool-details-container .guest-carpool-detail-field-container > label{
+    width: fit-content;
+    margin-right: auto;
+}
+
+.guest-carpool-details-container .guest-carpool-detail-field-container > input,
+.guest-carpool-details-container .guest-carpool-detail-field-container > div > input,
+.guest-carpool-details-container .guest-carpool-detail-field-container .guest-carpool-detail-field-container {
+    border-radius: 0.25rem;
+    width: 100%;
+    margin-right: auto;
+    border: none;
+    height: 35px;
+}
+
+.guest-carpool-details-container .guest-carpool-detail-field-container > div {
+    width: 100%;
+}
+
+#isComing, #isCar{
+    border-radius: 0.25rem;
+    width: 100%;
+    margin-right: auto;
+    border: none;
+    height: 35px;
+}
+
+.guest-carpool-details-container .guest-carpool-detail-submit-container{
+    text-align: right;
+}

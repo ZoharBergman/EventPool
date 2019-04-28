@@ -36,7 +36,7 @@ html{
 .event-pool-btn:not(.disabled):hover{
   background: var(--orange);
 }
-.event-pool-btn[disabled="true"]{
+.event-pool-btn[disabled=true]{
   background: var(--orange20) !important;
 }
 

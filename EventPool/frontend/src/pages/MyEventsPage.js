@@ -47,7 +47,9 @@ class MyEventsPage extends Component {
                      this.setState({...userEvents, isLoaded: true, initMode: false}, this.loader.current.closeLoader);
                     }
                 } else {
-                    this.loader.current.closeLoader();
+                    this.setState({
+                        initMode: false
+                    }, this.loader.current.closeLoader);
                 }
             });
     }
@@ -89,7 +91,7 @@ class MyEventsPage extends Component {
                 {hasEvents && this.state.isLoaded && !this.state.initMode && asOrganizer}
                 {!hasEvents && !this.state.initMode && (
                     <div className="empty-state">
-                        No events, feel free to create one.
+                        No events yet, feel free to create one.
                     </div>
                 )}
                 {this.state.initMode && (<div className="loading">

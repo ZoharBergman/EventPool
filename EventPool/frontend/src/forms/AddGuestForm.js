@@ -26,11 +26,14 @@ const validate = val => {
 };
 
 let AddGuestForm = (props) => {
-    let { handleSubmit, valid  } = props;
+    let { handleSubmit, valid, reset } = props;
     const btnDisabledClass = "event-pool-btn " + (!valid ? 'disabled' : '');
 
     return (
-    <form className="form" onSubmit={handleSubmit} >
+    <form className="form" onSubmit={(newGuest) => {
+        handleSubmit(newGuest);
+        reset();
+    }}>
         <Grid container spacing={24}>
             <Grid item>
                 <Field name="name" component={renderField} type="text" label="Full name" />
