@@ -102,7 +102,7 @@ class NewGuestPage extends Component {
                 }
             });
         }
-    };
+    }
 
     handleSubmit(guestDetails) {
         this.loader.current.openLoader();

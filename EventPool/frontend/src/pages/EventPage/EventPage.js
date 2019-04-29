@@ -548,7 +548,7 @@ class EventPage extends Component {
                                 </Popup>
                                 {carpoolGroupsSummary}
                                 {carpoolGroups}
-                                {!hasCarpoolGroups && !this.state.initMode && (
+                                {!hasCarpoolGroups && !this.state.initMode && !isCarpoolGroupsCalcAvailable && (
                                     <div className="empty-state">
                                         No carpool groups yet.
                                         <br/>
