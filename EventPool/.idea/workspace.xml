@@ -7,13 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="484d9a08-2983-452d-abe9-57c2e1152d4a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/forms/CreateEventForm.css" afterPath="$PROJECT_DIR$/frontend/src/forms/CreateEventForm.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" afterPath="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,11 +22,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EventPage.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="EventPage.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1210">
-              <caret line="550" column="111" lean-forward="false" selection-start-line="550" selection-start-column="111" selection-end-line="550" selection-end-column="111" />
+            <state relative-caret-position="259">
+              <caret line="414" column="36" lean-forward="false" selection-start-line="414" selection-start-column="36" selection-end-line="414" selection-end-column="36" />
               <folding>
                 <element signature="e#43#84#0" expanded="true" />
                 <element signature="e#1670#1796#0" expanded="false" />
@@ -104,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImportDataPage.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ImportDataPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="102" column="87" lean-forward="false" selection-start-line="102" selection-start-column="87" selection-end-line="102" selection-end-column="87" />
+            <state relative-caret-position="-1085">
+              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
                 <element signature="e#43#84#0" expanded="true" />
               </folding>
@@ -174,8 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>SplashScreen</find>
-      <find>handleGoogleLogin</find>
       <find>initMode</find>
       <find>isComingValue</find>
       <find>isComing</find>
@@ -204,6 +198,8 @@
       <find>close</find>
       <find>closeLoader</find>
       <find>isCarpoolGroupsCalcAvailable</find>
+      <find>sep</find>
+      <find>debu</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Zuzu\Desktop\GitProjects\EventPool1\1\EventPool\frontend\node_modules\react-google-maps</dir>
@@ -273,8 +269,8 @@
         <option value="$PROJECT_DIR$/frontend/src/routers/AppRouter.js" />
         <option value="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.css" />
         <option value="$PROJECT_DIR$/frontend/src/pages/NewGuestPage.js" />
-        <option value="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" />
         <option value="$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js" />
+        <option value="$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js" />
       </list>
     </option>
   </component>
@@ -1134,14 +1130,7 @@
       <workItem from="1555914648482" duration="56058000" />
       <workItem from="1556286216016" duration="1226000" />
       <workItem from="1556381650749" duration="24336000" />
-      <workItem from="1556530160511" duration="10284000" />
-    </task>
-    <task id="LOCAL-00012" summary="Create stubs for calculate carpool matching">
-      <created>1546253540504</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1546253540504</updated>
+      <workItem from="1556530160511" duration="11684000" />
     </task>
     <task id="LOCAL-00013" summary="1. Add geofire.&#10;2. Cancel the routes collection.&#10;3. Start calculating potential matches between drivers &amp; passengers (not finished yet).">
       <created>1546382891578</created>
@@ -1479,11 +1468,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556468051770</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Create data import page">
+      <created>1556556690672</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1556556690672</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="735094000" />
+    <option name="totallyTimeSpent" value="736494000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1570,7 +1566,6 @@
       <path value="$PROJECT_DIR$/frontend" />
       <path value="$PROJECT_DIR$/" />
     </ignored-roots>
-    <MESSAGE value="Create method to calculate pickup order for all the carpool groups. not finished yet." />
     <MESSAGE value="Check pickup order calculation for all the groups.&#10;Start writing a service to run the pickup orders (not finished yet)." />
     <MESSAGE value="Create scheduler service" />
     <MESSAGE value="Add pickup order service to scheduler" />
@@ -1595,7 +1590,8 @@
     <MESSAGE value="Redesign" />
     <MESSAGE value="Design" />
     <MESSAGE value="Fix login. Continue design. Add info button in the create event form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix login. Continue design. Add info button in the create event form" />
+    <MESSAGE value="Create data import page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create data import page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1984,10 +1980,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-spinners/docs/bundle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="29" column="67591" lean-forward="false" selection-start-line="29" selection-start-column="67591" selection-end-line="29" selection-end-column="67591" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1085">
+          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding>
+            <element signature="e#43#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/pages/EventPage/EventPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1210">
-          <caret line="550" column="111" lean-forward="false" selection-start-line="550" selection-start-column="111" selection-end-line="550" selection-end-column="111" />
+        <state relative-caret-position="259">
+          <caret line="414" column="36" lean-forward="false" selection-start-line="414" selection-start-column="36" selection-end-line="414" selection-end-column="36" />
           <folding>
             <element signature="e#43#84#0" expanded="true" />
             <element signature="e#1670#1796#0" expanded="false" />
@@ -2026,24 +2040,6 @@
             <element signature="n#!!block;n#handleGuestClicked#0;n#EventPage#0" expanded="false" />
             <element signature="e#14064#14167#0" expanded="false" />
             <element signature="n#!!block;n#handleManageTabsChange#0;n#EventPage#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-spinners/docs/bundle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="29" column="67591" lean-forward="false" selection-start-line="29" selection-start-column="67591" selection-end-line="29" selection-end-column="67591" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/pages/ImportDataPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="102" column="87" lean-forward="false" selection-start-line="102" selection-start-column="87" selection-end-line="102" selection-end-column="87" />
-          <folding>
-            <element signature="e#43#84#0" expanded="true" />
           </folding>
         </state>
       </provider>

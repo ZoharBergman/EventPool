@@ -71,7 +71,7 @@ class ImportDataPage extends Component {
     handleImportGuestsExcelFile(e) {
         this.loader.current.openLoader();
         let fileObj = e.target.files[0];
-debugger;
+
         ExcelRenderer(fileObj, (err, resp) => {
             if(err){
                 this.loader.current.closeLoader();

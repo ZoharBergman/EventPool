@@ -402,6 +402,19 @@ class EventPage extends Component {
                                     .filter((guest) => guest.isComing && guest.isCar).length
                                 }`}
                         </div>
+                        <div className="separator">|</div>
+                        <div>
+                            <i className="material-icons car-group-summary-icon">
+                                airline_seat_legroom_normal
+                            </i>
+                            {`Seats: ${Object.values(this.state.event.carpoolGroups).map((carpoolGroup) => {
+                                return Object.keys(carpoolGroup.passengers).length
+                            }).reduce((l1, l2) => l1 + l2)} of ${
+                                Object.values(this.state.event.guests).filter((guest) => guest.isComing && guest.isCar)
+                                    .map((driver) => {return driver.freeSeatsNum})
+                                    .reduce((n1, n2) => n1 + n2)
+                            }`}
+                        </div>
                     </div>
                 </div>
             );
