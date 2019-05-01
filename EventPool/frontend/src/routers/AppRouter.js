@@ -14,12 +14,13 @@ import { NewGuestPage } from '../pages/NewGuestPage';
 import { CarpoolGroupPage } from '../pages/CarpoolGroupPage';
 import ImportDataPage from '../pages/ImportDataPage';
 import auth from '../config/auth';
+import PrivateRoute from './PrivateRoute';
 
 class AppRouter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAppHeader: !!localStorage.getItem(auth.appTokenKey)
+            isAppHeader: auth.isUserAuthenticated()
         };
 
         this.showHeader = this.showHeader.bind(this);
@@ -41,13 +42,13 @@ class AppRouter extends Component {
                     {this.state.isAppHeader && <AppHeader onLogout={this.hideHeader}/>}
                     <Switch>
                         <Route path="/login" render={(props) => <LoginPage {...props} onAuthenticate={this.showHeader}/>} />
-                        <Route path='/home' component={HomePage}/>
-                        <Route path='/events/create' component={CreateEventPage} />
-                        <Route path='/events' component={MyEventsPage} />
-                        <Route path='/event/:id' exact={true} component={EventPage}/>
+                        <PrivateRoute path='/home' component={HomePage}/>
+                        <PrivateRoute path='/events/create' component={CreateEventPage} />
+                        <PrivateRoute path='/events' component={MyEventsPage} />
+                        <PrivateRoute path='/event/:id' exact={true} component={EventPage}/>
                         <Route path='/event/:eventId/newGuest/:guestId' component={NewGuestPage}/>
                         <Route path='/event/:eventId/carpoolGroup/:groupId' component={CarpoolGroupPage}/>
-                        <Route path='/importData' component={ImportDataPage}/>
+                        <PrivateRoute path='/importData' component={ImportDataPage}/>
                         <Redirect from="/" to="/login" />
                     </Switch>
                 </Fragment>

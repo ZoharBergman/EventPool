@@ -142,7 +142,9 @@ class EventPage extends Component {
     buildCarpoolGroupsList(carpoolGroups) {
         return (
             <ul className="cars-details-container">
-                {Object.values(carpoolGroups).map(carpoolGroup => {
+                {Object.values(carpoolGroups)
+                    .sort((g1, g2)=> {return Object.keys(g2.passengers).length - Object.keys(g1.passengers).length })
+                    .map(carpoolGroup => {
                    return (
                        <li className="group-details-container" key={carpoolGroup.driver.id}>
                            <CarpoolGroupComponent eventId={this.state.eventId} driver={carpoolGroup.driver} passengers={Object.values(carpoolGroup.passengers)}/>

@@ -19,8 +19,13 @@ function logout() {
     return firebaseAuth().signOut();
 }
 
+function isUserAuthenticated() {
+    return !!localStorage.getItem(appTokenKey);
+}
+
 export default {
     appTokenKey: appTokenKey,
     loginWithGoogle : loginWithGoogle,
-    logout: logout
+    logout: logout,
+    isUserAuthenticated: isUserAuthenticated
 };

@@ -150,6 +150,7 @@
 }
 .carpool-groups-container .car-group-container .car-group-summary-container{
     display: flex;
+    flex-wrap: wrap;
 }
 .carpool-groups-container .car-group-container .car-group-summary-container div{
     font-size: 1rem;
