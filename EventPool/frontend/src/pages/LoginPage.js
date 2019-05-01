@@ -6,7 +6,7 @@ import GoogleButton from 'react-google-button'
 import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
 import Loader from '../components/Loader';
-import logo from '../images/EventpoolLogo3.png';
+import logo from '../images/EventpoolLogo.png';
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 
