@@ -2,10 +2,9 @@
  * Created by Zohar on 02/12/2018.
  */
 class userEvent {
-    constructor(userId, asGuest, asOrganizer) {
+    constructor(userId) {
         this.userId = userId;
-        this.asGuest = asGuest;
-        this.asOrganizer = asOrganizer;
+        this.asOrganizer = {};
     }
 
     static collectionName () {

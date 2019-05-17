@@ -56,7 +56,9 @@ class CreateEventPage extends Component {
 
                 if (!snapshot.exists() || !snapshot.val()) {
                     // Creating a new user events object and save it to the DB
-                    userEventsRef.child(eventId).set(new userEvent(user, [], [newUserEventAsOrganizer]));
+                    let newUserEvent = new userEvent(user);
+                    newUserEvent.asOrganizer[eventId] = newUserEventAsOrganizer;
+                    userEventsRef.child(eventId).set(newUserEvent);
                 } else {
                     const userEvents = snapshot.val();
                     for (let key in userEvents) {
