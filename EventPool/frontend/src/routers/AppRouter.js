@@ -13,6 +13,7 @@ import { EventPage } from '../pages/EventPage/EventPage';
 import { NewGuestPage } from '../pages/NewGuestPage';
 import { CarpoolGroupPage } from '../pages/CarpoolGroupPage';
 import ImportDataPage from '../pages/ImportDataPage';
+import SuccessPage from '../pages/SuccessPage';
 import auth from '../config/auth';
 import PrivateRoute from './PrivateRoute';
 
@@ -47,6 +48,7 @@ class AppRouter extends Component {
                         <PrivateRoute path='/events' component={MyEventsPage} />
                         <PrivateRoute path='/event/:id' exact={true} component={EventPage}/>
                         <Route path='/event/:eventId/newGuest/:guestId' component={NewGuestPage}/>
+                        <Route path='/event/newGuest/success' component={SuccessPage}/>
                         <Route path='/event/:eventId/carpoolGroup/:groupId' component={CarpoolGroupPage}/>
                         <PrivateRoute path='/importData' component={ImportDataPage}/>
                         <Redirect from="/" to="/login" />

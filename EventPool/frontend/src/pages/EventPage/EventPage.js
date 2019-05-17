@@ -20,6 +20,7 @@ import TabContainer from '../../components/TabContainer';
 import Formatters from '../../util/Formatters';
 import GuestsExcelTemplateComponent from '../../components/GuestsExcelTemplateComponent';
 import ErrorPopupComponent from '../../components/ErrorPopupComponent';
+import MessagesSentComponent from '../../components/MessagesSentComponent';
 import CardButton from '../../components/CardButton';
 
 import Grid from '@material-ui/core/Grid';
@@ -36,6 +37,7 @@ class EventPage extends Component {
 
         this.loader = React.createRef();
         this.errorPopup = React.createRef();
+        this.messagesSentPopup = React.createRef();
 
         this.MANAGE_GUESTS = "Manage guests";
         this.MANAGE_CARPOOL_GROUPS = "Manage carpool groups";
@@ -241,6 +243,7 @@ class EventPage extends Component {
 
         Messaging.sendMessages(this.state.eventId, messages);
         this.loader.current.closeLoader();
+        this.messagesSentPopup.current.openMessagesSentPopup();
     }
 
     calcCarpoolGroupsAgain(data) {
@@ -453,6 +456,7 @@ class EventPage extends Component {
             <div className="event-container">
                 <Loader ref={this.loader}/>
                 <ErrorPopupComponent ref={this.errorPopup} errorMessage={this.state.errorMessage}/>
+                <MessagesSentComponent ref={this.messagesSentPopup}/>
                 {this.state.event.id === "" && this.state.initMode && (<div className="loading">
                     Waiting for event details...
                 </div>)}

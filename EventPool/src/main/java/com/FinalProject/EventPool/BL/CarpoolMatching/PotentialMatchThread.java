@@ -53,7 +53,7 @@ public class PotentialMatchThread extends Thread{
                             numOfHandledGeoLocations++;
                         }
 
-                        // Get the drivers that are driving through the location
+                        // Get the drivers ids' that are driving through the location
                         GeofireToDriver.getReference().child(eventId).child(locationSnapshot.getKey())
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override

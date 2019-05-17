@@ -71,7 +71,7 @@ class MyEventsPage extends Component {
                         <div className="event-clickable" onClick={() =>{
                             this.props.history.push(`/event/${event.eventId}`)
                         }}>
-                            <i class="material-icons event-icon">stars</i>
+                            <i className="material-icons event-icon">stars</i>
                             <div>{event.eventName}</div>
                         </div>
                     </ListItem>

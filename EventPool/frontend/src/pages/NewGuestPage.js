@@ -82,6 +82,7 @@ class NewGuestPage extends Component {
                 if (!this.state.newGuest.isCar) { // The guest is a passenger
                     this.saveToDB();
                     this.loader.current.closeLoader();
+                    this.props.history.push('/event/newGuest/success');
                 } else { // The guest is a driver
                     // Calculate and save the route of the driver
                     routesService.calcAndSaveRoute(
@@ -93,6 +94,7 @@ class NewGuestPage extends Component {
                         .then(() => {
                             this.saveToDB();
                             this.loader.current.closeLoader();
+                            this.props.history.push('/event/newGuest/success');
                         })
                         .catch(() => {
                             this.loader.current.closeLoader();
@@ -124,6 +126,7 @@ class NewGuestPage extends Component {
                (guestDetails.isComing && guestDetails.isCar && guestDetails.freeSeatsNum === "0")) {
                 this.saveToDB();
                 this.loader.current.closeLoader();
+                this.props.history.push('/event/newGuest/success');
             } else {
                 // Geocoding the start location of the guest
                 geocoding.codeAddress(guestDetails.startAddress, this.afterGeocode);

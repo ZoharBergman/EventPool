@@ -7,6 +7,7 @@ import auth from "../config/auth";
 import {firebaseAuth} from "../config/firebase";
 import Loader from '../components/Loader';
 import logo from '../images/EventpoolLogo.png';
+import './LoginPage.css';
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 
@@ -76,17 +77,8 @@ export default class LoginPage extends React.Component {
 }
 
 const Login = ({handleGoogleLogin}) => (
-    <div className="login-container" style={{
-        margin: "0",
-        position: "absolute",
-        top: "40%",
-        left: "50%",
-        transform: "translate(-50%, -50%)"}}>
-        <img  src={logo} style={{
-            width: "70%",
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "auto"}}/>
+    <div className="login-container">
+        <img className="login-logo" src={logo}/>
         <GoogleButton className="login-btn" onClick={handleGoogleLogin} style={{
             marginLeft: "auto",
             marginRight: "auto",

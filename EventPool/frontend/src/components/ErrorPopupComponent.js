@@ -27,7 +27,7 @@ class ErrorPopupComponent extends Component {
 
     render() {
         return (
-            <Popup open={this.state.open} modal className="error-popup-container">
+            <Popup open={this.state.open} modal>
                 <div className="error-popup-container">
                     <a className="close" onClick={this.closeErrorPopup}>
                         &times;
