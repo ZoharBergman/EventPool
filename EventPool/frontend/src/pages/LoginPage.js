@@ -44,11 +44,10 @@ export default class LoginPage extends React.Component {
             this.setState({splashScreen: true});
         }
 
-        let that = this;
-        let unsubscribe = firebaseAuth().onAuthStateChanged((user) => {
+        let unsubscribe = firebaseAuth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.removeItem(firebaseAuthKey);
-                that.setState({splashScreen: false});
+                this.setState({splashScreen: false});
 
                 // here you could authenticate with you web server to get the
                 // application specific token so that you do not have to
@@ -60,9 +59,9 @@ export default class LoginPage extends React.Component {
                 this.props.onAuthenticate();
                 unsubscribe();
             } else {
-                that.setState({splashScreen: false});
+                this.setState({splashScreen: false});
             }
-        });
+        }.bind(this));
     }
 
     render() {

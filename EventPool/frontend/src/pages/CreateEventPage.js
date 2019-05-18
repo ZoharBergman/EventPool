@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react';
 import CreateEventForm from '../forms/CreateEventForm';
-// import {CreateEventPageForm} from './CreateEventPageForm/CreateEventPageForm';
 import { eventsRef, userEventsRef } from '../config/firebase';
 import geocoding from '../util/Geocoding';
 import auth from '../config/auth';
@@ -71,20 +70,19 @@ class CreateEventPage extends Component {
 
     handleCreateEvent(newEvent) {
         this.loader.current.openLoader();
-        let that = this;
-        geocoding.codeAddress(newEvent.addressName, (err, response) => {
+        geocoding.codeAddress(newEvent.addressName, function (err, response) {
             if (err || response.json.results.length === 0) {
                 this.loader.current.closeLoader();
                 this.setState({errorMessage: "Error while geocoding the address."}, this.errorPopup.current.openErrorPopup);
             } else {
                 const user = localStorage.getItem(auth.appTokenKey);
-                const eventId = that.saveNewEvent(user, response, newEvent);
-                that.saveEventToUser(user, eventId, newEvent);
-                that.props.history.push("/event/" + eventId);
+                const eventId = this.saveNewEvent(user, response, newEvent);
+                this.saveEventToUser(user, eventId, newEvent);
+                this.props.history.push("/event/" + eventId);
             }
 
-            that.loader.current.closeLoader();
-        });
+            this.loader.current.closeLoader();
+        }.bind(this));
     }
 
     render() {

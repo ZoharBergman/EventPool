@@ -14,12 +14,11 @@ class AppHeader extends Component {
     }
 
     handleLogout() {
-        let that = this;
-        auth.logout().then(() => {
+        auth.logout().then(function() {
             localStorage.removeItem(auth.appTokenKey);
-            that.props.history.push("/login");
-            that.props.onLogout();
-        });
+            this.props.history.push("/login");
+            this.props.onLogout();
+        }.bind(this));
     }
 
     render() {
