@@ -77,7 +77,9 @@ class EventPage extends Component {
         this.handleManageTabsChange = this.handleManageTabsChange.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.loader.current.openLoader();
+
         eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
             if (snapshot.exists()) {
                 const val = snapshot.val();
@@ -93,13 +95,6 @@ class EventPage extends Component {
                 }, this.loader.current.closeLoader);
             }
         });
-    }
-
-    componentDidMount() {
-        // Checking if the event data from the DB have not loaded yet
-        if (this.state.event.id === "") {
-            this.loader.current.openLoader();
-        }
     }
 
     handleAddGuest(newGuest) {

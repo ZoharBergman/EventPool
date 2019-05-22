@@ -24,7 +24,8 @@ class MyEventsPage extends Component {
         this.loader = React.createRef();
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.loader.current.openLoader();
         const user = localStorage.getItem(auth.appTokenKey);
 
         userEventsRef.orderByChild("userId").equalTo(user).once('value')
@@ -36,15 +37,15 @@ class MyEventsPage extends Component {
 
                 if (snapshot.exists()) {
                     if (Object.values(snapshot.val())[0]) {
-                     if (Object.values(snapshot.val())[0].asOrganizer) {
-                         userEvents.asOrganizer = Object.values(Object.values(snapshot.val())[0].asOrganizer);
-                     }
+                        if (Object.values(snapshot.val())[0].asOrganizer) {
+                            userEvents.asOrganizer = Object.values(Object.values(snapshot.val())[0].asOrganizer);
+                        }
 
-                     if (Object.values(snapshot.val())[0].asGuest) {
-                         userEvents.asGuest = Object.values(Object.values(snapshot.val())[0].asGuest);
-                     }
+                        if (Object.values(snapshot.val())[0].asGuest) {
+                            userEvents.asGuest = Object.values(Object.values(snapshot.val())[0].asGuest);
+                        }
 
-                     this.setState({...userEvents, isLoaded: true, initMode: false}, this.loader.current.closeLoader);
+                        this.setState({...userEvents, isLoaded: true, initMode: false}, this.loader.current.closeLoader);
                     }
                 } else {
                     this.setState({
@@ -52,13 +53,6 @@ class MyEventsPage extends Component {
                     }, this.loader.current.closeLoader);
                 }
             });
-    }
-
-    componentDidMount() {
-        // Checking if the event data from the DB have not loaded yet
-        if (!this.state.isLoaded) {
-            this.loader.current.openLoader();
-        }
     }
 
     buildEventsList(events) {

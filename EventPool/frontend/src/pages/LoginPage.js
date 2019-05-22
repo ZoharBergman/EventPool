@@ -32,7 +32,7 @@ export default class LoginPage extends React.Component {
         this.setState({splashScreen: true});
     }
 
-    componentWillMount() {
+    componentDidMount() {
         /**
          * We have appToken relevant for our backend API
          */

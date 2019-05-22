@@ -31,7 +31,9 @@ class NewGuestPage extends Component {
         this.saveToDB = this.saveToDB.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.loader.current.openLoader();
+
         eventsRef.child(this.state.eventId).once('value').then((snapshot) => {
             if (snapshot.exists()) {
                 this.setState({event: new event(snapshot.val())});
@@ -48,13 +50,6 @@ class NewGuestPage extends Component {
                 }, this.loader.current.closeLoader);
             }
         });
-    }
-
-    componentDidMount() {
-        // Checking if the event data from the DB have not loaded yet
-        if (Object.keys(this.state.event) <= 0) {
-            this.loader.current.openLoader();
-        }
     }
 
     saveToDB() {

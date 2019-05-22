@@ -40,33 +40,30 @@ class CarpoolGroupPage extends Component {
         debugger;
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        // Open the loader
+        this.loader.current.openLoader();
+
+        // Get the carpool group details
         eventsRef.child(this.state.eventId).child('carpoolGroups').child(this.state.groupId).once('value')
             .then((snapshot) => {
-            if (snapshot.exists()) {
-                const val = snapshot.val();
+                if (snapshot.exists()) {
+                    const val = snapshot.val();
 
-                eventsRef.child(this.state.eventId).child('address').child('location').once('value')
-                    .then((eventLocationSnapshot) => {
-                    if (eventLocationSnapshot.exists()) {
-                        this.setState({
-                            ...val,
-                            eventLocation: eventLocationSnapshot.val(),
-                            initMode: false
-                        }, this.loader.current.closeLoader);
-                    }
-                    });
-            } else {
-                this.loader.current.closeLoader();
-            }
-        });
-    }
-
-    componentDidMount() {
-        // Checking if the event data from the DB have not loaded yet
-        if (Object.keys(this.state.driver).length <= 0) {
-            this.loader.current.openLoader();
-        }
+                    eventsRef.child(this.state.eventId).child('address').child('location').once('value')
+                        .then((eventLocationSnapshot) => {
+                            if (eventLocationSnapshot.exists()) {
+                                this.setState({
+                                    ...val,
+                                    eventLocation: eventLocationSnapshot.val(),
+                                    initMode: false
+                                }, this.loader.current.closeLoader);
+                            }
+                        });
+                } else {
+                    this.loader.current.closeLoader();
+                }
+            });
     }
 
     calcPickupOrder() {
